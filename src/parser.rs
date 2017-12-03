@@ -28,17 +28,28 @@ named!(parse<&str, ::Task>,
     do_parse!(
         finished:
             opt!(tag_s!("x ")) >>
+        completed:
+            opt!(date) >>
         created:
             opt!(date) >>
         subject:
             take_till!(is_line_ending) >>
-        (
+        ({
             ::Task {
                 subject: subject.to_owned(),
-                created: created,
+                created: if created.is_none() {
+                    completed
+                } else {
+                    created
+                },
+                completed: if created.is_none() {
+                    None
+                } else {
+                    completed
+                },
                 finished: finished.is_some(),
             }
-        )
+        })
     )
 );
 
