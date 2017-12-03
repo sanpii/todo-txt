@@ -1,3 +1,8 @@
+fn is_space(chr: char) -> bool
+{
+    chr == ' ' || chr == '\t' || is_line_ending(chr)
+}
+
 fn is_line_ending(chr: char) -> bool
 {
     chr == '\n' || chr == '\r'
@@ -36,6 +41,19 @@ named!(priority<&str, u8>,
     )
 );
 
+named!(context<&str, String>,
+    do_parse!(
+            take_until_and_consume_s!(" @") >>
+        context:
+            take_till!(is_space) >>
+        (
+            context.to_owned()
+        )
+    )
+);
+
+named!(contexts<&str, Vec<String>>, many0!(context));
+
 named!(parse<&str, ::Task>,
     do_parse!(
         finished:
@@ -48,7 +66,7 @@ named!(parse<&str, ::Task>,
             opt!(date) >>
         subject:
             take_till!(is_line_ending) >>
-        ({
+        (
             ::Task {
                 subject: subject.to_owned(),
                 priority: if priority.is_none() {
@@ -67,8 +85,9 @@ named!(parse<&str, ::Task>,
                     finish_date
                 },
                 finished: finished.is_some(),
+                contexts: contexts(subject).unwrap().1
             }
-        })
+        )
     )
 );
 

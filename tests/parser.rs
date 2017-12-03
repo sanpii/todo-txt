@@ -13,7 +13,7 @@ fn simple_task()
 }
 
 #[test]
-fn finished_task()
+fn finished()
 {
     let line = "x done\n".to_owned();
     let task = ::todo_txt::Task {
@@ -26,7 +26,7 @@ fn finished_task()
 }
 
 #[test]
-fn created_task()
+fn created()
 {
     let line = "x 2017-11-25 subject\n".to_owned();
     let task = ::todo_txt::Task {
@@ -40,7 +40,7 @@ fn created_task()
 }
 
 #[test]
-fn completed_task()
+fn completed()
 {
     let line = "x 2017-11-26 2017-11-25 subject\n".to_owned();
     let task = ::todo_txt::Task {
@@ -55,7 +55,7 @@ fn completed_task()
 }
 
 #[test]
-fn priority_task()
+fn priority()
 {
     let line = "x (A) 2017-11-26 2017-11-25 subject\n".to_owned();
     let task = ::todo_txt::Task {
@@ -64,6 +64,19 @@ fn priority_task()
         create_date: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
         finish_date: Some(::todo_txt::Date::from_ymd(2017, 11, 26)),
         finished: true,
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), task);
+}
+
+#[test]
+fn contexts()
+{
+    let line = "Email SoAndSo at soandso@example.com @context1 @context2\n".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "Email SoAndSo at soandso@example.com @context1 @context2".to_owned(),
+        contexts: vec!["context1".to_owned(), "context2".to_owned()],
         .. Default::default()
     };
 

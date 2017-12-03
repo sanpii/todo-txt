@@ -5,6 +5,7 @@ pub struct Task {
     pub create_date: Option<::Date>,
     pub finish_date: Option<::Date>,
     pub finished: bool,
+    pub contexts: Vec<String>,
 }
 
 impl Default for Task
@@ -17,6 +18,7 @@ impl Default for Task
             create_date: None,
             finish_date: None,
             finished: false,
+            contexts: Vec::new(),
         }
     }
 }
