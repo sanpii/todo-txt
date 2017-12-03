@@ -54,6 +54,19 @@ named!(context<&str, String>,
 
 named!(contexts<&str, Vec<String>>, many0!(context));
 
+named!(project<&str, String>,
+    do_parse!(
+            take_until_and_consume_s!(" +") >>
+        project:
+            take_till!(is_space) >>
+        (
+            project.to_owned()
+        )
+    )
+);
+
+named!(projects<&str, Vec<String>>, many0!(project));
+
 named!(parse<&str, ::Task>,
     do_parse!(
         finished:
@@ -85,7 +98,8 @@ named!(parse<&str, ::Task>,
                     finish_date
                 },
                 finished: finished.is_some(),
-                contexts: contexts(subject).unwrap().1
+                contexts: contexts(subject).unwrap().1,
+                projects: projects(subject).unwrap().1,
             }
         )
     )

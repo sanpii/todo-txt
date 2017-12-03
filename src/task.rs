@@ -6,6 +6,7 @@ pub struct Task {
     pub finish_date: Option<::Date>,
     pub finished: bool,
     pub contexts: Vec<String>,
+    pub projects: Vec<String>,
 }
 
 impl Default for Task
@@ -19,6 +20,7 @@ impl Default for Task
             finish_date: None,
             finished: false,
             contexts: Vec::new(),
+            projects: Vec::new(),
         }
     }
 }

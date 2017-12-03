@@ -82,3 +82,17 @@ fn contexts()
 
     assert_eq!(::todo_txt::parser::task(&line), task);
 }
+
+#[test]
+fn projects()
+{
+    let line = "Email SoAndSo at soandso@example.com +project1 @context2\n".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "Email SoAndSo at soandso@example.com +project1 @context2".to_owned(),
+        contexts: vec!["context2".to_owned()],
+        projects: vec!["project1".to_owned()],
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), task);
+}
