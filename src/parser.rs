@@ -24,10 +24,24 @@ named!(date<&str, ::Date>,
     )
 );
 
+named!(priority<&str, u8>,
+    do_parse!(
+            tag_s!("(") >>
+        priority:
+            take!(1) >>
+            tag_s!(") ") >>
+        (
+            priority.as_bytes()[0] - b'A'
+        )
+    )
+);
+
 named!(parse<&str, ::Task>,
     do_parse!(
         finished:
             opt!(tag_s!("x ")) >>
+        priority:
+            opt!(priority) >>
         completed:
             opt!(date) >>
         created:
@@ -37,6 +51,11 @@ named!(parse<&str, ::Task>,
         ({
             ::Task {
                 subject: subject.to_owned(),
+                priority: if priority.is_none() {
+                    26
+                } else {
+                    priority.unwrap()
+                },
                 created: if created.is_none() {
                     completed
                 } else {
