@@ -84,6 +84,19 @@ fn contexts()
 }
 
 #[test]
+fn deplucate_contexts()
+{
+    let line = "Email SoAndSo at soandso@example.com @context1 @context2 @context1\n".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "Email SoAndSo at soandso@example.com @context1 @context2 @context1".to_owned(),
+        contexts: vec!["context1".to_owned(), "context2".to_owned()],
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), task);
+}
+
+#[test]
 fn projects()
 {
     let line = "Email SoAndSo at soandso@example.com +project1 @context2\n".to_owned();

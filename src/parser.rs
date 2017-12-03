@@ -54,6 +54,16 @@ named!(context<&str, String>,
 
 named!(contexts<&str, Vec<String>>, many0!(context));
 
+fn get_contexts(subject: &str) -> Vec<String>
+{
+    let mut contexts = contexts(subject).unwrap().1;
+
+    contexts.sort();
+    contexts.dedup();
+
+    contexts
+}
+
 named!(project<&str, String>,
     do_parse!(
             take_until_and_consume_s!(" +") >>
@@ -66,6 +76,16 @@ named!(project<&str, String>,
 );
 
 named!(projects<&str, Vec<String>>, many0!(project));
+
+fn get_projects(subject: &str) -> Vec<String>
+{
+    let mut projects = projects(subject).unwrap().1;
+
+    projects.sort();
+    projects.dedup();
+
+    projects
+}
 
 named!(parse<&str, ::Task>,
     do_parse!(
@@ -98,8 +118,8 @@ named!(parse<&str, ::Task>,
                     finish_date
                 },
                 finished: finished.is_some(),
-                contexts: contexts(subject).unwrap().1,
-                projects: projects(subject).unwrap().1,
+                contexts: get_contexts(subject),
+                projects: get_projects(subject),
             }
         )
     )
