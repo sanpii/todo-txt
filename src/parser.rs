@@ -87,6 +87,29 @@ fn get_projects(subject: &str) -> Vec<String>
     projects
 }
 
+named!(hashtag<&str, String>,
+    do_parse!(
+            take_until_and_consume_s!(" #") >>
+        hashtag:
+            take_till!(is_space) >>
+        (
+            hashtag.to_owned()
+        )
+    )
+);
+
+named!(hashtags<&str, Vec<String>>, many0!(hashtag));
+
+fn get_hashtags(subject: &str) -> Vec<String>
+{
+    let mut hashtags = hashtags(subject).unwrap().1;
+
+    hashtags.sort();
+    hashtags.dedup();
+
+    hashtags
+}
+
 named!(parse<&str, ::Task>,
     do_parse!(
         finished:
@@ -120,6 +143,7 @@ named!(parse<&str, ::Task>,
                 finished: finished.is_some(),
                 contexts: get_contexts(subject),
                 projects: get_projects(subject),
+                hashtags: get_hashtags(subject),
             }
         )
     )

@@ -7,6 +7,7 @@ pub struct Task {
     pub finished: bool,
     pub contexts: Vec<String>,
     pub projects: Vec<String>,
+    pub hashtags: Vec<String>,
 }
 
 impl Default for Task
@@ -21,6 +22,7 @@ impl Default for Task
             finished: false,
             contexts: Vec::new(),
             projects: Vec::new(),
+            hashtags: Vec::new(),
         }
     }
 }
