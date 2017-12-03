@@ -6,10 +6,7 @@ fn simple_task()
     let line = "Email SoAndSo at soandso@example.com\n".to_owned();
     let task = ::todo_txt::Task {
         subject: "Email SoAndSo at soandso@example.com".to_owned(),
-        priority: 26,
-        create_date: None,
-        finish_date: None,
-        finished: false,
+        .. Default::default()
     };
 
     assert_eq!(::todo_txt::parser::task(&line), task);
@@ -21,10 +18,8 @@ fn finished_task()
     let line = "x done\n".to_owned();
     let task = ::todo_txt::Task {
         subject: "done".to_owned(),
-        priority: 26,
-        create_date: None,
-        finish_date: None,
         finished: true,
+        .. Default::default()
     };
 
     assert_eq!(::todo_txt::parser::task(&line), task);
@@ -36,10 +31,9 @@ fn created_task()
     let line = "x 2017-11-25 subject\n".to_owned();
     let task = ::todo_txt::Task {
         subject: "subject".to_owned(),
-        priority: 26,
         create_date: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
-        finish_date: None,
         finished: true,
+        .. Default::default()
     };
 
     assert_eq!(::todo_txt::parser::task(&line), task);
@@ -51,10 +45,10 @@ fn completed_task()
     let line = "x 2017-11-26 2017-11-25 subject\n".to_owned();
     let task = ::todo_txt::Task {
         subject: "subject".to_owned(),
-        priority: 26,
         create_date: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
         finish_date: Some(::todo_txt::Date::from_ymd(2017, 11, 26)),
         finished: true,
+        .. Default::default()
     };
 
     assert_eq!(::todo_txt::parser::task(&line), task);
@@ -70,6 +64,7 @@ fn priority_task()
         create_date: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
         finish_date: Some(::todo_txt::Date::from_ymd(2017, 11, 26)),
         finished: true,
+        .. Default::default()
     };
 
     assert_eq!(::todo_txt::parser::task(&line), task);

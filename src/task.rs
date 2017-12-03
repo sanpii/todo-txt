@@ -6,3 +6,17 @@ pub struct Task {
     pub finish_date: Option<::Date>,
     pub finished: bool,
 }
+
+impl Default for Task
+{
+    fn default() -> Self
+    {
+        Self {
+            subject: String::new(),
+            priority: 26,
+            create_date: None,
+            finish_date: None,
+            finished: false,
+        }
+    }
+}
