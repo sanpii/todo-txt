@@ -1,3 +1,5 @@
+use ::std::collections::BTreeMap;
+
 #[derive(Debug, PartialEq)]
 pub struct Task {
     pub subject: String,
@@ -8,6 +10,7 @@ pub struct Task {
     pub contexts: Vec<String>,
     pub projects: Vec<String>,
     pub hashtags: Vec<String>,
+    pub tags: BTreeMap<String, String>,
 }
 
 impl Default for Task
@@ -23,6 +26,7 @@ impl Default for Task
             contexts: Vec::new(),
             projects: Vec::new(),
             hashtags: Vec::new(),
+            tags: BTreeMap::new(),
         }
     }
 }

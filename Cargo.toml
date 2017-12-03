@@ -6,3 +6,4 @@ authors = ["Sanpi <sanpi@homecomputing.fr>"]
 [dependencies]
 chrono = "^0.4"
 nom = "^3.2"
+regex = "^0.2"

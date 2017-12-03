@@ -1,3 +1,5 @@
+use ::std::collections::BTreeMap;
+
 fn is_space(chr: char) -> bool
 {
     chr == ' ' || chr == '\t' || is_line_ending(chr)
@@ -110,6 +112,23 @@ fn get_hashtags(subject: &str) -> Vec<String>
     hashtags
 }
 
+fn get_tags(subject: &str) -> (String, BTreeMap<String, String>)
+{
+    let mut tags = BTreeMap::new();
+    let regex = ::regex::Regex::new(r" (?P<key>[^\s]+):(?P<value>[^\s]+)").unwrap();
+
+    let new_subject = regex.replace_all(subject, |caps: &::regex::Captures| {
+        let key = caps.name("key").unwrap().as_str();
+        let value = caps.name("value").unwrap().as_str();
+
+        tags.insert(key.to_owned(), value.to_owned());
+
+        String::new()
+    });
+
+    (new_subject.into_owned(), tags)
+}
+
 named!(parse<&str, ::Task>,
     do_parse!(
         finished:
@@ -122,9 +141,8 @@ named!(parse<&str, ::Task>,
             opt!(date) >>
         subject:
             take_till!(is_line_ending) >>
-        (
-            ::Task {
-                subject: subject.to_owned(),
+        ({
+            let mut task = ::Task {
                 priority: if priority.is_none() {
                     26
                 } else {
@@ -144,8 +162,16 @@ named!(parse<&str, ::Task>,
                 contexts: get_contexts(subject),
                 projects: get_projects(subject),
                 hashtags: get_hashtags(subject),
-            }
-        )
+
+                .. Default::default()
+            };
+
+            let (subject, tags) = get_tags(subject);
+            task.subject = subject;
+            task.tags = tags;
+
+            task
+        })
     )
 );
 
