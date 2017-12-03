@@ -7,8 +7,8 @@ fn simple_task()
     let task = ::todo_txt::Task {
         subject: "Email SoAndSo at soandso@example.com".to_owned(),
         priority: 26,
-        created: None,
-        completed: None,
+        create_date: None,
+        finish_date: None,
         finished: false,
     };
 
@@ -22,8 +22,8 @@ fn finished_task()
     let task = ::todo_txt::Task {
         subject: "done".to_owned(),
         priority: 26,
-        created: None,
-        completed: None,
+        create_date: None,
+        finish_date: None,
         finished: true,
     };
 
@@ -37,8 +37,8 @@ fn created_task()
     let task = ::todo_txt::Task {
         subject: "subject".to_owned(),
         priority: 26,
-        created: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
-        completed: None,
+        create_date: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
+        finish_date: None,
         finished: true,
     };
 
@@ -52,8 +52,8 @@ fn completed_task()
     let task = ::todo_txt::Task {
         subject: "subject".to_owned(),
         priority: 26,
-        created: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
-        completed: Some(::todo_txt::Date::from_ymd(2017, 11, 26)),
+        create_date: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
+        finish_date: Some(::todo_txt::Date::from_ymd(2017, 11, 26)),
         finished: true,
     };
 
@@ -67,8 +67,8 @@ fn priority_task()
     let task = ::todo_txt::Task {
         subject: "subject".to_owned(),
         priority: 0,
-        created: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
-        completed: Some(::todo_txt::Date::from_ymd(2017, 11, 26)),
+        create_date: Some(::todo_txt::Date::from_ymd(2017, 11, 25)),
+        finish_date: Some(::todo_txt::Date::from_ymd(2017, 11, 26)),
         finished: true,
     };
 

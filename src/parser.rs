@@ -42,9 +42,9 @@ named!(parse<&str, ::Task>,
             opt!(tag_s!("x ")) >>
         priority:
             opt!(priority) >>
-        completed:
+        finish_date:
             opt!(date) >>
-        created:
+        create_date:
             opt!(date) >>
         subject:
             take_till!(is_line_ending) >>
@@ -56,15 +56,15 @@ named!(parse<&str, ::Task>,
                 } else {
                     priority.unwrap()
                 },
-                created: if created.is_none() {
-                    completed
+                create_date: if create_date.is_none() {
+                    finish_date
                 } else {
-                    created
+                    create_date
                 },
-                completed: if created.is_none() {
+                finish_date: if create_date.is_none() {
                     None
                 } else {
-                    completed
+                    finish_date
                 },
                 finished: finished.is_some(),
             }

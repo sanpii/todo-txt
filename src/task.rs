@@ -2,7 +2,7 @@
 pub struct Task {
     pub subject: String,
     pub priority: u8,
-    pub created: Option<::Date>,
-    pub completed: Option<::Date>,
+    pub create_date: Option<::Date>,
+    pub finish_date: Option<::Date>,
     pub finished: bool,
 }
