@@ -41,9 +41,7 @@ impl ::std::str::FromStr for Task
 
     fn from_str(s: &str) -> Result<Task, ()>
     {
-        Ok(
-            ::parser::task(&s.to_owned())
-        )
+        ::parser::task(&s.to_owned())
     }
 }
 

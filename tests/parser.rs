@@ -9,7 +9,7 @@ fn simple_task()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -22,7 +22,7 @@ fn finished()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -36,7 +36,7 @@ fn created()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -51,7 +51,7 @@ fn completed()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -67,7 +67,7 @@ fn priority()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -80,7 +80,7 @@ fn contexts()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -93,7 +93,7 @@ fn deplucate_contexts()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -107,7 +107,7 @@ fn projects()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -122,7 +122,7 @@ fn hashtags()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -141,7 +141,7 @@ fn tags()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -155,7 +155,7 @@ fn due()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
 
 #[test]
@@ -169,5 +169,5 @@ fn threshold()
         .. Default::default()
     };
 
-    assert_eq!(::todo_txt::parser::task(&line), task);
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }

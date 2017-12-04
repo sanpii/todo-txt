@@ -21,13 +21,24 @@ named!(date<&str, ::Date>,
         day:
             take!(2) >>
             tag_s!(" ") >>
-        (
-            ::Date::from_ymd(
-                year.parse().unwrap(),
-                month.parse().unwrap(),
-                day.parse().unwrap()
-            )
-        )
+        ({
+            let year = match year.parse() {
+                Ok(year) => year,
+                Err(_) => return ::nom::IResult::Error(::nom::ErrorKind::Custom(1)),
+            };
+
+            let month = match month.parse() {
+                Ok(month) => month,
+                Err(_) => return ::nom::IResult::Error(::nom::ErrorKind::Custom(2)),
+            };
+
+            let day = match day.parse() {
+                Ok(day) => day,
+                Err(_) => return ::nom::IResult::Error(::nom::ErrorKind::Custom(3)),
+            };
+
+            ::Date::from_ymd(year, month, day)
+        })
     )
 );
 
@@ -58,12 +69,15 @@ named!(contexts<&str, Vec<String>>, many0!(context));
 
 fn get_contexts(subject: &str) -> Vec<String>
 {
-    let mut contexts = contexts(subject).unwrap().1;
+    match contexts(subject) {
+        ::nom::IResult::Done(_, mut contexts) => {
+            contexts.sort();
+            contexts.dedup();
 
-    contexts.sort();
-    contexts.dedup();
-
-    contexts
+            contexts
+        },
+        _ => Vec::new(),
+    }
 }
 
 named!(project<&str, String>,
@@ -81,12 +95,15 @@ named!(projects<&str, Vec<String>>, many0!(project));
 
 fn get_projects(subject: &str) -> Vec<String>
 {
-    let mut projects = projects(subject).unwrap().1;
+    match projects(subject) {
+        ::nom::IResult::Done(_, mut projects) => {
+            projects.sort();
+            projects.dedup();
 
-    projects.sort();
-    projects.dedup();
-
-    projects
+            projects
+        },
+        _ => Vec::new(),
+    }
 }
 
 named!(hashtag<&str, String>,
@@ -104,12 +121,15 @@ named!(hashtags<&str, Vec<String>>, many0!(hashtag));
 
 fn get_hashtags(subject: &str) -> Vec<String>
 {
-    let mut hashtags = hashtags(subject).unwrap().1;
+    match hashtags(subject) {
+        ::nom::IResult::Done(_, mut hashtags) => {
+            hashtags.sort();
+            hashtags.dedup();
 
-    hashtags.sort();
-    hashtags.dedup();
-
-    hashtags
+            hashtags
+        },
+        _ => Vec::new(),
+    }
 }
 
 fn get_tags(subject: &str) -> (String, BTreeMap<String, String>)
@@ -143,10 +163,9 @@ named!(parse<&str, ::Task>,
             take_till!(is_line_ending) >>
         ({
             let mut task = ::Task {
-                priority: if priority.is_none() {
-                    26
-                } else {
-                    priority.unwrap()
+                priority: match priority {
+                    Some(priority) => priority,
+                    None => 26,
                 },
                 create_date: if create_date.is_none() {
                     finish_date
@@ -190,9 +209,10 @@ named!(parse<&str, ::Task>,
     )
 );
 
-pub fn task(line: &String) -> ::Task
+pub fn task(line: &String) -> Result<::Task, ()>
 {
-    parse(line)
-        .unwrap()
-        .1
+    match parse(line) {
+        ::nom::IResult::Done(_, task) => Ok(task),
+        _ => Err(()),
+    }
 }
