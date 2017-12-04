@@ -162,13 +162,13 @@ fn get_tags(subject: &str) -> (String, BTreeMap<String, String>)
 named!(parse<&str, ::Task>,
     do_parse!(
         finished:
-            opt!(tag_s!("x ")) >>
+            opt!(complete!(tag_s!("x "))) >>
         priority:
-            opt!(priority) >>
+            opt!(complete!(priority)) >>
         finish_date:
-            opt!(date) >>
+            opt!(complete!(date)) >>
         create_date:
-            opt!(date) >>
+            opt!(complete!(date)) >>
         subject:
             take_till!(is_line_ending) >>
         ({
