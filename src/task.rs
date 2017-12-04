@@ -1,6 +1,6 @@
 use ::std::collections::BTreeMap;
 
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Task {
     pub subject: String,
     pub priority: u8,
