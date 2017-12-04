@@ -40,6 +40,19 @@ fn created()
 }
 
 #[test]
+fn invalid_date()
+{
+    let line = "2017-02-30 subject\n".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "2017-02-30 subject".to_owned(),
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
+}
+
+#[test]
 fn completed()
 {
     let line = "x 2017-11-26 2017-11-25 subject\n".to_owned();

@@ -37,7 +37,10 @@ named!(date<&str, ::Date>,
                 Err(_) => return ::nom::IResult::Error(::nom::ErrorKind::Custom(3)),
             };
 
-            ::Date::from_ymd(year, month, day)
+            match ::Date::from_ymd_opt(year, month, day) {
+                Some(date) => date,
+                None => return ::nom::IResult::Error(::nom::ErrorKind::Custom(4)),
+            }
         })
     )
 );
