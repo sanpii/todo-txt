@@ -157,3 +157,17 @@ fn due()
 
     assert_eq!(::todo_txt::parser::task(&line), task);
 }
+
+#[test]
+fn threshold()
+{
+    let line = "Email SoAndSo at soandso@example.com t:2018-01-01\n".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "Email SoAndSo at soandso@example.com".to_owned(),
+        threshold_date: Some(::todo_txt::Date::from_ymd(2018, 1, 1)),
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), task);
+}

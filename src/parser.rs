@@ -176,6 +176,13 @@ named!(parse<&str, ::Task>,
                 };
             }
 
+            if let Some(t) = tags.remove("t") {
+                task.threshold_date = match ::Date::parse_from_str(t.as_str(), "%Y-%m-%d") {
+                    Ok(t) => Some(t),
+                    Err(_) => None,
+                };
+            }
+
             task.tags = tags;
 
             task
