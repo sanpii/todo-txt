@@ -2,6 +2,11 @@
 name = "todo-txt"
 version = "0.1.0"
 authors = ["Sanpi <sanpi@homecomputing.fr>"]
+description = "Parser for the todo.txt format"
+license = "MIT"
+keywords = ["parser", "todotxt"]
+repository = "https://github.com/sanpii/todo-txt"
+readme = "README.md"
 
 [dependencies]
 chrono = "^0.4"
