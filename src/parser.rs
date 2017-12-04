@@ -166,8 +166,16 @@ named!(parse<&str, ::Task>,
                 .. Default::default()
             };
 
-            let (subject, tags) = get_tags(subject);
+            let (subject, mut tags) = get_tags(subject);
             task.subject = subject;
+
+            if let Some(due) = tags.remove("due") {
+                task.due_date = match ::Date::parse_from_str(due.as_str(), "%Y-%m-%d") {
+                    Ok(due) => Some(due),
+                    Err(_) => None,
+                };
+            }
+
             task.tags = tags;
 
             task
