@@ -48,9 +48,16 @@ named!(priority<&str, u8>,
         priority:
             take!(1) >>
             tag_s!(") ") >>
-        (
-            priority.as_bytes()[0] - b'A'
-        )
+        ({
+            let p = priority.as_bytes()[0];
+
+            if p >= b'A' && p <= b'Z' {
+                p - b'A'
+            }
+            else {
+                26
+            }
+        })
     )
 );
 
