@@ -1,4 +1,5 @@
 use ::std::collections::BTreeMap;
+use ::nom::rest_s;
 
 fn is_space(chr: char) -> bool
 {
@@ -169,8 +170,8 @@ named!(parse<&str, ::Task>,
             opt!(complete!(date)) >>
         create_date:
             opt!(complete!(date)) >>
-        subject:
-            take_till!(is_line_ending) >>
+        rest:
+            rest_s >>
         ({
             let mut task = ::Task {
                 priority: match priority {
@@ -188,14 +189,14 @@ named!(parse<&str, ::Task>,
                     finish_date
                 },
                 finished: finished.is_some(),
-                contexts: get_contexts(subject),
-                projects: get_projects(subject),
-                hashtags: get_hashtags(subject),
+                contexts: get_contexts(rest),
+                projects: get_projects(rest),
+                hashtags: get_hashtags(rest),
 
                 .. Default::default()
             };
 
-            let (subject, mut tags) = get_tags(subject);
+            let (subject, mut tags) = get_tags(rest);
             task.subject = subject;
 
             if let Some(due) = tags.remove("due") {

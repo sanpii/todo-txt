@@ -5,7 +5,7 @@ fn from_str()
 {
     use ::std::str::FromStr;
 
-    let line = "Email SoAndSo at soandso@example.com\n";
+    let line = "Email SoAndSo at soandso@example.com";
     let task = ::todo_txt::Task {
         subject: "Email SoAndSo at soandso@example.com".to_owned(),
         .. Default::default()
