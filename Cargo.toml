@@ -12,3 +12,6 @@ readme = "README.md"
 chrono = "^0.4"
 nom = "^3.2"
 regex = "^0.2"
+
+[badges]
+travis-ci = { repository = "sanpii/todo-txt", branch = "master" }
