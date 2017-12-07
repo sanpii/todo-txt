@@ -82,6 +82,7 @@ fn get_contexts(subject: &str) -> Vec<String>
 {
     match contexts(subject) {
         ::nom::IResult::Done(_, mut contexts) => {
+            contexts.retain(|x| !x.is_empty());
             contexts.sort();
             contexts.dedup();
 
@@ -108,6 +109,7 @@ fn get_projects(subject: &str) -> Vec<String>
 {
     match projects(subject) {
         ::nom::IResult::Done(_, mut projects) => {
+            projects.retain(|x| !x.is_empty());
             projects.sort();
             projects.dedup();
 
@@ -134,6 +136,7 @@ fn get_hashtags(subject: &str) -> Vec<String>
 {
     match hashtags(subject) {
         ::nom::IResult::Done(_, mut hashtags) => {
+            hashtags.retain(|x| !x.is_empty());
             hashtags.sort();
             hashtags.dedup();
 

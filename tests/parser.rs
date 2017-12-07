@@ -124,6 +124,19 @@ fn projects()
 }
 
 #[test]
+fn empty_tag()
+{
+    let line = "Email SoAndSo at soandso@example.com + @ #".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "Email SoAndSo at soandso@example.com + @ #".to_owned(),
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
+}
+
+#[test]
 fn hashtags()
 {
     let line = "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_owned();
