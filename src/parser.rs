@@ -149,7 +149,7 @@ fn get_hashtags(subject: &str) -> Vec<String>
 fn get_tags(subject: &str) -> (String, BTreeMap<String, String>)
 {
     let mut tags = BTreeMap::new();
-    let regex = ::regex::Regex::new(r" (?P<key>[^\s]+):(?P<value>[^\s]+)").unwrap();
+    let regex = ::regex::Regex::new(r" (?P<key>[^\s]+):(?P<value>[^\s^/]+)").unwrap();
 
     let new_subject = regex.replace_all(subject, |caps: &::regex::Captures| {
         let key = caps.name("key").unwrap().as_str();

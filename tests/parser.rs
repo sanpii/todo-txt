@@ -137,6 +137,19 @@ fn empty_tag()
 }
 
 #[test]
+fn url()
+{
+    let line = "Participer à https://contributopia.org".to_owned();
+    let task = ::todo_txt::Task {
+        subject: line.clone(),
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
+}
+
+#[test]
 fn hashtags()
 {
     let line = "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_owned();
