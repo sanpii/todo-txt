@@ -223,7 +223,7 @@ named!(parse<&str, ::Task>,
     )
 );
 
-pub fn task(line: &String) -> Result<::Task, ()>
+pub fn task(line: &str) -> Result<::Task, ()>
 {
     match parse(line) {
         ::nom::IResult::Done(_, task) => Ok(task),

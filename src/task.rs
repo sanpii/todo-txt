@@ -77,7 +77,7 @@ impl ::std::fmt::Display for Task
             f.write_str(format!(" t:{}", threshold_date.format("%Y-%m-%d")).as_str())?;
         }
 
-        for (key, value) in self.tags.iter() {
+        for (key, value) in &self.tags {
             f.write_str(format!(" {}:{}", key, value).as_str())?;
         }
 
