@@ -13,5 +13,9 @@ chrono = "^0.4"
 nom = "^3.2"
 regex = "^0.2"
 
+[dependencies.clippy]
+version = "0.0.176"
+optional = true
+
 [badges]
 travis-ci = { repository = "sanpii/todo-txt", branch = "master" }
