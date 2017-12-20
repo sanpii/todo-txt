@@ -81,12 +81,16 @@ named!(contexts<&str, Vec<String>>, many0!(context));
 fn get_contexts(subject: &str) -> Vec<String>
 {
     match contexts(subject) {
-        ::nom::IResult::Done(_, mut contexts) => {
-            contexts.retain(|x| !x.is_empty());
-            contexts.sort();
-            contexts.dedup();
+        ::nom::IResult::Done(_, contexts) => {
+            let mut c = contexts.iter()
+                .filter(|x| !x.is_empty())
+                .map(|x| x.to_lowercase())
+                .collect::<Vec<String>>();
 
-            contexts
+            c.sort();
+            c.dedup();
+
+            c
         },
         _ => Vec::new(),
     }
@@ -108,12 +112,16 @@ named!(projects<&str, Vec<String>>, many0!(project));
 fn get_projects(subject: &str) -> Vec<String>
 {
     match projects(subject) {
-        ::nom::IResult::Done(_, mut projects) => {
-            projects.retain(|x| !x.is_empty());
-            projects.sort();
-            projects.dedup();
+        ::nom::IResult::Done(_, projects) => {
+            let mut p = projects.iter()
+                .filter(|x| !x.is_empty())
+                .map(|x| x.to_lowercase())
+                .collect::<Vec<String>>();
 
-            projects
+            p.sort();
+            p.dedup();
+
+            p
         },
         _ => Vec::new(),
     }
@@ -135,12 +143,16 @@ named!(hashtags<&str, Vec<String>>, many0!(hashtag));
 fn get_hashtags(subject: &str) -> Vec<String>
 {
     match hashtags(subject) {
-        ::nom::IResult::Done(_, mut hashtags) => {
-            hashtags.retain(|x| !x.is_empty());
-            hashtags.sort();
-            hashtags.dedup();
+        ::nom::IResult::Done(_, hashtags) => {
+            let mut h = hashtags.iter()
+                .filter(|x| !x.is_empty())
+                .map(|x| x.to_lowercase())
+                .collect::<Vec<String>>();
 
-            hashtags
+            h.sort();
+            h.dedup();
+
+            h
         },
         _ => Vec::new(),
     }

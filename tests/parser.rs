@@ -137,6 +137,20 @@ fn empty_tag()
 }
 
 #[test]
+fn case_insensitive_tag()
+{
+    let line = "Email SoAndSo at soandso@example.com +Project1".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "Email SoAndSo at soandso@example.com +Project1".to_owned(),
+        projects: vec!["project1".to_owned()],
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
+}
+
+#[test]
 fn url()
 {
     let line = "Participer à https://contributopia.org".to_owned();
