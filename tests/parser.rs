@@ -151,6 +151,20 @@ fn case_insensitive_tag()
 }
 
 #[test]
+fn start_with_tag()
+{
+    let line = "+Project1".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "+Project1".to_owned(),
+        projects: vec!["project1".to_owned()],
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
+}
+
+#[test]
 fn url()
 {
     let line = "Participer à https://contributopia.org".to_owned();
