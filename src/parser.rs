@@ -1,16 +1,6 @@
 use ::std::collections::BTreeMap;
 use ::nom::rest_s;
 
-fn is_space(chr: char) -> bool
-{
-    chr == ' ' || chr == '\t' || is_line_ending(chr)
-}
-
-fn is_line_ending(chr: char) -> bool
-{
-    chr == '\n' || chr == '\r'
-}
-
 named!(date<&str, ::Date>,
     do_parse!(
         year:
@@ -65,97 +55,39 @@ named!(priority<&str, u8>,
     )
 );
 
-named!(context<&str, String>,
-    do_parse!(
-            take_until_and_consume_s!(" @") >>
-        context:
-            take_till!(is_space) >>
-        (
-            context.to_owned()
-        )
-    )
-);
+fn get_tags(delim: &str, subject: &str) -> Vec<String>
+{
+    let expression = format!("(?P<space>^|[\\s]){}(?P<tag>[\\w-]+)", delim);
+    let regex = ::regex::Regex::new(&expression)
+        .unwrap();
 
-named!(contexts<&str, Vec<String>>, many0!(context));
+    let mut tags = regex.captures_iter(subject)
+        .map(|x| {
+            x["tag"].to_lowercase()
+                .to_string()
+        })
+        .filter(|x| !x.is_empty())
+        .collect::<Vec<_>>();
+
+    tags.sort();
+    tags.dedup();
+
+    tags
+}
 
 fn get_contexts(subject: &str) -> Vec<String>
 {
-    match contexts(subject) {
-        ::nom::IResult::Done(_, contexts) => {
-            let mut c = contexts.iter()
-                .filter(|x| !x.is_empty())
-                .map(|x| x.to_lowercase())
-                .collect::<Vec<String>>();
-
-            c.sort();
-            c.dedup();
-
-            c
-        },
-        _ => Vec::new(),
-    }
+    get_tags("@", subject)
 }
-
-named!(project<&str, String>,
-    do_parse!(
-            take_until_and_consume_s!(" +") >>
-        project:
-            take_till!(is_space) >>
-        (
-            project.to_owned()
-        )
-    )
-);
-
-named!(projects<&str, Vec<String>>, many0!(project));
 
 fn get_projects(subject: &str) -> Vec<String>
 {
-    match projects(subject) {
-        ::nom::IResult::Done(_, projects) => {
-            let mut p = projects.iter()
-                .filter(|x| !x.is_empty())
-                .map(|x| x.to_lowercase())
-                .collect::<Vec<String>>();
-
-            p.sort();
-            p.dedup();
-
-            p
-        },
-        _ => Vec::new(),
-    }
+    get_tags("\\+", subject)
 }
-
-named!(hashtag<&str, String>,
-    do_parse!(
-            take_until_and_consume_s!(" #") >>
-        hashtag:
-            take_till!(is_space) >>
-        (
-            hashtag.to_owned()
-        )
-    )
-);
-
-named!(hashtags<&str, Vec<String>>, many0!(hashtag));
 
 fn get_hashtags(subject: &str) -> Vec<String>
 {
-    match hashtags(subject) {
-        ::nom::IResult::Done(_, hashtags) => {
-            let mut h = hashtags.iter()
-                .filter(|x| !x.is_empty())
-                .map(|x| x.to_lowercase())
-                .collect::<Vec<String>>();
-
-            h.sort();
-            h.dedup();
-
-            h
-        },
-        _ => Vec::new(),
-    }
+    get_tags("#", subject)
 }
 
 fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>)
