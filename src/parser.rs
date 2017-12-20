@@ -158,7 +158,7 @@ fn get_hashtags(subject: &str) -> Vec<String>
     }
 }
 
-fn get_tags(subject: &str) -> (String, BTreeMap<String, String>)
+fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>)
 {
     let mut tags = BTreeMap::new();
     let regex = ::regex::Regex::new(r" (?P<key>[^\s]+):(?P<value>[^\s^/]+)").unwrap();
@@ -211,7 +211,7 @@ named!(parse<&str, ::Task>,
                 .. Default::default()
             };
 
-            let (subject, mut tags) = get_tags(rest);
+            let (subject, mut tags) = get_keywords(rest);
             task.subject = subject;
 
             if let Some(due) = tags.remove("due") {

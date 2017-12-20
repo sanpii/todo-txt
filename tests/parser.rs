@@ -179,18 +179,18 @@ fn hashtags()
 }
 
 #[test]
-fn tags()
+fn keywords()
 {
     use ::std::collections::BTreeMap;
 
-    let mut tags = BTreeMap::new();
-    tags.insert("key1".to_owned(), "2018-01-01".to_owned());
-    tags.insert("key2".to_owned(), "value".to_owned());
+    let mut keywords = BTreeMap::new();
+    keywords.insert("key1".to_owned(), "2018-01-01".to_owned());
+    keywords.insert("key2".to_owned(), "value".to_owned());
 
     let line = "Email SoAndSo at soandso@example.com key1:2018-01-01 key2:value".to_owned();
     let task = ::todo_txt::Task {
         subject: "Email SoAndSo at soandso@example.com".to_owned(),
-        tags: tags,
+        tags: keywords,
         .. Default::default()
     };
 
