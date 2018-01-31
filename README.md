@@ -10,7 +10,7 @@ Add it to your dependencies:
 
 ```toml
 [dependencies]
-todo-txt = "^0.8"
+todo-txt = "^1.0"
 ```
 
 And use it:
