@@ -55,12 +55,8 @@ named!(priority<&str, u8>,
     )
 );
 
-fn get_tags(delim: &str, subject: &str) -> Vec<String>
+fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String>
 {
-    let expression = format!("(?P<space>^|[\\s]){}(?P<tag>[\\w-]+)", delim);
-    let regex = ::regex::Regex::new(&expression)
-        .unwrap();
-
     let mut tags = regex.captures_iter(subject)
         .map(|x| {
             x["tag"].to_lowercase()
@@ -75,27 +71,47 @@ fn get_tags(delim: &str, subject: &str) -> Vec<String>
     tags
 }
 
+macro_rules! regex_tags_shared {
+    () => { "(?P<space>^|[\\s]){}(?P<tag>[\\w-]+)" }
+}
+
 fn get_contexts(subject: &str) -> Vec<String>
 {
-    get_tags("@", subject)
+    lazy_static! {
+        static ref REGEX: ::regex::Regex =
+            ::regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap();
+    }
+    get_tags(&REGEX, subject)
 }
 
 fn get_projects(subject: &str) -> Vec<String>
 {
-    get_tags("\\+", subject)
+    lazy_static! {
+        static ref REGEX: ::regex::Regex =
+            ::regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap();
+    }
+    get_tags(&REGEX, subject)
 }
 
 fn get_hashtags(subject: &str) -> Vec<String>
 {
-    get_tags("#", subject)
+    lazy_static! {
+        static ref REGEX: ::regex::Regex =
+            ::regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap();
+    }
+    get_tags(&REGEX, subject)
 }
 
 fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>)
 {
-    let mut tags = BTreeMap::new();
-    let regex = ::regex::Regex::new(r" (?P<key>[^\s]+):(?P<value>[^\s^/]+)").unwrap();
+    lazy_static! {
+        static ref REGEX: ::regex::Regex =
+            ::regex::Regex::new(r" (?P<key>[^\s]+):(?P<value>[^\s^/]+)").unwrap();
+    }
 
-    let new_subject = regex.replace_all(subject, |caps: &::regex::Captures| {
+    let mut tags = BTreeMap::new();
+
+    let new_subject = REGEX.replace_all(subject, |caps: &::regex::Captures| {
         let key = caps.name("key").unwrap().as_str();
         let value = caps.name("value").unwrap().as_str();
 
