@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
+#[cfg_attr(any(feature = "serde-support", test), derive(Serialize, Deserialize))]
 pub struct Task {
     pub subject: String,
     pub priority: u8,
@@ -78,4 +78,44 @@ impl ::std::fmt::Display for Task {
 
         Ok(())
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Task;
+
+    #[test]
+    fn test_simple_deserialize() {
+        let json = r#"{
+            "subject": "Test",
+            "priority": 26,
+            "create_date": null,
+            "finish_date": null,
+            "finished": false,
+            "contexts": [ "context_a", "context_b" ],
+            "threshold_date": null,
+            "due_date": null,
+            "projects": [],
+            "hashtags": [ "tag_a", "tag_b" ],
+            "tags": {}
+        }"#;
+
+        let task: Task = ::serde_json::from_str(json).unwrap();
+
+        assert_eq!(task.subject, "Test");
+        assert_eq!(task.priority, 26);
+        assert_eq!(task.create_date, None);
+        assert_eq!(task.finish_date, None);
+        assert_eq!(task.contexts[0], "context_a");
+        assert_eq!(task.contexts[1], "context_b");
+        assert_eq!(task.threshold_date, None);
+        assert_eq!(task.due_date, None);
+        assert_eq!(task.hashtags[0], "tag_a");
+        assert_eq!(task.hashtags[1], "tag_b");
+
+        assert!(!task.finished);
+        assert!(task.projects.is_empty());
+        assert!(task.tags.is_empty());
+    }
+
 }
