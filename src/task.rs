@@ -5,24 +5,14 @@ use ::std::collections::BTreeMap;
 pub struct Task {
     pub subject: String,
     pub priority: u8,
-
-    #[cfg_attr(feature = "serde-support", serde(skip_serializing_if = "Option::is_none"))]
     pub create_date: Option<::Date>,
-
-    #[cfg_attr(feature = "serde-support", serde(skip_serializing_if = "Option::is_none"))]
     pub finish_date: Option<::Date>,
     pub finished: bool,
-
-    #[cfg_attr(feature = "serde-support", serde(skip_serializing_if = "Option::is_none"))]
     pub threshold_date: Option<::Date>,
-
-    #[cfg_attr(feature = "serde-support", serde(skip_serializing_if = "Option::is_none"))]
     pub due_date: Option<::Date>,
     pub contexts: Vec<String>,
     pub projects: Vec<String>,
     pub hashtags: Vec<String>,
-
-    #[cfg_attr(feature = "serde-support", serde(skip_serializing_if = "BTreeMap::is_empty"))]
     pub tags: BTreeMap<String, String>,
 }
 
