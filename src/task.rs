@@ -91,7 +91,7 @@ mod tests {
     use super::Task;
 
     #[test]
-    fn test_simple_serialize() {
+    fn test_simple_deserialize() {
         let json = r#"{
             "subject": "Test",
             "priority": 26,
