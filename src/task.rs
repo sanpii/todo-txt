@@ -151,4 +151,14 @@ mod tests {
         assert!(task.tags.is_empty());
     }
 
+    #[test]
+    fn test_serialize_simple() {
+        let task = Task::default();
+        let json = ::serde_json::to_string(&task).unwrap();
+
+        let expected = r#"{"subject":"","priority":26,"create_date":null,"finish_date":null,"finished":false,"threshold_date":null,"due_date":null,"contexts":[],"projects":[],"hashtags":[],"tags":{}}"#;
+
+        assert_eq!(expected, json);
+    }
+
 }
