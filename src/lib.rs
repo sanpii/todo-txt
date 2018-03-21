@@ -8,6 +8,13 @@ extern crate lazy_static;
 extern crate nom;
 extern crate regex;
 
+#[cfg(feature = "serde-support")]
+extern crate serde;
+
+#[cfg(feature = "serde-support")]
+#[macro_use]
+extern crate serde_derive;
+
 pub mod parser;
 pub mod task;
 
