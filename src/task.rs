@@ -108,18 +108,19 @@ mod tests {
 
         let task : Task = ::serde_json::from_str(json).unwrap();
 
-        assert_eq!(task.subject, "Test");
-        assert_eq!(task.priority, 26);
-        assert_eq!(task.create_date, None);
-        assert_eq!(task.finish_date, None);
+        assert_eq!(task.subject        , "Test");
+        assert_eq!(task.priority       , 26);
+        assert_eq!(task.create_date    , None);
+        assert_eq!(task.finish_date    , None);
+        assert_eq!(task.contexts[0]    , "context_a");
+        assert_eq!(task.contexts[1]    , "context_b");
+        assert_eq!(task.threshold_date , None);
+        assert_eq!(task.due_date       , None);
+        assert_eq!(task.hashtags[0]    , "tag_a");
+        assert_eq!(task.hashtags[1]    , "tag_b");
+
         assert!(!task.finished);
-        assert_eq!(task.contexts[0], "context_a");
-        assert_eq!(task.contexts[1], "context_b");
-        assert_eq!(task.threshold_date, None);
-        assert_eq!(task.due_date, None);
         assert!(task.projects.is_empty());
-        assert_eq!(task.hashtags[0], "tag_a");
-        assert_eq!(task.hashtags[1], "tag_b");
         assert!(task.tags.is_empty());
     }
 
