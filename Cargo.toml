@@ -20,3 +20,4 @@ optional = true
 
 [badges]
 travis-ci = { repository = "sanpii/todo-txt", branch = "master" }
+gitlab = { repository = "sanpi/todo-txt", branch = "master" }
