@@ -1,0 +1,7 @@
+image: "rust:latest"
+
+test:debug:
+    script: cargo test
+
+test:release:
+    script: cargo test --release
