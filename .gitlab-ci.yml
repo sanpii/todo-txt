@@ -1,5 +1,12 @@
 image: "rust:latest"
 
+lint:fmt:
+    before_script:
+        - rustup component add rustfmt-preview
+    script:
+        - cargo fmt
+        - test $(git ls-files --modified | wc -l) -eq 0 || (echo 'You have introduced some unformated code:'; git ls-files --modified | sed 's/^/* /'; echo 'Please run `cargo fmt` and amend your PR.'; exit 1)
+
 test:debug:
     script: cargo test
 
