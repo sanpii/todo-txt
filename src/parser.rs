@@ -1,5 +1,5 @@
-use ::std::collections::BTreeMap;
-use ::nom::rest_s;
+use nom::rest_s;
+use std::collections::BTreeMap;
 
 macro_rules! return_error (
     ($num:expr) => {
@@ -68,13 +68,10 @@ named!(priority<&str, u8>,
     )
 );
 
-fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String>
-{
-    let mut tags = regex.captures_iter(subject)
-        .map(|x| {
-            x["tag"].to_lowercase()
-                .to_string()
-        })
+fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String> {
+    let mut tags = regex
+        .captures_iter(subject)
+        .map(|x| x["tag"].to_lowercase().to_string())
         .filter(|x| !x.is_empty())
         .collect::<Vec<_>>();
 
@@ -85,11 +82,12 @@ fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String>
 }
 
 macro_rules! regex_tags_shared {
-    () => { "(?P<space>^|[\\s]){}(?P<tag>[\\w-]+)" }
+    () => {
+        "(?P<space>^|[\\s]){}(?P<tag>[\\w-]+)"
+    };
 }
 
-fn get_contexts(subject: &str) -> Vec<String>
-{
+fn get_contexts(subject: &str) -> Vec<String> {
     lazy_static! {
         static ref REGEX: ::regex::Regex =
             ::regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap();
@@ -97,8 +95,7 @@ fn get_contexts(subject: &str) -> Vec<String>
     get_tags(&REGEX, subject)
 }
 
-fn get_projects(subject: &str) -> Vec<String>
-{
+fn get_projects(subject: &str) -> Vec<String> {
     lazy_static! {
         static ref REGEX: ::regex::Regex =
             ::regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap();
@@ -106,8 +103,7 @@ fn get_projects(subject: &str) -> Vec<String>
     get_tags(&REGEX, subject)
 }
 
-fn get_hashtags(subject: &str) -> Vec<String>
-{
+fn get_hashtags(subject: &str) -> Vec<String> {
     lazy_static! {
         static ref REGEX: ::regex::Regex =
             ::regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap();
@@ -115,8 +111,7 @@ fn get_hashtags(subject: &str) -> Vec<String>
     get_tags(&REGEX, subject)
 }
 
-fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>)
-{
+fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
     lazy_static! {
         static ref REGEX: ::regex::Regex =
             ::regex::Regex::new(r"(\s+|^)(?P<key>[^\s]+?):(?P<value>[^\s]+)").unwrap();
@@ -200,8 +195,7 @@ named!(parse<&str, ::Task>,
     )
 );
 
-pub fn task(line: &str) -> Result<::Task, ()>
-{
+pub fn task(line: &str) -> Result<::Task, ()> {
     match parse(line) {
         Ok((_, task)) => Ok(task),
         _ => Err(()),

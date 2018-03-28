@@ -1,4 +1,4 @@
-use ::std::collections::BTreeMap;
+use std::collections::BTreeMap;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Task {
@@ -15,10 +15,8 @@ pub struct Task {
     pub tags: BTreeMap<String, String>,
 }
 
-impl Default for Task
-{
-    fn default() -> Self
-    {
+impl Default for Task {
+    fn default() -> Self {
         Self {
             subject: String::new(),
             priority: 26,
@@ -35,20 +33,16 @@ impl Default for Task
     }
 }
 
-impl ::std::str::FromStr for Task
-{
+impl ::std::str::FromStr for Task {
     type Err = ();
 
-    fn from_str(s: &str) -> Result<Task, ()>
-    {
+    fn from_str(s: &str) -> Result<Task, ()> {
         ::parser::task(&s.to_owned())
     }
 }
 
-impl ::std::fmt::Display for Task
-{
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result
-    {
+impl ::std::fmt::Display for Task {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         if self.finished {
             f.write_str("x ")?;
         }
