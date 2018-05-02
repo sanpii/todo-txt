@@ -12,7 +12,7 @@ readme = "README.md"
 chrono = "^0.4"
 lazy_static = "1.0.0"
 nom = "^3.2"
-regex = "^0.2"
+regex = "^1.0"
 
 [dependencies.clippy]
 version = "^0.0"
