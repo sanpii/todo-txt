@@ -5,15 +5,12 @@ extern crate lazy_static;
 extern crate nom;
 extern crate regex;
 
-#[cfg(any(feature = "serde-support", test))]
+#[cfg(feature = "serde-support")]
 extern crate serde;
 
-#[cfg(any(feature = "serde-support", test))]
+#[cfg(feature = "serde-support")]
 #[macro_use]
 extern crate serde_derive;
-
-#[cfg(test)]
-extern crate serde_json;
 
 pub mod parser;
 pub mod task;

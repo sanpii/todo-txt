@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(any(feature = "serde-support", test), derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct Task {
     pub subject: String,
     pub priority: u8,

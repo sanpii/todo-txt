@@ -1,3 +1,5 @@
+#[cfg(feature = "serde-support")]
+extern crate serde_json;
 extern crate todo_txt;
 
 #[test]
@@ -35,6 +37,7 @@ fn display() {
 }
 
 #[test]
+#[cfg(feature = "serde-support")]
 fn test_simple_deserialize() {
     let json = r#"{
         "subject": "Test",
@@ -69,6 +72,7 @@ fn test_simple_deserialize() {
 }
 
 #[test]
+#[cfg(feature = "serde-support")]
 fn test_deserialize_with_dates() {
     let json = r#"{
         "subject": "Test",
@@ -88,13 +92,25 @@ fn test_deserialize_with_dates() {
 
     assert_eq!(task.subject, "Test");
     assert_eq!(task.priority, 26);
-    assert_eq!(task.create_date, Some(::Date::from_ymd(2018, 03, 01)));
-    assert_eq!(task.finish_date, Some(::Date::from_ymd(2018, 03, 04)));
+    assert_eq!(
+        task.create_date,
+        Some(::todo_txt::Date::from_ymd(2018, 03, 01))
+    );
+    assert_eq!(
+        task.finish_date,
+        Some(::todo_txt::Date::from_ymd(2018, 03, 04))
+    );
     assert!(!task.finished);
     assert_eq!(task.contexts[0], "context_a");
     assert_eq!(task.contexts[1], "context_b");
-    assert_eq!(task.threshold_date, Some(::Date::from_ymd(2018, 03, 02)));
-    assert_eq!(task.due_date, Some(::Date::from_ymd(2018, 03, 03)));
+    assert_eq!(
+        task.threshold_date,
+        Some(::todo_txt::Date::from_ymd(2018, 03, 02))
+    );
+    assert_eq!(
+        task.due_date,
+        Some(::todo_txt::Date::from_ymd(2018, 03, 03))
+    );
     assert!(task.projects.is_empty());
     assert_eq!(task.hashtags[0], "tag_a");
     assert_eq!(task.hashtags[1], "tag_b");
@@ -102,6 +118,7 @@ fn test_deserialize_with_dates() {
 }
 
 #[test]
+#[cfg(feature = "serde-support")]
 fn test_serialize_simple() {
     let task = ::todo_txt::Task::default();
     let json = ::serde_json::to_string(&task).unwrap();
