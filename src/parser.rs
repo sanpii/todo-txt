@@ -1,6 +1,19 @@
 use ::std::collections::BTreeMap;
 use ::nom::rest_s;
 
+macro_rules! return_error (
+    ($num:expr) => {
+        return Err(
+            ::nom::Err::Error(
+                ::nom::simple_errors::Context::Code(
+                    "",
+                    ::nom::ErrorKind::Custom($num)
+                )
+            )
+        );
+    }
+);
+
 named!(date<&str, ::Date>,
     do_parse!(
         year:
@@ -15,22 +28,22 @@ named!(date<&str, ::Date>,
         ({
             let year = match year.parse() {
                 Ok(year) => year,
-                Err(_) => return ::nom::IResult::Error(::nom::ErrorKind::Custom(1)),
+                Err(_) => return_error!(1),
             };
 
             let month = match month.parse() {
                 Ok(month) => month,
-                Err(_) => return ::nom::IResult::Error(::nom::ErrorKind::Custom(2)),
+                Err(_) => return_error!(2),
             };
 
             let day = match day.parse() {
                 Ok(day) => day,
-                Err(_) => return ::nom::IResult::Error(::nom::ErrorKind::Custom(3)),
+                Err(_) => return_error!(3),
             };
 
             match ::Date::from_ymd_opt(year, month, day) {
                 Some(date) => date,
-                None => return ::nom::IResult::Error(::nom::ErrorKind::Custom(4)),
+                None => return_error!(4),
             }
         })
     )
@@ -186,7 +199,7 @@ named!(parse<&str, ::Task>,
 pub fn task(line: &str) -> Result<::Task, ()>
 {
     match parse(line) {
-        ::nom::IResult::Done(_, task) => Ok(task),
+        Ok((_, task)) => Ok(task),
         _ => Err(()),
     }
 }
