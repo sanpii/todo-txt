@@ -119,7 +119,7 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>)
 {
     lazy_static! {
         static ref REGEX: ::regex::Regex =
-            ::regex::Regex::new(r" (?P<key>[^\s]+):(?P<value>[^\s^/]+)").unwrap();
+            ::regex::Regex::new(r"(\s+|^)(?P<key>[^\s]+):(?P<value>[^\s^/]+)").unwrap();
     }
 
     let mut tags = BTreeMap::new();
@@ -133,7 +133,7 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>)
         String::new()
     });
 
-    (new_subject.into_owned(), tags)
+    (new_subject.trim().to_owned(), tags)
 }
 
 named!(parse<&str, ::Task>,
