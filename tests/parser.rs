@@ -1,5 +1,7 @@
 extern crate todo_txt;
 
+use ::std::collections::BTreeMap;
+
 #[test]
 fn simple_task()
 {
@@ -195,7 +197,6 @@ fn hashtags()
 #[test]
 fn keywords()
 {
-    use ::std::collections::BTreeMap;
 
     let mut keywords = BTreeMap::new();
     keywords.insert("key1".to_owned(), "2018-01-01".to_owned());
@@ -248,6 +249,24 @@ fn begin_with_keyword()
         subject: "Open issue on todo-txt parser".to_owned(),
         threshold_date: Some(::todo_txt::Date::from_ymd(2018, 4, 3)),
         priority: 2,
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
+}
+
+#[test]
+fn url_in_tags()
+{
+    let mut keywords = BTreeMap::new();
+    keywords.insert("url".to_owned(), "http://example.org".to_owned());
+
+    let line = "2018-03-26 test url:http://example.org".to_owned();
+    let task = ::todo_txt::Task {
+        subject: "test".to_owned(),
+        create_date: Some(::todo_txt::Date::from_ymd(2018, 3, 26)),
+        tags: keywords,
 
         .. Default::default()
     };
