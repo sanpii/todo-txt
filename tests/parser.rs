@@ -238,3 +238,19 @@ fn threshold()
 
     assert_eq!(::todo_txt::parser::task(&line), Ok(task));
 }
+
+#[test]
+fn begin_with_keyword()
+{
+    let line = "(C) t:2018-04-03 Open issue on todo-txt parser".to_owned();
+
+    let task = ::todo_txt::Task {
+        subject: "Open issue on todo-txt parser".to_owned(),
+        threshold_date: Some(::todo_txt::Date::from_ymd(2018, 4, 3)),
+        priority: 2,
+
+        .. Default::default()
+    };
+
+    assert_eq!(::todo_txt::parser::task(&line), Ok(task));
+}
