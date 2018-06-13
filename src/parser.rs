@@ -149,20 +149,9 @@ named!(parse<&str, ::Task>,
             rest_s >>
         ({
             let mut task = ::Task {
-                priority: match priority {
-                    Some(priority) => priority,
-                    None => 26,
-                },
-                create_date: if create_date.is_none() {
-                    finish_date
-                } else {
-                    create_date
-                },
-                finish_date: if create_date.is_none() {
-                    None
-                } else {
-                    finish_date
-                },
+                priority: priority.unwrap_or(26),
+                create_date: create_date.or(finish_date),
+                finish_date: create_date.and(finish_date),
                 finished: finished.is_some(),
                 contexts: get_contexts(rest),
                 projects: get_projects(rest),
