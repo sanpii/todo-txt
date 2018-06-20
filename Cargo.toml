@@ -30,6 +30,10 @@ version = "^0.4"
 default-features = false
 features = ["serde"]
 
+[[example]]
+name = "serialization"
+required-features = ["serde-support"]
+
 [badges]
 travis-ci = { repository = "sanpii/todo-txt", branch = "master" }
 gitlab = { repository = "sanpi/todo-txt", branch = "master" }
