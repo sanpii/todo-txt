@@ -14,7 +14,7 @@ lint:clippy:
     script: cargo +nightly clippy -- --deny warnings
 
 test:debug:
-    script: cargo test
+    script: cargo test --all-features
 
 test:release:
-    script: cargo test --release
+    script: cargo test --all-features --release

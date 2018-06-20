@@ -29,3 +29,8 @@ fn main()
     println!("{:#?}", task);
 }
 ```
+
+## Features
+
+* `serde-support`: (De)serialization with serde. See
+    [serialization.rs](examples/serialization.rs).
