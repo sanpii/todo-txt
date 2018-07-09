@@ -157,7 +157,7 @@ named!(parse<&str, ::Task>,
                 projects: get_projects(rest),
                 hashtags: get_hashtags(rest),
 
-                .. Default::default()
+                .. ::Task::default()
             };
 
             let (subject, mut tags) = get_keywords(rest);
