@@ -105,11 +105,13 @@ fn deplucate_contexts() {
 
 #[test]
 fn projects() {
-    let line = "Email SoAndSo at soandso@example.com +project1 @context2".to_owned();
+    let line =
+        "Email SoAndSo at soandso@example.com +project1 +project1\\subject1 @context2".to_owned();
     let task = ::todo_txt::Task {
-        subject: "Email SoAndSo at soandso@example.com +project1 @context2".to_owned(),
+        subject: "Email SoAndSo at soandso@example.com +project1 +project1\\subject1 @context2"
+            .to_owned(),
         contexts: vec!["context2".to_owned()],
-        projects: vec!["project1".to_owned()],
+        projects: vec!["project1".to_owned(), "project1\\subject1".to_owned()],
         ..Default::default()
     };
 
