@@ -83,7 +83,7 @@ fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String> {
 
 macro_rules! regex_tags_shared {
     () => {
-        "(?P<space>^|[\\s]){}(?P<tag>[\\w-]+)"
+        "(?P<space>^|[\\s]){}(?P<tag>[\\w\\\\-]+)"
     };
 }
 
