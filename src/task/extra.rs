@@ -39,34 +39,44 @@ impl Extra {
     }
 }
 
-impl ::std::str::FromStr for Extra {
-    type Err = ();
+impl ::std::convert::From<super::Task> for Extra {
+    fn from(task: super::Task) -> Self {
+        use std::str::FromStr;
 
-    fn from_str(s: &str) -> Result<Self, ()> {
-        let mut task = super::Task::from_str(s)?;
+        let mut inner = task.clone();
 
-        let note = Self::note(&task);
-        task.tags.remove(&Self::tag_name());
+        let note = Self::note(&inner);
+        inner.tags.remove(&Self::tag_name());
 
         let mut recurrence = None;
 
-        if let Some(rec) = task.tags.get(&"rec".to_owned()) {
+        if let Some(rec) = inner.tags.get(&"rec".to_owned()) {
             recurrence = match super::Recurrence::from_str(rec) {
                 Ok(rec) => Some(rec),
                 Err(_) => None,
             };
         }
-        task.tags.remove(&"rec".to_owned());
+        inner.tags.remove(&"rec".to_owned());
 
-        let flagged = task.tags.contains_key(&"f".to_owned());
-        task.tags.remove(&"f".to_owned());
+        let flagged = inner.tags.contains_key(&"f".to_owned());
+        inner.tags.remove(&"f".to_owned());
 
-        Ok(Self {
+        Self {
             note,
-            inner: task,
+            inner,
             recurrence,
             flagged,
-        })
+        }
+    }
+}
+
+impl ::std::str::FromStr for Extra {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, ()> {
+        let task = super::Task::from_str(s)?;
+
+        Ok(task.into())
     }
 }
 
