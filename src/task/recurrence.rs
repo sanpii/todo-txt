@@ -3,6 +3,7 @@
 pub struct Recurrence {
     pub num: i64,
     pub period: super::Period,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub strict: bool,
 }
 

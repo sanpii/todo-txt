@@ -1,18 +1,33 @@
 use std::collections::BTreeMap;
 
+struct Priority;
+
+#[allow(dead_code)]
+impl Priority {
+    fn lowest() -> u8 {
+        26
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct Simple {
     pub subject: String,
+    #[cfg_attr(feature = "serde-support", serde(default = "Priority::lowest"))]
     pub priority: u8,
     pub create_date: Option<::Date>,
     pub finish_date: Option<::Date>,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub finished: bool,
     pub threshold_date: Option<::Date>,
     pub due_date: Option<::Date>,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub contexts: Vec<String>,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub projects: Vec<String>,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub hashtags: Vec<String>,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub tags: BTreeMap<String, String>,
 }
 
