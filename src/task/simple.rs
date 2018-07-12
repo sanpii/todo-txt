@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct Task {
+pub struct Simple {
     pub subject: String,
     pub priority: u8,
     pub create_date: Option<::Date>,
@@ -16,7 +16,7 @@ pub struct Task {
     pub tags: BTreeMap<String, String>,
 }
 
-impl Default for Task {
+impl Default for Simple {
     fn default() -> Self {
         Self {
             subject: String::new(),
@@ -34,15 +34,15 @@ impl Default for Task {
     }
 }
 
-impl ::std::str::FromStr for Task {
+impl ::std::str::FromStr for Simple {
     type Err = ();
 
-    fn from_str(s: &str) -> Result<Task, ()> {
+    fn from_str(s: &str) -> Result<Simple, ()> {
         ::parser::task(&s.to_owned())
     }
 }
 
-impl ::std::fmt::Display for Task {
+impl ::std::fmt::Display for Simple {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         if self.finished {
             f.write_str("x ")?;
