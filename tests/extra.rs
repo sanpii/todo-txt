@@ -2,6 +2,8 @@
 extern crate serde_json;
 extern crate todo_txt;
 
+use std::collections::BTreeMap;
+
 #[test]
 #[cfg(feature = "serde-support")]
 fn test_extra_deserialize() {
@@ -23,7 +25,7 @@ fn test_extra_deserialize() {
             hashtags: Vec::new(),
             finished: false,
             projects: Vec::new(),
-            tags: ::std::collections::BTreeMap::new(),
+            tags: BTreeMap::new(),
         },
         flagged: false,
         note: ::todo_txt::task::Note::None,
@@ -55,4 +57,23 @@ fn test_note_deserialize() {
     };
 
     assert_eq!(actual, expected);
+}
+
+#[test]
+fn test_from_task() {
+    let task = ::todo_txt::Task {
+        subject: "Subject".to_string(),
+        tags: {
+            let mut map = BTreeMap::new();
+            map.insert("f".to_string(), "1".to_string());
+
+            map
+        },
+
+        ..::todo_txt::Task::default()
+    };
+
+    let extra: ::todo_txt::task::Extra = task.into();
+
+    assert_eq!(extra.flagged, true);
 }
