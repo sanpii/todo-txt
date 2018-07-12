@@ -1,5 +1,6 @@
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde-support", serde(untagged))]
 pub enum Note {
     None,
     Short(String),
