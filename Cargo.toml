@@ -11,7 +11,9 @@ readme = "README.md"
 [dependencies]
 chrono = "^0.4"
 lazy_static = "^1.0"
+log = "^0.4"
 nom = "^4.0"
+rand = "^0.5"
 regex = "^1.0"
 
 [dependencies.serde]
