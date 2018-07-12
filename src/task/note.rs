@@ -1,4 +1,5 @@
 #[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub enum Note {
     None,
     Short(String),
@@ -137,6 +138,12 @@ impl Note {
         };
 
         Ok(format!("{}/{}", note_dir, filename))
+    }
+}
+
+impl Default for Note {
+    fn default() -> Self {
+        Note::None
     }
 }
 
