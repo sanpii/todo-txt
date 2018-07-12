@@ -1,8 +1,12 @@
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Default)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct Extra {
-    inner: super::Task,
+    #[cfg_attr(feature = "serde-support", serde(flatten))]
+    pub inner: super::Task,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub note: super::Note,
     pub recurrence: Option<super::Recurrence>,
+    #[cfg_attr(feature = "serde-support", serde(default))]
     pub flagged: bool,
 }
 
@@ -31,17 +35,6 @@ impl Extra {
         match ::std::env::var("TODO_NOTE_TAG") {
             Ok(tag) => tag,
             Err(_) => "note".to_owned(),
-        }
-    }
-}
-
-impl Default for Extra {
-    fn default() -> Self {
-        Self {
-            inner: super::Task::default(),
-            note: super::Note::None,
-            recurrence: None,
-            flagged: false,
         }
     }
 }

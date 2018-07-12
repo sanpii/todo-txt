@@ -1,4 +1,5 @@
 #[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
 pub struct Recurrence {
     pub num: i64,
     pub period: super::Period,
