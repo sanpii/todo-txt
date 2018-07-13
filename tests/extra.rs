@@ -5,7 +5,7 @@ extern crate todo_txt;
 use std::collections::BTreeMap;
 
 #[test]
-#[cfg(feature = "serde-support")]
+#[cfg(all(feature = "serde-support", feature="extended"))]
 fn test_extra_deserialize() {
     let json = r#"{
         "subject": "Test"
@@ -36,7 +36,7 @@ fn test_extra_deserialize() {
 }
 
 #[test]
-#[cfg(feature = "serde-support")]
+#[cfg(all(feature = "serde-support", feature="extended"))]
 fn test_note_deserialize() {
     let json = r#"{
         "subject": "Test",
@@ -60,6 +60,7 @@ fn test_note_deserialize() {
 }
 
 #[test]
+#[cfg(feature="extended")]
 fn test_from_task() {
     let task = ::todo_txt::Task {
         subject: "Subject".to_string(),

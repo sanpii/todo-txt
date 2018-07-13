@@ -1,6 +1,7 @@
 extern crate todo_txt;
 
 #[test]
+#[cfg(feature="extended")]
 fn from_invalid() {
     use std::str::FromStr;
 

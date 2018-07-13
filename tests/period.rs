@@ -1,9 +1,11 @@
 extern crate chrono;
 extern crate todo_txt;
 
+#[cfg(feature="extended")]
 use todo_txt::task::Period::*;
 
 #[test]
+#[cfg(feature="extended")]
 fn add_year() {
     let current = Year + ::chrono::NaiveDate::from_ymd(1999, 1, 1);
     let expected = ::chrono::NaiveDate::from_ymd(2000, 1, 1);
@@ -12,6 +14,7 @@ fn add_year() {
 }
 
 #[test]
+#[cfg(feature="extended")]
 fn add_month() {
     let current = Month + ::chrono::NaiveDate::from_ymd(1999, 1, 1);
     let expected = ::chrono::NaiveDate::from_ymd(1999, 2, 1);
@@ -20,6 +23,7 @@ fn add_month() {
 }
 
 #[test]
+#[cfg(feature="extended")]
 fn add_month_extra() {
     let current = Month + ::chrono::NaiveDate::from_ymd(1999, 12, 1);
     let expected = ::chrono::NaiveDate::from_ymd(2000, 1, 1);
@@ -28,6 +32,7 @@ fn add_month_extra() {
 }
 
 #[test]
+#[cfg(feature="extended")]
 fn add_week() {
     let current = Week + ::chrono::NaiveDate::from_ymd(1999, 1, 1);
     let expected = ::chrono::NaiveDate::from_ymd(1999, 1, 8);
@@ -36,6 +41,7 @@ fn add_week() {
 }
 
 #[test]
+#[cfg(feature="extended")]
 fn add_day() {
     let current = Day + ::chrono::NaiveDate::from_ymd(1999, 1, 1);
     let expected = ::chrono::NaiveDate::from_ymd(1999, 1, 2);
@@ -44,6 +50,7 @@ fn add_day() {
 }
 
 #[test]
+#[cfg(feature="extended")]
 fn add_day_extra() {
     let current = Day + ::chrono::NaiveDate::from_ymd(1999, 1, 31);
     let expected = ::chrono::NaiveDate::from_ymd(1999, 2, 1);
