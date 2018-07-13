@@ -55,12 +55,31 @@ impl ::std::ops::Add<::chrono::NaiveDate> for Recurrence {
     type Output = ::chrono::NaiveDate;
 
     fn add(self, rhs: Self::Output) -> Self::Output {
-        let mut result = rhs;
+        use super::Period::{self, *};
+        use chrono::{Datelike, Duration};
 
-        for _ in 0..self.num {
-            result = self.period.clone() + result;
+        let delta_months = match self.period {
+            Year => 12 * self.num as u32,
+            Month => self.num as u32,
+            Week => return rhs + Duration::weeks(self.num),
+            Day => return rhs + Duration::days(self.num),
+        };
+
+        let mut y = rhs.year();
+        let mut m = rhs.month();
+        let mut d = rhs.day();
+
+        // Semantics taken from
+        //  https://github.com/dbeniamine/todo.txt-vim/blob/259125d9efe93f69582f50ef68c17e20fd1e963a/autoload/todo.vim#L531-L538
+        let was_last_day = d == Period::days_in_month(m, y);
+
+        m += delta_months;
+        y += ((m - 1) / 12) as i32;
+        m = (m - 1) % 12 + 1;
+        if was_last_day || d > Period::days_in_month(m, y) {
+            d = Period::days_in_month(m, y);
         }
 
-        result
+        ::chrono::NaiveDate::from_ymd(y, m, d)
     }
 }
