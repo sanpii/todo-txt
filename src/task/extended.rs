@@ -1,6 +1,6 @@
 #[derive(Clone, Debug, PartialEq, Eq, Default)]
 #[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
-pub struct Extra {
+pub struct Extended {
     #[cfg_attr(feature = "serde-support", serde(flatten))]
     pub inner: super::Task,
     #[cfg_attr(feature = "serde-support", serde(default))]
@@ -10,7 +10,7 @@ pub struct Extra {
     pub flagged: bool,
 }
 
-impl Extra {
+impl Extended {
     pub fn complete(&mut self) {
         let today = ::chrono::Local::now().date().naive_local();
 
@@ -39,7 +39,7 @@ impl Extra {
     }
 }
 
-impl ::std::convert::From<super::Task> for Extra {
+impl ::std::convert::From<super::Task> for Extended {
     fn from(task: super::Task) -> Self {
         use std::str::FromStr;
 
@@ -70,7 +70,7 @@ impl ::std::convert::From<super::Task> for Extra {
     }
 }
 
-impl ::std::str::FromStr for Extra {
+impl ::std::str::FromStr for Extended {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, ()> {
@@ -80,7 +80,7 @@ impl ::std::str::FromStr for Extra {
     }
 }
 
-impl ::std::ops::Deref for Extra {
+impl ::std::ops::Deref for Extended {
     type Target = super::Task;
 
     fn deref(&self) -> &Self::Target {
@@ -88,13 +88,13 @@ impl ::std::ops::Deref for Extra {
     }
 }
 
-impl ::std::ops::DerefMut for Extra {
+impl ::std::ops::DerefMut for Extended {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl ::std::fmt::Display for Extra {
+impl ::std::fmt::Display for Extended {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         use std::ops::Deref;
 
@@ -116,13 +116,13 @@ impl ::std::fmt::Display for Extra {
     }
 }
 
-impl ::std::cmp::PartialOrd for Extra {
+impl ::std::cmp::PartialOrd for Extended {
     fn partial_cmp(&self, other: &Self) -> Option<::std::cmp::Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl ::std::cmp::Ord for Extra {
+impl ::std::cmp::Ord for Extended {
     fn cmp(&self, other: &Self) -> ::std::cmp::Ordering {
         if self.inner.due_date != other.inner.due_date {
             return self.inner.due_date.cmp(&other.inner.due_date);

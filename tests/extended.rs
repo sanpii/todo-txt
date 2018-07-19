@@ -13,9 +13,9 @@ mod test {
             "subject": "Test"
         }"#;
 
-        let actual: ::todo_txt::task::Extra = ::serde_json::from_str(json).unwrap();
+        let actual: ::todo_txt::task::Extended = ::serde_json::from_str(json).unwrap();
 
-        let expected = ::todo_txt::task::Extra {
+        let expected = ::todo_txt::task::Extended {
             inner: ::todo_txt::Task {
                 subject: "Test".to_string(),
                 priority: 26,
@@ -45,9 +45,9 @@ mod test {
             "note": "A note"
         }"#;
 
-        let actual: ::todo_txt::task::Extra = ::serde_json::from_str(json).unwrap();
+        let actual: ::todo_txt::task::Extended = ::serde_json::from_str(json).unwrap();
 
-        let expected = ::todo_txt::task::Extra {
+        let expected = ::todo_txt::task::Extended {
             inner: ::todo_txt::Task {
                 subject: "Test".to_string(),
 
@@ -55,7 +55,7 @@ mod test {
             },
             note: ::todo_txt::task::Note::Short("A note".to_string()),
 
-            ..::todo_txt::task::Extra::default()
+            ..::todo_txt::task::Extended::default()
         };
 
         assert_eq!(actual, expected);
@@ -75,7 +75,7 @@ mod test {
             ..::todo_txt::Task::default()
         };
 
-        let extra: ::todo_txt::task::Extra = task.into();
+        let extra: ::todo_txt::task::Extended = task.into();
 
         assert_eq!(extra.flagged, true);
     }

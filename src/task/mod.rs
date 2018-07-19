@@ -1,5 +1,5 @@
 #[cfg(feature = "extended")]
-mod extra;
+mod extended;
 #[cfg(feature = "extended")]
 mod note;
 #[cfg(feature = "extended")]
@@ -9,7 +9,7 @@ mod recurrence;
 mod simple;
 
 #[cfg(feature = "extended")]
-pub use self::extra::Extra;
+pub use self::extended::Extended;
 #[cfg(feature = "extended")]
 pub use self::note::Note;
 #[cfg(feature = "extended")]
