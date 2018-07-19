@@ -5,7 +5,7 @@ cache: cargo
 before_script:
     - rustup component add rustfmt-preview
     - rustup install nightly
-    - cargo +nightly install --force clippy
+    - rustup component add --toolchain=nightly clippy-preview
 
 script:
     - cargo fmt
