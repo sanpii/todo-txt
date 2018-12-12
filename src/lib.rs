@@ -21,4 +21,4 @@ pub mod parser;
 pub mod task;
 
 pub use chrono::NaiveDate as Date;
-pub use task::Task;
+pub use crate::task::Task;

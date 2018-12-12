@@ -14,7 +14,7 @@ macro_rules! return_error (
     }
 );
 
-named!(date<&str, ::Date>,
+named!(date<&str, crate::Date>,
     do_parse!(
         year:
             take!(4) >>
@@ -41,7 +41,7 @@ named!(date<&str, ::Date>,
                 Err(_) => return_error!(3),
             };
 
-            match ::Date::from_ymd_opt(year, month, day) {
+            match crate::Date::from_ymd_opt(year, month, day) {
                 Some(date) => date,
                 None => return_error!(4),
             }
@@ -135,7 +135,7 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
     (new_subject.trim().to_owned(), tags)
 }
 
-named!(parse<&str, ::Task>,
+named!(parse<&str, crate::Task>,
     do_parse!(
         finished:
             opt!(complete!(tag_s!("x "))) >>
@@ -148,7 +148,7 @@ named!(parse<&str, ::Task>,
         rest:
             rest_s >>
         ({
-            let mut task = ::Task {
+            let mut task = crate::Task {
                 priority: priority.unwrap_or(26),
                 create_date: create_date.or(finish_date),
                 finish_date: create_date.and(finish_date),
@@ -157,21 +157,21 @@ named!(parse<&str, ::Task>,
                 projects: get_projects(rest),
                 hashtags: get_hashtags(rest),
 
-                .. ::Task::default()
+                .. crate::Task::default()
             };
 
             let (subject, mut tags) = get_keywords(rest);
             task.subject = subject;
 
             if let Some(due) = tags.remove("due") {
-                task.due_date = match ::Date::parse_from_str(due.as_str(), "%Y-%m-%d") {
+                task.due_date = match crate::Date::parse_from_str(due.as_str(), "%Y-%m-%d") {
                     Ok(due) => Some(due),
                     Err(_) => None,
                 };
             }
 
             if let Some(t) = tags.remove("t") {
-                task.threshold_date = match ::Date::parse_from_str(t.as_str(), "%Y-%m-%d") {
+                task.threshold_date = match crate::Date::parse_from_str(t.as_str(), "%Y-%m-%d") {
                     Ok(t) => Some(t),
                     Err(_) => None,
                 };
@@ -184,7 +184,7 @@ named!(parse<&str, ::Task>,
     )
 );
 
-pub fn task(line: &str) -> Result<::Task, ()> {
+pub fn task(line: &str) -> Result<crate::Task, ()> {
     match parse(line) {
         Ok((_, task)) => Ok(task),
         _ => Err(()),

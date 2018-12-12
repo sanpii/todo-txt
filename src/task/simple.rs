@@ -15,12 +15,12 @@ pub struct Simple {
     pub subject: String,
     #[cfg_attr(feature = "serde-support", serde(default = "Priority::lowest"))]
     pub priority: u8,
-    pub create_date: Option<::Date>,
-    pub finish_date: Option<::Date>,
+    pub create_date: Option<crate::Date>,
+    pub finish_date: Option<crate::Date>,
     #[cfg_attr(feature = "serde-support", serde(default))]
     pub finished: bool,
-    pub threshold_date: Option<::Date>,
-    pub due_date: Option<::Date>,
+    pub threshold_date: Option<crate::Date>,
+    pub due_date: Option<crate::Date>,
     #[cfg_attr(feature = "serde-support", serde(default))]
     pub contexts: Vec<String>,
     #[cfg_attr(feature = "serde-support", serde(default))]
@@ -53,7 +53,7 @@ impl ::std::str::FromStr for Simple {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Simple, ()> {
-        ::parser::task(&s.to_owned())
+        crate::parser::task(&s.to_owned())
     }
 }
 
