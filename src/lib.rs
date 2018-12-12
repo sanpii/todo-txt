@@ -1,4 +1,3 @@
-extern crate chrono;
 #[macro_use]
 extern crate lazy_static;
 #[cfg(feature = "extended")]
@@ -8,7 +7,6 @@ extern crate log;
 extern crate nom;
 #[cfg(feature = "extended")]
 extern crate rand;
-extern crate regex;
 
 #[cfg(feature = "serde-support")]
 extern crate serde;
