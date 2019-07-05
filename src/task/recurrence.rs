@@ -18,7 +18,7 @@ impl std::str::FromStr for Recurrence {
         }
 
         let strict = if s.get(0..1) == Some("+") {
-            s = s.trim_left_matches('+');
+            s = s.trim_start_matches('+');
             true
         } else {
             false
