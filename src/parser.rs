@@ -1,30 +1,31 @@
-use nom::rest_s;
+use nom::combinator::rest;
 use std::collections::BTreeMap;
 
 macro_rules! return_error (
     ($num:expr) => {
         return Err(
             ::nom::Err::Error(
-                ::nom::simple_errors::Context::Code(
+                ::nom::error::make_error(
                     "",
-                    ::nom::ErrorKind::Custom($num)
+                    ::nom::error::ErrorKind::Tag
                 )
             )
         );
     }
 );
 
-named!(date<&str, crate::Date>,
-    do_parse!(
+fn date(input: &str) -> nom::IResult<&str, crate::Date>
+{
+    do_parse!(input,
         year:
             take!(4) >>
-            tag_s!("-") >>
+            tag!("-") >>
         month:
             take!(2) >>
-            tag_s!("-") >>
+            tag!("-") >>
         day:
             take!(2) >>
-            tag_s!(" ") >>
+            tag!(" ") >>
         ({
             let year = match year.parse() {
                 Ok(year) => year,
@@ -47,14 +48,15 @@ named!(date<&str, crate::Date>,
             }
         })
     )
-);
+}
 
-named!(priority<&str, u8>,
-    do_parse!(
-            tag_s!("(") >>
+fn priority(input: &str) -> nom::IResult <&str, u8>
+{
+    do_parse!(input,
+            tag!("(") >>
         priority:
             take!(1) >>
-            tag_s!(") ") >>
+            tag!(") ") >>
         ({
             let p = priority.as_bytes()[0];
 
@@ -66,7 +68,7 @@ named!(priority<&str, u8>,
             }
         })
     )
-);
+}
 
 fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String> {
     let mut tags = regex
@@ -135,10 +137,11 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
     (new_subject.trim().to_owned(), tags)
 }
 
-named!(parse<&str, crate::Task>,
-    do_parse!(
+fn parse(input: &str) -> nom::IResult<&str, crate::Task>
+{
+    do_parse!(input,
         finished:
-            opt!(complete!(tag_s!("x "))) >>
+            opt!(complete!(tag!("x "))) >>
         priority:
             opt!(complete!(priority)) >>
         finish_date:
@@ -146,7 +149,7 @@ named!(parse<&str, crate::Task>,
         create_date:
             opt!(complete!(date)) >>
         rest:
-            rest_s >>
+            rest >>
         ({
             let mut task = crate::Task {
                 priority: priority.unwrap_or(26),
@@ -182,7 +185,7 @@ named!(parse<&str, crate::Task>,
             task
         })
     )
-);
+}
 
 pub fn task(line: &str) -> Result<crate::Task, ()> {
     match parse(line) {
