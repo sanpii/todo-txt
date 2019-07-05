@@ -1,5 +1,3 @@
-extern crate todo_txt;
-
 use std::str::FromStr;
 
 fn main() {
