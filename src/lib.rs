@@ -18,5 +18,5 @@ extern crate serde_derive;
 pub mod parser;
 pub mod task;
 
-pub use chrono::NaiveDate as Date;
 pub use crate::task::Task;
+pub use chrono::NaiveDate as Date;

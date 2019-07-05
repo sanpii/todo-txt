@@ -109,10 +109,7 @@ mod test {
             task.threshold_date,
             Some(todo_txt::Date::from_ymd(2018, 03, 02))
         );
-        assert_eq!(
-            task.due_date,
-            Some(todo_txt::Date::from_ymd(2018, 03, 03))
-        );
+        assert_eq!(task.due_date, Some(todo_txt::Date::from_ymd(2018, 03, 03)));
         assert!(task.projects.is_empty());
         assert_eq!(task.hashtags[0], "tag_a");
         assert_eq!(task.hashtags[1], "tag_b");
