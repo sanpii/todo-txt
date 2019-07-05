@@ -12,7 +12,7 @@ pub struct Extended {
 
 impl Extended {
     pub fn complete(&mut self) {
-        let today = ::chrono::Local::now().date().naive_local();
+        let today = chrono::Local::now().date().naive_local();
 
         self.finished = true;
         self.finish_date = Some(today);
@@ -32,14 +32,14 @@ impl Extended {
     }
 
     fn tag_name() -> String {
-        match ::std::env::var("TODO_NOTE_TAG") {
+        match std::env::var("TODO_NOTE_TAG") {
             Ok(tag) => tag,
             Err(_) => "note".to_owned(),
         }
     }
 }
 
-impl ::std::convert::From<super::Task> for Extended {
+impl std::convert::From<super::Task> for Extended {
     fn from(task: super::Task) -> Self {
         use std::str::FromStr;
 
@@ -70,7 +70,7 @@ impl ::std::convert::From<super::Task> for Extended {
     }
 }
 
-impl ::std::str::FromStr for Extended {
+impl std::str::FromStr for Extended {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, ()> {
@@ -80,7 +80,7 @@ impl ::std::str::FromStr for Extended {
     }
 }
 
-impl ::std::ops::Deref for Extended {
+impl std::ops::Deref for Extended {
     type Target = super::Task;
 
     fn deref(&self) -> &Self::Target {
@@ -88,14 +88,14 @@ impl ::std::ops::Deref for Extended {
     }
 }
 
-impl ::std::ops::DerefMut for Extended {
+impl std::ops::DerefMut for Extended {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl ::std::fmt::Display for Extended {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+impl std::fmt::Display for Extended {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         use std::ops::Deref;
 
         f.write_str(format!("{}", self.deref()).as_str())?;
@@ -116,14 +116,14 @@ impl ::std::fmt::Display for Extended {
     }
 }
 
-impl ::std::cmp::PartialOrd for Extended {
+impl std::cmp::PartialOrd for Extended {
     fn partial_cmp(&self, other: &Self) -> Option<::std::cmp::Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl ::std::cmp::Ord for Extended {
-    fn cmp(&self, other: &Self) -> ::std::cmp::Ordering {
+impl std::cmp::Ord for Extended {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         if self.inner.due_date != other.inner.due_date {
             return self.inner.due_date.cmp(&other.inner.due_date);
         }
@@ -136,6 +136,6 @@ impl ::std::cmp::Ord for Extended {
             return self.inner.subject.cmp(&other.inner.subject);
         }
 
-        ::std::cmp::Ordering::Equal
+        std::cmp::Ordering::Equal
     }
 }

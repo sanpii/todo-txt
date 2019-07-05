@@ -9,23 +9,23 @@ mod test {
         use std::str::FromStr;
 
         let line = "Email SoAndSo at soandso@example.com";
-        let task = ::todo_txt::Task {
+        let task = todo_txt::Task {
             subject: "Email SoAndSo at soandso@example.com".to_owned(),
             ..Default::default()
         };
 
-        assert_eq!(::todo_txt::Task::from_str(line), Ok(task));
+        assert_eq!(todo_txt::Task::from_str(line), Ok(task));
     }
 
     #[test]
     fn display() {
-        let task = ::todo_txt::Task {
+        let task = todo_txt::Task {
             subject: "@Email SoAndSo at soandso@example.com".to_owned(),
             priority: 1,
             finished: true,
-            due_date: Some(::todo_txt::Date::from_ymd(2019, 2, 10)),
-            finish_date: Some(::todo_txt::Date::from_ymd(2019, 2, 15)),
-            create_date: Some(::todo_txt::Date::from_ymd(2019, 2, 5)),
+            due_date: Some(todo_txt::Date::from_ymd(2019, 2, 10)),
+            finish_date: Some(todo_txt::Date::from_ymd(2019, 2, 15)),
+            create_date: Some(todo_txt::Date::from_ymd(2019, 2, 5)),
 
             ..Default::default()
         };
@@ -55,7 +55,7 @@ mod test {
             "tags": {}
         }"#;
 
-        let task: ::todo_txt::Task = ::serde_json::from_str(json).unwrap();
+        let task: todo_txt::Task = serde_json::from_str(json).unwrap();
 
         assert_eq!(task.subject, "Test");
         assert_eq!(task.priority, 26);
@@ -90,28 +90,28 @@ mod test {
             "tags": {}
         }"#;
 
-        let task: ::todo_txt::Task = ::serde_json::from_str(json).unwrap();
+        let task: todo_txt::Task = serde_json::from_str(json).unwrap();
 
         assert_eq!(task.subject, "Test");
         assert_eq!(task.priority, 26);
         assert_eq!(
             task.create_date,
-            Some(::todo_txt::Date::from_ymd(2018, 03, 01))
+            Some(todo_txt::Date::from_ymd(2018, 03, 01))
         );
         assert_eq!(
             task.finish_date,
-            Some(::todo_txt::Date::from_ymd(2018, 03, 04))
+            Some(todo_txt::Date::from_ymd(2018, 03, 04))
         );
         assert!(!task.finished);
         assert_eq!(task.contexts[0], "context_a");
         assert_eq!(task.contexts[1], "context_b");
         assert_eq!(
             task.threshold_date,
-            Some(::todo_txt::Date::from_ymd(2018, 03, 02))
+            Some(todo_txt::Date::from_ymd(2018, 03, 02))
         );
         assert_eq!(
             task.due_date,
-            Some(::todo_txt::Date::from_ymd(2018, 03, 03))
+            Some(todo_txt::Date::from_ymd(2018, 03, 03))
         );
         assert!(task.projects.is_empty());
         assert_eq!(task.hashtags[0], "tag_a");
@@ -122,8 +122,8 @@ mod test {
     #[test]
     #[cfg(feature = "serde-support")]
     fn test_serialize_simple() {
-        let task = ::todo_txt::Task::default();
-        let json = ::serde_json::to_string(&task).unwrap();
+        let task = todo_txt::Task::default();
+        let json = serde_json::to_string(&task).unwrap();
 
         let expected = r#"{"subject":"","priority":26,"create_date":null,"finish_date":null,"finished":false,"threshold_date":null,"due_date":null,"contexts":[],"projects":[],"hashtags":[],"tags":{}}"#;
 

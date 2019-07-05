@@ -13,10 +13,10 @@ mod test {
             "subject": "Test"
         }"#;
 
-        let actual: ::todo_txt::task::Extended = ::serde_json::from_str(json).unwrap();
+        let actual: todo_txt::task::Extended = serde_json::from_str(json).unwrap();
 
-        let expected = ::todo_txt::task::Extended {
-            inner: ::todo_txt::Task {
+        let expected = todo_txt::task::Extended {
+            inner: todo_txt::Task {
                 subject: "Test".to_string(),
                 priority: 26,
                 create_date: None,
@@ -30,7 +30,7 @@ mod test {
                 tags: BTreeMap::new(),
             },
             flagged: false,
-            note: ::todo_txt::task::Note::None,
+            note: todo_txt::task::Note::None,
             recurrence: None,
         };
 
@@ -45,15 +45,15 @@ mod test {
             "note": "A note"
         }"#;
 
-        let actual: ::todo_txt::task::Extended = ::serde_json::from_str(json).unwrap();
+        let actual: todo_txt::task::Extended = serde_json::from_str(json).unwrap();
 
-        let expected = ::todo_txt::task::Extended {
-            inner: ::todo_txt::Task {
+        let expected = todo_txt::task::Extended {
+            inner: todo_txt::Task {
                 subject: "Test".to_string(),
 
                 ..::todo_txt::Task::default()
             },
-            note: ::todo_txt::task::Note::Short("A note".to_string()),
+            note: todo_txt::task::Note::Short("A note".to_string()),
 
             ..::todo_txt::task::Extended::default()
         };
@@ -63,7 +63,7 @@ mod test {
 
     #[test]
     fn test_from_task() {
-        let task = ::todo_txt::Task {
+        let task = todo_txt::Task {
             subject: "Subject".to_string(),
             tags: {
                 let mut map = BTreeMap::new();
@@ -75,7 +75,7 @@ mod test {
             ..::todo_txt::Task::default()
         };
 
-        let extra: ::todo_txt::task::Extended = task.into();
+        let extra: todo_txt::task::Extended = task.into();
 
         assert_eq!(extra.flagged, true);
     }

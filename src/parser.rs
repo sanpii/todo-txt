@@ -4,10 +4,10 @@ use std::collections::BTreeMap;
 macro_rules! return_error (
     ($num:expr) => {
         return Err(
-            ::nom::Err::Error(
-                ::nom::error::make_error(
+            nom::Err::Error(
+                nom::error::make_error(
                     "",
-                    ::nom::error::ErrorKind::Tag
+                    nom::error::ErrorKind::Tag
                 )
             )
         );
@@ -91,32 +91,32 @@ macro_rules! regex_tags_shared {
 
 fn get_contexts(subject: &str) -> Vec<String> {
     lazy_static! {
-        static ref REGEX: ::regex::Regex =
-            ::regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap();
+        static ref REGEX: regex::Regex =
+            regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap();
     }
     get_tags(&REGEX, subject)
 }
 
 fn get_projects(subject: &str) -> Vec<String> {
     lazy_static! {
-        static ref REGEX: ::regex::Regex =
-            ::regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap();
+        static ref REGEX: regex::Regex =
+            regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap();
     }
     get_tags(&REGEX, subject)
 }
 
 fn get_hashtags(subject: &str) -> Vec<String> {
     lazy_static! {
-        static ref REGEX: ::regex::Regex =
-            ::regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap();
+        static ref REGEX: regex::Regex =
+            regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap();
     }
     get_tags(&REGEX, subject)
 }
 
 fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
     lazy_static! {
-        static ref REGEX: ::regex::Regex =
-            ::regex::Regex::new(r"(\s+|^)(?P<key>[^\s]+?):(?P<value>[^\s]+)").unwrap();
+        static ref REGEX: regex::Regex =
+            regex::Regex::new(r"(\s+|^)(?P<key>[^\s]+?):(?P<value>[^\s]+)").unwrap();
     }
 
     let mut tags = BTreeMap::new();

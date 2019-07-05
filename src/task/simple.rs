@@ -49,7 +49,7 @@ impl Default for Simple {
     }
 }
 
-impl ::std::str::FromStr for Simple {
+impl std::str::FromStr for Simple {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Simple, ()> {
@@ -57,8 +57,8 @@ impl ::std::str::FromStr for Simple {
     }
 }
 
-impl ::std::fmt::Display for Simple {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+impl std::fmt::Display for Simple {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         if self.finished {
             f.write_str("x ")?;
         }

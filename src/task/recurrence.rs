@@ -7,7 +7,7 @@ pub struct Recurrence {
     pub strict: bool,
 }
 
-impl ::std::str::FromStr for Recurrence {
+impl std::str::FromStr for Recurrence {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, ()> {
@@ -39,8 +39,8 @@ impl ::std::str::FromStr for Recurrence {
     }
 }
 
-impl ::std::fmt::Display for Recurrence {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+impl std::fmt::Display for Recurrence {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         if self.strict {
             f.write_str("+")?;
         }
@@ -51,8 +51,8 @@ impl ::std::fmt::Display for Recurrence {
     }
 }
 
-impl ::std::ops::Add<::chrono::NaiveDate> for Recurrence {
-    type Output = ::chrono::NaiveDate;
+impl std::ops::Add<::chrono::NaiveDate> for Recurrence {
+    type Output = chrono::NaiveDate;
 
     fn add(self, rhs: Self::Output) -> Self::Output {
         use super::Period::{self, *};
@@ -80,6 +80,6 @@ impl ::std::ops::Add<::chrono::NaiveDate> for Recurrence {
             d = Period::days_in_month(m, y);
         }
 
-        ::chrono::NaiveDate::from_ymd(y, m, d)
+        chrono::NaiveDate::from_ymd(y, m, d)
     }
 }

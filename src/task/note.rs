@@ -23,7 +23,7 @@ impl Note {
             }
         };
 
-        let file = match ::std::fs::File::open(note_file.clone()) {
+        let file = match std::fs::File::open(note_file.clone()) {
             Ok(file) => file,
             Err(_) => {
                 error!("Unable to open {:?}", note_file);
@@ -31,7 +31,7 @@ impl Note {
             }
         };
 
-        let mut buffer = ::std::io::BufReader::new(file);
+        let mut buffer = std::io::BufReader::new(file);
         let mut content = String::new();
 
         match buffer.read_to_string(&mut content) {
@@ -74,7 +74,7 @@ impl Note {
         } = note
         {
             if content.is_empty() {
-                match ::std::fs::remove_file(Self::note_file(filename)?) {
+                match std::fs::remove_file(Self::note_file(filename)?) {
                     Ok(_) => (),
                     Err(err) => error!("Unable to delete note: {}", err),
                 };
@@ -92,7 +92,7 @@ impl Note {
 
             let note_file = Self::note_file(filename)?;
 
-            let mut f = match ::std::fs::File::create(note_file) {
+            let mut f = match std::fs::File::create(note_file) {
                 Ok(f) => f,
                 Err(err) => return Err(format!("{}", err)),
             };
@@ -107,7 +107,7 @@ impl Note {
     }
 
     fn new_filename() -> String {
-        let ext = match ::std::env::var("TODO_NOTE_EXT") {
+        let ext = match std::env::var("TODO_NOTE_EXT") {
             Ok(ext) => ext,
             Err(_) => ".txt".to_owned(),
         };
@@ -121,19 +121,19 @@ impl Note {
         use rand::distributions::Alphanumeric;
         use rand::Rng;
 
-        ::rand::thread_rng()
+        rand::thread_rng()
             .sample_iter(&Alphanumeric)
             .take(3)
             .collect()
     }
 
     fn note_file(filename: &str) -> Result<String, String> {
-        let todo_dir = match ::std::env::var("TODO_DIR") {
+        let todo_dir = match std::env::var("TODO_DIR") {
             Ok(todo_dir) => todo_dir,
             Err(_) => return Err("Launch this program via todo.sh".to_owned()),
         };
 
-        let note_dir = match ::std::env::var("TODO_NOTES_DIR") {
+        let note_dir = match std::env::var("TODO_NOTES_DIR") {
             Ok(note_dir) => note_dir,
             Err(_) => format!("{}/notes", todo_dir),
         };
@@ -148,9 +148,9 @@ impl Default for Note {
     }
 }
 
-impl ::std::fmt::Display for Note {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        let tag = match ::std::env::var("TODO_NOTE_TAG") {
+impl std::fmt::Display for Note {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let tag = match std::env::var("TODO_NOTE_TAG") {
             Ok(tag) => tag,
             Err(_) => "note".to_owned(),
         };

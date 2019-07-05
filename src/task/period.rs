@@ -27,7 +27,7 @@ impl Period {
     }
 }
 
-impl ::std::str::FromStr for Period {
+impl std::str::FromStr for Period {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, ()> {
@@ -43,8 +43,8 @@ impl ::std::str::FromStr for Period {
     }
 }
 
-impl ::std::fmt::Display for Period {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+impl std::fmt::Display for Period {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         use self::Period::*;
 
         let s = match *self {
@@ -60,8 +60,8 @@ impl ::std::fmt::Display for Period {
     }
 }
 
-impl ::std::ops::Add<::chrono::NaiveDate> for Period {
-    type Output = ::chrono::NaiveDate;
+impl std::ops::Add<::chrono::NaiveDate> for Period {
+    type Output = chrono::NaiveDate;
 
     fn add(self, rhs: Self::Output) -> Self::Output {
         let rec = super::Recurrence {
