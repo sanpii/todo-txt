@@ -13,16 +13,16 @@ impl std::str::FromStr for Recurrence {
     fn from_str(s: &str) -> Result<Self, ()> {
         let mut s = s;
 
-        if s.len() < 2 || s.len() > 3 {
-            return Err(());
-        }
-
         let strict = if s.get(0..1) == Some("+") {
             s = s.trim_start_matches('+');
             true
         } else {
             false
         };
+
+        if s.len() != 2 {
+            return Err(());
+        }
 
         let num = match s.get(0..1).unwrap().parse() {
             Ok(num) => num,
