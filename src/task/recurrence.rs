@@ -14,25 +14,24 @@ impl std::str::FromStr for Recurrence {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, ()> {
-        let mut s = s;
+        let mut s = String::from(s);
 
         let strict = if s.get(0..1) == Some("+") {
-            s = s.trim_start_matches('+');
+            s.remove(0);
             true
         } else {
             false
         };
 
-        if s.len() != 2 {
-            return Err(());
-        }
+        let period = match s.pop() {
+            Some(c) => super::Period::from_str(&c.to_string())?,
+            None => return Err(()),
+        };
 
-        let num = match s.get(0..1).unwrap().parse() {
+        let num = match s.parse() {
             Ok(num) => num,
             Err(_) => return Err(()),
         };
-
-        let period = super::Period::from_str(s.get(1..2).unwrap())?;
 
         Ok(Self {
             num,
