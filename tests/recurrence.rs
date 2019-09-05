@@ -11,18 +11,18 @@ mod test {
     fn from_invalid() {
         use std::str::FromStr;
 
-        assert_eq!(Recurrence::from_str("1"), Err(()));
-        assert_eq!(Recurrence::from_str("+1"), Err(()));
+        for p in &["1", "+1"] {
+            assert_eq!(Recurrence::from_str(p), Err(()));
+        }
     }
 
     #[test]
     fn from_valid() {
         use std::str::FromStr;
 
-        assert_ne!(Recurrence::from_str("+4y"), Err(()));
-        assert_ne!(Recurrence::from_str("+4m"), Err(()));
-        assert_ne!(Recurrence::from_str("+4w"), Err(()));
-        assert_ne!(Recurrence::from_str("+4d"), Err(()));
+        for p in &["+4y", "+4m", "+4w", "+4d"] {
+            assert_ne!(Recurrence::from_str(p), Err(()));
+        }
     }
 
     #[test]
