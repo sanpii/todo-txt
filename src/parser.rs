@@ -1,6 +1,6 @@
 use lazy_static::lazy_static;
-use nom::{complete, opt, return_error, tag, take};
 use nom::combinator::rest;
+use nom::{complete, opt, return_error, tag, take};
 use std::collections::BTreeMap;
 
 macro_rules! return_error (
