@@ -60,7 +60,7 @@ impl std::fmt::Display for Period {
     }
 }
 
-impl std::ops::Add<::chrono::NaiveDate> for Period {
+impl std::ops::Add<chrono::NaiveDate> for Period {
     type Output = chrono::NaiveDate;
 
     fn add(self, rhs: Self::Output) -> Self::Output {

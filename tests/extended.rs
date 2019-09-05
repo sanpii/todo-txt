@@ -1,7 +1,3 @@
-#[cfg(feature = "serde-support")]
-extern crate serde_json;
-extern crate todo_txt;
-
 #[cfg(all(test, feature = "extended"))]
 mod test {
     use std::collections::BTreeMap;

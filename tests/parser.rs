@@ -1,5 +1,3 @@
-extern crate todo_txt;
-
 #[cfg(test)]
 mod test {
     use std::collections::BTreeMap;

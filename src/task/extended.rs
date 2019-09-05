@@ -117,7 +117,7 @@ impl std::fmt::Display for Extended {
 }
 
 impl std::cmp::PartialOrd for Extended {
-    fn partial_cmp(&self, other: &Self) -> Option<::std::cmp::Ordering> {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         Some(self.cmp(other))
     }
 }

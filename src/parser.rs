@@ -1,3 +1,5 @@
+use lazy_static::lazy_static;
+use nom::{complete, opt, return_error, tag, take};
 use nom::combinator::rest;
 use std::collections::BTreeMap;
 
@@ -15,7 +17,7 @@ macro_rules! return_error (
 );
 
 fn date(input: &str) -> nom::IResult<&str, crate::Date> {
-    do_parse!(
+    nom::do_parse!(
         input,
         year: take!(4)
             >> tag!("-")
@@ -48,7 +50,7 @@ fn date(input: &str) -> nom::IResult<&str, crate::Date> {
 }
 
 fn priority(input: &str) -> nom::IResult<&str, u8> {
-    do_parse!(
+    nom::do_parse!(
         input,
         tag!("(")
             >> priority: take!(1)
@@ -133,7 +135,7 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
 }
 
 fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
-    do_parse!(
+    nom::do_parse!(
         input,
         finished: opt!(complete!(tag!("x ")))
             >> priority: opt!(complete!(priority))

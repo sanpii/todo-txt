@@ -1,6 +1,3 @@
-extern crate chrono;
-extern crate todo_txt;
-
 #[cfg(all(test, feature = "extended"))]
 mod test {
     use chrono::NaiveDate;

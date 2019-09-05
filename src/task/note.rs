@@ -18,7 +18,7 @@ impl Note {
         let note_file = match Self::note_file(filename) {
             Ok(note_file) => note_file,
             Err(err) => {
-                error!("{}", err);
+                log::error!("{}", err);
                 return Note::Short(filename.to_string());
             }
         };
@@ -26,7 +26,7 @@ impl Note {
         let file = match std::fs::File::open(note_file.clone()) {
             Ok(file) => file,
             Err(_) => {
-                error!("Unable to open {:?}", note_file);
+                log::error!("Unable to open {:?}", note_file);
                 return Note::Short(filename.to_string());
             }
         };
@@ -37,7 +37,7 @@ impl Note {
         match buffer.read_to_string(&mut content) {
             Ok(_) => (),
             Err(_) => {
-                error!("Unable to read {:?}", note_file);
+                log::error!("Unable to read {:?}", note_file);
                 return Note::Short(filename.to_string());
             }
         };
@@ -76,7 +76,7 @@ impl Note {
             if content.is_empty() {
                 match std::fs::remove_file(Self::note_file(filename)?) {
                     Ok(_) => (),
-                    Err(err) => error!("Unable to delete note: {}", err),
+                    Err(err) => log::error!("Unable to delete note: {}", err),
                 };
 
                 return Ok(Note::None);

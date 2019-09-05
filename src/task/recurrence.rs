@@ -51,7 +51,7 @@ impl std::fmt::Display for Recurrence {
     }
 }
 
-impl std::ops::Add<::chrono::NaiveDate> for Recurrence {
+impl std::ops::Add<chrono::NaiveDate> for Recurrence {
     type Output = chrono::NaiveDate;
 
     fn add(self, rhs: Self::Output) -> Self::Output {
