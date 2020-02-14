@@ -2,7 +2,6 @@ use std::collections::BTreeMap;
 
 struct Priority;
 
-#[allow(dead_code)]
 impl Priority {
     fn lowest() -> u8 {
         26
@@ -38,7 +37,7 @@ impl Default for Simple {
     fn default() -> Self {
         Self {
             subject: String::new(),
-            priority: 26,
+            priority: Priority::lowest(),
             create_date: None,
             finish_date: None,
             finished: false,
@@ -66,7 +65,7 @@ impl std::fmt::Display for Simple {
             f.write_str("x ")?;
         }
 
-        if self.priority < 26 {
+        if self.priority < Priority::lowest() {
             let priority = (b'A' + self.priority) as char;
 
             f.write_str(format!("({}) ", priority).as_str())?;
