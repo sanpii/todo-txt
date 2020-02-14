@@ -118,7 +118,7 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
 
     let mut tags = BTreeMap::new();
 
-    let new_subject = REGEX.replace_all(subject, |caps: &::regex::Captures| {
+    let new_subject = REGEX.replace_all(subject, |caps: &regex::Captures<'_>| {
         let key = caps.name("key").unwrap().as_str();
         let value = caps.name("value").unwrap().as_str();
 

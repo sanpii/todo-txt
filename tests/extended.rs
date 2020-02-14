@@ -47,11 +47,11 @@ mod test {
             inner: todo_txt::Task {
                 subject: "Test".to_string(),
 
-                ..::todo_txt::Task::default()
+                ..todo_txt::Task::default()
             },
             note: todo_txt::task::Note::Short("A note".to_string()),
 
-            ..::todo_txt::task::Extended::default()
+            ..todo_txt::task::Extended::default()
         };
 
         assert_eq!(actual, expected);
@@ -68,7 +68,7 @@ mod test {
                 map
             },
 
-            ..::todo_txt::Task::default()
+            ..todo_txt::Task::default()
         };
 
         let extra: todo_txt::task::Extended = task.into();
