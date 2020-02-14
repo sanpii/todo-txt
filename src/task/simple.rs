@@ -10,7 +10,10 @@ impl Priority {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
+#[cfg_attr(
+    feature = "serde-support",
+    derive(serde_derive::Serialize, serde_derive::Deserialize)
+)]
 pub struct Simple {
     pub subject: String,
     #[cfg_attr(feature = "serde-support", serde(default = "Priority::lowest"))]

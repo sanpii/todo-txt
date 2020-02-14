@@ -1,5 +1,8 @@
 #[derive(Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "serde-support", derive(Serialize, Deserialize))]
+#[cfg_attr(
+    feature = "serde-support",
+    derive(serde_derive::Serialize, serde_derive::Deserialize)
+)]
 pub enum Period {
     Day,
     Week,
