@@ -5,14 +5,18 @@ lint:fmt:
         - rustup component add rustfmt-preview
     script:
         - cargo fmt
-        - test $(git ls-files --modified | wc -l) -eq 0 || (echo 'You have introduced some unformated code:'; git ls-files --modified | sed 's/^/* /'; echo 'Please run `cargo fmt` and amend your PR.'; exit 1)
+        - if test $(git ls-files --modified | wc -l) -ne 0;
+          then
+              echo 'You have introduced some unformated code:';
+              git ls-files --modified | sed 's/^/* /';
+              echo 'Please run `cargo fmt` and amend your PR.';
+              exit 1;
+          fi
 
 lint:clippy:
     before_script:
-        - rustup self update
-        - rustup install nightly
-        - rustup component add --toolchain=nightly clippy-preview
-    script: cargo +nightly clippy -- --deny warnings
+        - rustup component add clippy
+    script: cargo clippy -- --deny warnings
 
 test:debug:
     script: cargo test --all-features
