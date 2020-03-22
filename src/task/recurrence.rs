@@ -43,7 +43,7 @@ impl std::str::FromStr for Recurrence {
 }
 
 impl std::fmt::Display for Recurrence {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if self.strict {
             f.write_str("+")?;
         }

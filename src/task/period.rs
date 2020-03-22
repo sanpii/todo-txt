@@ -47,7 +47,7 @@ impl std::str::FromStr for Period {
 }
 
 impl std::fmt::Display for Period {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use self::Period::*;
 
         let s = match *self {

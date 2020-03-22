@@ -152,7 +152,7 @@ impl Default for Note {
 }
 
 impl std::fmt::Display for Note {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let tag = match std::env::var("TODO_NOTE_TAG") {
             Ok(tag) => tag,
             Err(_) => "note".to_owned(),

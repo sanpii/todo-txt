@@ -98,7 +98,7 @@ impl std::ops::DerefMut for Extended {
 }
 
 impl std::fmt::Display for Extended {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use std::ops::Deref;
 
         f.write_str(format!("{}", self.deref()).as_str())?;
