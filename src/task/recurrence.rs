@@ -62,6 +62,7 @@ impl std::ops::Add<chrono::NaiveDate> for Recurrence {
         use chrono::{Datelike, Duration};
 
         let delta_months = match self.period {
+            #[allow(clippy::suspicious_arithmetic_impl)]
             Year => 12 * self.num as u32,
             Month => self.num as u32,
             Week => return rhs + Duration::weeks(self.num),

@@ -46,7 +46,7 @@ impl std::convert::From<super::Task> for Extended {
     fn from(task: super::Task) -> Self {
         use std::str::FromStr;
 
-        let mut inner = task.clone();
+        let mut inner = task;
 
         let note = Self::note(&inner);
         inner.tags.remove(&Self::tag_name());
