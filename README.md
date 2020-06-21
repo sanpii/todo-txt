@@ -11,7 +11,7 @@ Add it to your dependencies:
 
 ```toml
 [dependencies]
-todo-txt = "^1.0"
+todo-txt = "2.0"
 ```
 
 And use it:
