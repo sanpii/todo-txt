@@ -14,20 +14,6 @@ pub struct Extended {
 }
 
 impl Extended {
-    pub fn complete(&mut self) {
-        let today = chrono::Local::now().date().naive_local();
-
-        self.finished = true;
-        if self.create_date.is_some() {
-            self.finish_date = Some(today);
-        }
-    }
-
-    pub fn uncomplete(&mut self) {
-        self.finished = false;
-        self.finish_date = None;
-    }
-
     fn note(task: &super::Task) -> super::Note {
         if let Some(file) = task.tags.get(&Self::tag_name()) {
             super::Note::from_file(file)
