@@ -10,7 +10,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -22,7 +22,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -35,7 +35,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -47,7 +47,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -61,7 +61,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -76,7 +76,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -88,7 +88,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -101,7 +101,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -116,7 +116,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -128,7 +128,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -141,7 +141,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -154,7 +154,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -166,7 +166,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -180,7 +180,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -196,7 +196,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -209,7 +209,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -222,7 +222,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -237,7 +237,7 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -254,6 +254,6 @@ mod test {
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::parser::task(&line), Ok(task));
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 }

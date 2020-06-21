@@ -71,7 +71,7 @@ impl std::str::FromStr for Simple {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Simple, ()> {
-        crate::parser::task(&s.to_owned())
+        Ok(crate::parser::task(&s.to_owned()))
     }
 }
 

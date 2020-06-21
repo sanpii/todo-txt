@@ -180,9 +180,6 @@ fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
     )
 }
 
-pub fn task(line: &str) -> Result<crate::Task, ()> {
-    match parse(line) {
-        Ok((_, task)) => Ok(task),
-        _ => Err(()),
-    }
+pub fn task(line: &str) -> crate::Task {
+    parse(line).unwrap().1
 }
