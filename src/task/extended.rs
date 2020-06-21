@@ -18,7 +18,9 @@ impl Extended {
         let today = chrono::Local::now().date().naive_local();
 
         self.finished = true;
-        self.finish_date = Some(today);
+        if self.create_date.is_some() {
+            self.finish_date = Some(today);
+        }
     }
 
     pub fn uncomplete(&mut self) {
