@@ -17,7 +17,7 @@ mod test {
     fn from_valid() {
         use std::str::FromStr;
 
-        for p in &["+4y", "+4m", "+4w", "+4d"] {
+        for p in &["+4y", "+4m", "+4w", "+4d", "12m"] {
             assert_ne!(Recurrence::from_str(p), Err(()));
         }
     }
