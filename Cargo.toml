@@ -20,7 +20,7 @@ version = "^0.4"
 optional = true
 
 [dependencies.rand]
-version = "^0.7"
+version = "^0.8"
 optional = true
 
 [dependencies.serde]
