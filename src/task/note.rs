@@ -126,6 +126,7 @@ impl Note {
 
         rand::thread_rng()
             .sample_iter(&Alphanumeric)
+            .map(char::from)
             .take(3)
             .collect()
     }
