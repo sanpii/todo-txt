@@ -43,10 +43,6 @@ features = ["serde"]
 name = "serialization"
 required-features = ["serde-support"]
 
-[badges]
-travis-ci = { repository = "sanpii/todo-txt", branch = "master" }
-gitlab = { repository = "sanpi/todo-txt", branch = "master" }
-
 [features]
 default = []
 serde-support = ["serde", "serde_derive", "chrono/serde"]
