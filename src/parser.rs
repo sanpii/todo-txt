@@ -58,7 +58,7 @@ fn priority(input: &str) -> nom::IResult<&str, u8> {
             >> ({
                 let p = priority.as_bytes()[0];
 
-                if p >= b'A' && p <= b'Z' {
+                if (b'A'..=b'Z').contains(&p) {
                     p - b'A'
                 } else {
                     26
