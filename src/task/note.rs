@@ -95,6 +95,13 @@ impl Note {
 
             let note_file = Self::note_file(filename)?;
 
+            if let Some(todo_dir) = note_file.parent() {
+                if !todo_dir.exists() {
+                    std::fs::create_dir_all(&todo_dir)
+                        .map_err(|e| e.to_string())?;
+                }
+            }
+
             let mut f = match std::fs::File::create(note_file) {
                 Ok(f) => f,
                 Err(err) => return Err(format!("{}", err)),
@@ -131,7 +138,7 @@ impl Note {
             .collect()
     }
 
-    fn note_file(filename: &str) -> Result<String, String> {
+    fn note_file(filename: &str) -> Result<std::path::PathBuf, String> {
         let todo_dir = match std::env::var("TODO_DIR") {
             Ok(todo_dir) => todo_dir,
             Err(_) => return Err("Launch this program via todo.sh".to_owned()),
@@ -142,7 +149,9 @@ impl Note {
             Err(_) => format!("{}/notes", todo_dir),
         };
 
-        Ok(format!("{}/{}", note_dir, filename))
+        let path = format!("{}/{}", note_dir, filename);
+
+        Ok(path.into())
     }
 }
 
