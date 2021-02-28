@@ -97,8 +97,7 @@ impl Note {
 
             if let Some(todo_dir) = note_file.parent() {
                 if !todo_dir.exists() {
-                    std::fs::create_dir_all(&todo_dir)
-                        .map_err(|e| e.to_string())?;
+                    std::fs::create_dir_all(&todo_dir).map_err(|e| e.to_string())?;
                 }
             }
 
