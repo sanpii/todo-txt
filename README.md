@@ -1,6 +1,6 @@
 # Todo-txt
 
-[![Build Status](https://travis-ci.org/sanpii/todo-txt.svg?branch=master)](https://travis-ci.org/sanpii/todo-txt)
+[![Github actions](https://github.com/sanpii/todo-txt/workflows/.github/workflows/ci.yml/badge.svg)](https://github.com/sanpii/todo-txt/actions?query=workflow%3A.github%2Fworkflows%2Fci.yml)
 [![Build Status](https://gitlab.com/sanpi/todo-txt/badges/master/pipeline.svg)](https://gitlab.com/sanpi/todo-txt/commits/master)
 
 Parser for the [todo.txt](https://github.com/todotxt/todo.txt) format.
