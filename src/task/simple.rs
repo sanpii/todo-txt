@@ -112,3 +112,27 @@ impl std::fmt::Display for Simple {
         Ok(())
     }
 }
+
+impl std::cmp::PartialOrd for Simple {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl std::cmp::Ord for Simple {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        if self.due_date != other.due_date {
+            return self.due_date.cmp(&other.due_date);
+        }
+
+        if self.priority != other.priority {
+            return self.priority.cmp(&other.priority).reverse();
+        }
+
+        if self.subject != other.subject {
+            return self.subject.cmp(&other.subject);
+        }
+
+        std::cmp::Ordering::Equal
+    }
+}

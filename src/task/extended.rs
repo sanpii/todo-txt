@@ -115,18 +115,6 @@ impl std::cmp::PartialOrd for Extended {
 
 impl std::cmp::Ord for Extended {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        if self.inner.due_date != other.inner.due_date {
-            return self.inner.due_date.cmp(&other.inner.due_date);
-        }
-
-        if self.inner.priority != other.inner.priority {
-            return self.inner.priority.cmp(&other.inner.priority).reverse();
-        }
-
-        if self.inner.subject != other.inner.subject {
-            return self.inner.subject.cmp(&other.inner.subject);
-        }
-
-        std::cmp::Ordering::Equal
+        self.inner.cmp(&other.inner)
     }
 }
