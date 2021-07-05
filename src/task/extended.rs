@@ -53,8 +53,8 @@ impl std::convert::From<super::Task> for Extended {
         inner.tags.remove(&"f".to_owned());
 
         Self {
-            note,
             inner,
+            note,
             recurrence,
             flagged,
         }
