@@ -1,6 +1,7 @@
 use lazy_static::lazy_static;
-use nom::combinator::rest;
-use nom::{complete, opt, return_error, tag, take};
+use nom::bytes::complete::{tag, take};
+use nom::combinator::{complete, opt, rest};
+use nom::sequence::tuple;
 use std::collections::BTreeMap;
 
 macro_rules! return_error (
@@ -17,54 +18,50 @@ macro_rules! return_error (
 );
 
 fn date(input: &str) -> nom::IResult<&str, crate::Date> {
-    nom::do_parse!(
-        input,
-        year: take!(4)
-            >> tag!("-")
-            >> month: take!(2)
-            >> tag!("-")
-            >> day: take!(2)
-            >> tag!(" ")
-            >> ({
-                let year = match year.parse() {
-                    Ok(year) => year,
-                    Err(_) => return_error!(1),
-                };
+    let (input, (year, _, month, _, day, _)) = tuple((
+        take(4usize),
+        tag("-"),
+        take(2usize),
+        tag("-"),
+        take(2usize),
+        tag(" "),
+    ))(input)?;
 
-                let month = match month.parse() {
-                    Ok(month) => month,
-                    Err(_) => return_error!(2),
-                };
+    let year = match year.parse() {
+        Ok(year) => year,
+        Err(_) => return_error!(1),
+    };
 
-                let day = match day.parse() {
-                    Ok(day) => day,
-                    Err(_) => return_error!(3),
-                };
+    let month = match month.parse() {
+        Ok(month) => month,
+        Err(_) => return_error!(2),
+    };
 
-                match crate::Date::from_ymd_opt(year, month, day) {
-                    Some(date) => date,
-                    None => return_error!(4),
-                }
-            })
-    )
+    let day = match day.parse() {
+        Ok(day) => day,
+        Err(_) => return_error!(3),
+    };
+
+    let date = match crate::Date::from_ymd_opt(year, month, day) {
+        Some(date) => date,
+        None => return_error!(4),
+    };
+
+    Ok((input, date))
 }
 
 fn priority(input: &str) -> nom::IResult<&str, u8> {
-    nom::do_parse!(
-        input,
-        tag!("(")
-            >> priority: take!(1)
-            >> tag!(") ")
-            >> ({
-                let p = priority.as_bytes()[0];
+    let (input, (_, priority, ..)) = tuple((tag("("), take(1usize), tag(") ")))(input)?;
 
-                if (b'A'..=b'Z').contains(&p) {
-                    p - b'A'
-                } else {
-                    26
-                }
-            })
-    )
+    let p = priority.as_bytes()[0];
+
+    let priority = if (b'A'..=b'Z').contains(&p) {
+        p - b'A'
+    } else {
+        26
+    };
+
+    Ok((input, priority))
 }
 
 fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String> {
@@ -135,49 +132,46 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
 }
 
 fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
-    nom::do_parse!(
-        input,
-        finished: opt!(complete!(tag!("x ")))
-            >> priority: opt!(complete!(priority))
-            >> finish_date: opt!(complete!(date))
-            >> create_date: opt!(complete!(date))
-            >> rest: rest
-            >> ({
-                let mut task = crate::Task {
-                    priority: priority.unwrap_or(26),
-                    create_date: create_date.or(finish_date),
-                    finish_date: create_date.and(finish_date),
-                    finished: finished.is_some(),
-                    contexts: get_contexts(rest),
-                    projects: get_projects(rest),
-                    hashtags: get_hashtags(rest),
+    let (input, (finished, priority, finish_date, create_date, rest)) = tuple((
+        opt(complete(tag("x "))),
+        opt(complete(priority)),
+        opt(complete(date)),
+        opt(complete(date)),
+        rest,
+    ))(input)?;
 
-                    ..crate::Task::default()
-                };
+    let mut task = crate::Task {
+        priority: priority.unwrap_or(26),
+        create_date: create_date.or(finish_date),
+        finish_date: create_date.and(finish_date),
+        finished: finished.is_some(),
+        contexts: get_contexts(rest),
+        projects: get_projects(rest),
+        hashtags: get_hashtags(rest),
 
-                let (subject, mut tags) = get_keywords(rest);
-                task.subject = subject;
+        ..crate::Task::default()
+    };
 
-                if let Some(due) = tags.remove("due") {
-                    task.due_date = match crate::Date::parse_from_str(due.as_str(), "%Y-%m-%d") {
-                        Ok(due) => Some(due),
-                        Err(_) => None,
-                    };
-                }
+    let (subject, mut tags) = get_keywords(rest);
+    task.subject = subject;
 
-                if let Some(t) = tags.remove("t") {
-                    task.threshold_date = match crate::Date::parse_from_str(t.as_str(), "%Y-%m-%d")
-                    {
-                        Ok(t) => Some(t),
-                        Err(_) => None,
-                    };
-                }
+    if let Some(due) = tags.remove("due") {
+        task.due_date = match crate::Date::parse_from_str(due.as_str(), "%Y-%m-%d") {
+            Ok(due) => Some(due),
+            Err(_) => None,
+        };
+    }
 
-                task.tags = tags;
+    if let Some(t) = tags.remove("t") {
+        task.threshold_date = match crate::Date::parse_from_str(t.as_str(), "%Y-%m-%d") {
+            Ok(t) => Some(t),
+            Err(_) => None,
+        };
+    }
 
-                task
-            })
-    )
+    task.tags = tags;
+
+    Ok((input, task))
 }
 
 pub fn task(line: &str) -> crate::Task {
