@@ -13,7 +13,7 @@ macro_rules! return_error (
                     nom::error::ErrorKind::Tag
                 )
             )
-        );
+        )
     }
 );
 
