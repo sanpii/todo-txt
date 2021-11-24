@@ -6,7 +6,6 @@ description = "Parser for the todo.txt format"
 license = "MIT"
 keywords = ["parser", "todotxt"]
 repository = "https://github.com/sanpii/todo-txt"
-readme = "README.md"
 edition = "2021"
 
 [dependencies]
