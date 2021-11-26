@@ -62,9 +62,9 @@ impl std::convert::From<super::Task> for Extended {
 }
 
 impl std::str::FromStr for Extended {
-    type Err = ();
+    type Err = crate::Error;
 
-    fn from_str(s: &str) -> Result<Self, ()> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let task = super::Task::from_str(s)?;
 
         Ok(task.into())

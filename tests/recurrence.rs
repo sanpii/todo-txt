@@ -9,7 +9,7 @@ mod test {
         use std::str::FromStr;
 
         for p in &["1", "+1"] {
-            assert_eq!(Recurrence::from_str(p), Err(()));
+            assert!(Recurrence::from_str(p).is_err());
         }
     }
 
@@ -18,7 +18,7 @@ mod test {
         use std::str::FromStr;
 
         for p in &["+4y", "+4m", "+4w", "+4d", "12m"] {
-            assert_ne!(Recurrence::from_str(p), Err(()));
+            assert!(Recurrence::from_str(p).is_ok());
         }
     }
 

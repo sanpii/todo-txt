@@ -11,9 +11,9 @@ pub struct Recurrence {
 }
 
 impl std::str::FromStr for Recurrence {
-    type Err = ();
+    type Err = crate::Error;
 
-    fn from_str(s: &str) -> Result<Self, ()> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut s = String::from(s);
 
         let strict = if s.get(0..1) == Some("+") {
@@ -25,13 +25,12 @@ impl std::str::FromStr for Recurrence {
 
         let period = match s.pop() {
             Some(c) => super::Period::from_str(&c.to_string())?,
-            None => return Err(()),
+            None => return Err(crate::Error::InvalidRecurrence(s.to_string())),
         };
 
-        let num = match s.parse() {
-            Ok(num) => num,
-            Err(_) => return Err(()),
-        };
+        let num = s
+            .parse()
+            .map_err(|_| crate::Error::InvalidRecurrence(s.to_string()))?;
 
         Ok(Self {
             num,

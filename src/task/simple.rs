@@ -60,9 +60,9 @@ impl Default for Simple {
 }
 
 impl std::str::FromStr for Simple {
-    type Err = ();
+    type Err = crate::Error;
 
-    fn from_str(s: &str) -> Result<Simple, ()> {
+    fn from_str(s: &str) -> Result<Simple, Self::Err> {
         Ok(crate::parser::task(&s.to_owned()))
     }
 }

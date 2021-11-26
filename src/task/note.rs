@@ -57,7 +57,8 @@ impl Note {
             Note::Short(ref content) | Note::Long { ref content, .. } => Some(content.clone()),
         }
     }
-    pub fn write(&self) -> Result<Self, String> {
+
+    pub fn write(&self) -> crate::Result<Self> {
         let mut note = self.clone();
 
         if self == &Note::None {
@@ -97,19 +98,12 @@ impl Note {
 
             if let Some(todo_dir) = note_file.parent() {
                 if !todo_dir.exists() {
-                    std::fs::create_dir_all(&todo_dir).map_err(|e| e.to_string())?;
+                    std::fs::create_dir_all(&todo_dir).map_err(crate::Error::Note)?;
                 }
             }
 
-            let mut f = match std::fs::File::create(note_file) {
-                Ok(f) => f,
-                Err(err) => return Err(format!("{}", err)),
-            };
-
-            match f.write(content.as_bytes()) {
-                Ok(_) => (),
-                Err(err) => return Err(format!("{}", err)),
-            };
+            let mut f = std::fs::File::create(note_file).map_err(crate::Error::Note)?;
+            f.write(content.as_bytes()).map_err(crate::Error::Note)?;
         }
 
         Ok(note)
@@ -137,10 +131,10 @@ impl Note {
             .collect()
     }
 
-    fn note_file(filename: &str) -> Result<std::path::PathBuf, String> {
+    fn note_file(filename: &str) -> crate::Result<std::path::PathBuf> {
         let todo_dir = match std::env::var("TODO_DIR") {
             Ok(todo_dir) => todo_dir,
-            Err(_) => return Err("Launch this program via todo.sh".to_owned()),
+            Err(_) => return Err(crate::Error::Env),
         };
 
         let note_dir = match std::env::var("TODO_NOTES_DIR") {

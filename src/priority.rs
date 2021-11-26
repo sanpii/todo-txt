@@ -36,7 +36,7 @@ impl From<Priority> for char {
 }
 
 impl TryFrom<char> for Priority {
-    type Error = ();
+    type Error = crate::Error;
 
     fn try_from(value: char) -> Result<Self, Self::Error> {
         let c = value.to_ascii_uppercase() as u8;
@@ -44,7 +44,7 @@ impl TryFrom<char> for Priority {
         if (b'A'..=b'Z').contains(&c) {
             Ok(Self(c - b'A'))
         } else {
-            Err(())
+            Err(crate::Error::InvalidPriority(value))
         }
     }
 }

@@ -31,9 +31,9 @@ impl Period {
 }
 
 impl std::str::FromStr for Period {
-    type Err = ();
+    type Err = crate::Error;
 
-    fn from_str(s: &str) -> Result<Self, ()> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         use self::Period::*;
 
         match s {
@@ -41,7 +41,7 @@ impl std::str::FromStr for Period {
             "w" => Ok(Week),
             "m" => Ok(Month),
             "y" => Ok(Year),
-            _ => Err(()),
+            _ => Err(crate::Error::InvalidPeriod(s.to_string())),
         }
     }
 }
