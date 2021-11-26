@@ -17,7 +17,7 @@ mod test {
     fn display() {
         let task = todo_txt::Task {
             subject: "@Email SoAndSo at soandso@example.com".to_owned(),
-            priority: 1,
+            priority: 1.into(),
             finished: true,
             due_date: Some(todo_txt::Date::from_ymd(2019, 2, 10)),
             finish_date: Some(todo_txt::Date::from_ymd(2019, 2, 15)),

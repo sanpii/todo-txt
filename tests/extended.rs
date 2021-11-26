@@ -14,7 +14,7 @@ mod test {
         let expected = todo_txt::task::Extended {
             inner: todo_txt::Task {
                 subject: "Test".to_string(),
-                priority: 26,
+                priority: 26.into(),
                 create_date: None,
                 finish_date: None,
                 contexts: Vec::new(),

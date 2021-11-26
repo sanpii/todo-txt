@@ -50,15 +50,12 @@ fn date(input: &str) -> nom::IResult<&str, crate::Date> {
     Ok((input, date))
 }
 
-fn priority(input: &str) -> nom::IResult<&str, u8> {
+fn priority(input: &str) -> nom::IResult<&str, crate::Priority> {
     let (input, (_, priority, ..)) = tuple((tag("("), take(1usize), tag(") ")))(input)?;
 
-    let p = priority.as_bytes()[0];
-
-    let priority = if (b'A'..=b'Z').contains(&p) {
-        p - b'A'
-    } else {
-        26
+    let priority = match priority.chars().next() {
+        Some(c) => c.try_into().unwrap_or_default(),
+        None => crate::Priority::default(),
     };
 
     Ok((input, priority))
@@ -141,7 +138,7 @@ fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
     ))(input)?;
 
     let mut task = crate::Task {
-        priority: priority.unwrap_or(26),
+        priority: priority.unwrap_or_default(),
         create_date: create_date.or(finish_date),
         finish_date: create_date.and(finish_date),
         finished: finished.is_some(),

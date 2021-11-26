@@ -1,13 +1,5 @@
 use std::collections::BTreeMap;
 
-struct Priority;
-
-impl Priority {
-    fn lowest() -> u8 {
-        26
-    }
-}
-
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(
     feature = "serde-support",
@@ -15,8 +7,8 @@ impl Priority {
 )]
 pub struct Simple {
     pub subject: String,
-    #[cfg_attr(feature = "serde-support", serde(default = "Priority::lowest"))]
-    pub priority: u8,
+    #[cfg_attr(feature = "serde-support", serde(default))]
+    pub priority: crate::Priority,
     pub create_date: Option<crate::Date>,
     pub finish_date: Option<crate::Date>,
     #[cfg_attr(feature = "serde-support", serde(default))]
@@ -53,7 +45,7 @@ impl Default for Simple {
     fn default() -> Self {
         Self {
             subject: String::new(),
-            priority: Priority::lowest(),
+            priority: crate::Priority::lowest(),
             create_date: None,
             finish_date: None,
             finished: false,
@@ -81,10 +73,8 @@ impl std::fmt::Display for Simple {
             f.write_str("x ")?;
         }
 
-        if self.priority < Priority::lowest() {
-            let priority = (b'A' + self.priority) as char;
-
-            f.write_str(format!("({}) ", priority).as_str())?;
+        if !self.priority.is_lowest() {
+            f.write_str(format!("({}) ", self.priority).as_str())?;
         }
 
         if let Some(finish_date) = self.finish_date {
@@ -126,7 +116,7 @@ impl std::cmp::Ord for Simple {
         }
 
         if self.priority != other.priority {
-            return self.priority.cmp(&other.priority).reverse();
+            return self.priority.cmp(&other.priority);
         }
 
         if self.subject != other.subject {

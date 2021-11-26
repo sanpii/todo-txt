@@ -69,7 +69,7 @@ mod test {
         let line = "x (A) 2017-11-26 2017-11-25 subject".to_owned();
         let task = todo_txt::Task {
             subject: "subject".to_owned(),
-            priority: 0,
+            priority: 0.into(),
             create_date: Some(todo_txt::Date::from_ymd(2017, 11, 25)),
             finish_date: Some(todo_txt::Date::from_ymd(2017, 11, 26)),
             finished: true,
@@ -232,7 +232,7 @@ mod test {
         let task = todo_txt::Task {
             subject: "Open issue on todo-txt parser".to_owned(),
             threshold_date: Some(todo_txt::Date::from_ymd(2018, 4, 3)),
-            priority: 2,
+            priority: 2.into(),
 
             ..Default::default()
         };
