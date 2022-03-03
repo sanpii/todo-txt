@@ -11,6 +11,8 @@ pub struct Extended {
     pub recurrence: Option<super::Recurrence>,
     #[cfg_attr(feature = "serde-support", serde(default))]
     pub flagged: bool,
+    #[cfg_attr(feature = "serde-support", serde(default))]
+    pub hidden: bool,
 }
 
 impl Extended {
@@ -52,11 +54,15 @@ impl std::convert::From<super::Task> for Extended {
         let flagged = inner.tags.contains_key(&"f".to_owned());
         inner.tags.remove(&"f".to_owned());
 
+        let hidden = inner.tags.contains_key(&"h".to_owned());
+        inner.tags.remove(&"h".to_owned());
+
         Self {
             inner,
             note,
             recurrence,
             flagged,
+            hidden,
         }
     }
 }

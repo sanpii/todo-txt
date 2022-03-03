@@ -28,6 +28,7 @@ mod test {
             flagged: false,
             note: todo_txt::task::Note::None,
             recurrence: None,
+            hidden: false,
         };
 
         assert_eq!(actual, expected);
