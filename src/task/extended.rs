@@ -109,6 +109,10 @@ impl std::fmt::Display for Extended {
             f.write_str(" f:1")?;
         }
 
+        if self.hidden {
+            f.write_str(" h:1")?;
+        }
+
         Ok(())
     }
 }
