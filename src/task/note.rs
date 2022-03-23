@@ -109,6 +109,16 @@ impl Note {
         Ok(note)
     }
 
+    pub fn delete(&mut self) -> crate::Result {
+        if let Self::Long { filename, .. } = self {
+            std::fs::remove_file(&filename).map_err(crate::Error::Note)?;
+        }
+
+        *self = Self::None;
+
+        Ok(())
+    }
+
     fn new_filename() -> String {
         let ext = match std::env::var("TODO_NOTE_EXT") {
             Ok(ext) => ext,
