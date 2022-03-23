@@ -77,28 +77,13 @@ impl Note {
             ref content,
         } = note
         {
-            if content.is_empty() {
-                match std::fs::remove_file(Self::note_file(filename)?) {
-                    Ok(_) => (),
-                    Err(err) => log::error!("Unable to delete note: {}", err),
-                };
-
-                return Ok(Note::None);
-            }
-        }
-
-        if let Note::Long {
-            ref filename,
-            ref content,
-        } = note
-        {
             use std::io::Write;
 
             let note_file = Self::note_file(filename)?;
 
-            if let Some(todo_dir) = note_file.parent() {
-                if !todo_dir.exists() {
-                    std::fs::create_dir_all(&todo_dir).map_err(crate::Error::Note)?;
+            if let Some(note_dir) = note_file.parent() {
+                if !note_dir.exists() {
+                    std::fs::create_dir_all(&note_dir).map_err(crate::Error::Note)?;
                 }
             }
 
