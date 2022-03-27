@@ -58,15 +58,13 @@ impl Note {
         }
     }
 
-    pub fn write(&self) -> crate::Result<Self> {
-        let mut note = self.clone();
-
+    pub fn write(&mut self) -> crate::Result {
         if self == &Note::None {
-            return Ok(note);
+            return Ok(());
         }
 
         if let Note::Short(ref content) = *self {
-            note = Note::Long {
+            *self = Note::Long {
                 filename: Self::new_filename(),
                 content: content.clone(),
             }
@@ -75,7 +73,7 @@ impl Note {
         if let Note::Long {
             ref filename,
             ref content,
-        } = note
+        } = *self
         {
             use std::io::Write;
 
@@ -91,7 +89,7 @@ impl Note {
             f.write(content.as_bytes()).map_err(crate::Error::Note)?;
         }
 
-        Ok(note)
+        Ok(())
     }
 
     pub fn delete(&mut self) -> crate::Result {
