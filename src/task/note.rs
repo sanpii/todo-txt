@@ -1,10 +1,11 @@
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde-support",
     derive(serde_derive::Serialize, serde_derive::Deserialize)
 )]
 #[cfg_attr(feature = "serde-support", serde(untagged))]
 pub enum Note {
+    #[default]
     None,
     Short(String),
     Long { filename: String, content: String },
@@ -138,12 +139,6 @@ impl Note {
         let path = format!("{}/{}", note_dir, filename);
 
         Ok(path.into())
-    }
-}
-
-impl Default for Note {
-    fn default() -> Self {
-        Note::None
     }
 }
 
