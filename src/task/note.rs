@@ -8,7 +8,10 @@ pub enum Note {
     #[default]
     None,
     Short(String),
-    Long { filename: String, content: String },
+    Long {
+        filename: String,
+        content: String,
+    },
 }
 
 impl Note {
