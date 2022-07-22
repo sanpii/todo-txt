@@ -16,6 +16,10 @@ pub struct Extended {
 }
 
 impl Extended {
+    pub fn has_note(&self) -> bool {
+        self.note != super::Note::None
+    }
+
     fn note(task: &super::Task) -> super::Note {
         if let Some(file) = task.tags.get(&Self::tag_name()) {
             super::Note::from_file(file)
