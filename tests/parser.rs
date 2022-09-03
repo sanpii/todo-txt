@@ -132,11 +132,11 @@ mod test {
     }
 
     #[test]
-    fn case_insensitive_tag() {
+    fn case_sensitive_tag() {
         let line = "Email SoAndSo at soandso@example.com +Project1".to_owned();
         let task = todo_txt::Task {
             subject: "Email SoAndSo at soandso@example.com +Project1".to_owned(),
-            projects: vec!["project1".to_owned()],
+            projects: vec!["Project1".to_string()],
 
             ..Default::default()
         };
@@ -149,7 +149,7 @@ mod test {
         let line = "+Project1".to_owned();
         let task = todo_txt::Task {
             subject: "+Project1".to_owned(),
-            projects: vec!["project1".to_owned()],
+            projects: vec!["Project1".to_string()],
 
             ..Default::default()
         };
