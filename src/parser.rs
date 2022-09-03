@@ -64,7 +64,7 @@ fn priority(input: &str) -> nom::IResult<&str, crate::Priority> {
 fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String> {
     let mut tags = regex
         .captures_iter(subject)
-        .map(|x| x["tag"].to_lowercase())
+        .map(|x| x["tag"].to_string())
         .filter(|x| !x.is_empty())
         .collect::<Vec<_>>();
 
