@@ -117,7 +117,7 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
         let value = caps.name("value").unwrap().as_str();
 
         if value.starts_with('/') {
-            format!(" {}:{}", key, value)
+            format!(" {key}:{value}")
         } else {
             tags.insert(key.to_owned(), value.to_owned());
 

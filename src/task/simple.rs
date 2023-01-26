@@ -96,7 +96,7 @@ impl std::fmt::Display for Simple {
         }
 
         for (key, value) in &self.tags {
-            f.write_str(format!(" {}:{}", key, value).as_str())?;
+            f.write_str(format!(" {key}:{value}").as_str())?;
         }
 
         Ok(())
