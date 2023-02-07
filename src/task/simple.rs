@@ -27,7 +27,7 @@ pub struct Simple {
 
 impl Simple {
     pub fn complete(&mut self) {
-        let today = chrono::Local::now().date().naive_local();
+        let today = chrono::Local::now().date_naive();
 
         self.finished = true;
         if self.create_date.is_some() {
