@@ -111,12 +111,12 @@ impl std::cmp::PartialOrd for Simple {
 
 impl std::cmp::Ord for Simple {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        if self.due_date != other.due_date {
-            return self.due_date.cmp(&other.due_date);
-        }
-
         if self.priority != other.priority {
             return self.priority.cmp(&other.priority);
+        }
+
+        if self.due_date != other.due_date {
+            return self.due_date.cmp(&other.due_date);
         }
 
         if self.subject != other.subject {
