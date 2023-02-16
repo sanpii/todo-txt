@@ -6,18 +6,22 @@
 pub struct Priority(u8);
 
 impl Priority {
+    #[must_use]
     pub fn new() -> Self {
         Self::default()
     }
 
+    #[must_use]
     pub fn from(priority: u8) -> Self {
         Self(priority)
     }
 
+    #[must_use]
     pub fn lowest() -> Self {
         Self::default()
     }
 
+    #[must_use]
     pub fn is_lowest(&self) -> bool {
         self == &Self::lowest()
     }

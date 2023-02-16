@@ -171,6 +171,7 @@ fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
     Ok((input, task))
 }
 
+#[must_use]
 pub fn task(line: &str) -> crate::Task {
     parse(line).unwrap().1
 }
