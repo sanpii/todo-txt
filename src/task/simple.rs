@@ -87,6 +87,14 @@ impl std::fmt::Display for Simple {
 
         f.write_str(self.subject.as_str())?;
 
+        for project in &self.projects {
+            f.write_str(format!(" +{project}").as_str())?;
+        }
+
+        for context in &self.contexts {
+            f.write_str(format!(" @{context}").as_str())?;
+        }
+
         if let Some(due_date) = self.due_date {
             f.write_str(format!(" due:{}", due_date.format("%Y-%m-%d")).as_str())?;
         }

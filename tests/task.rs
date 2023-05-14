@@ -35,6 +35,30 @@ mod test {
     }
 
     #[test]
+    fn display_projects_contexts() {
+        let task = todo_txt::Task {
+            subject: "@Email SoAndSo at soandso@example.com".to_owned(),
+            priority: 1.into(),
+            finished: true,
+            due_date: Some(todo_txt::Date::from_ymd(2019, 2, 10)),
+            finish_date: Some(todo_txt::Date::from_ymd(2019, 2, 15)),
+            create_date: Some(todo_txt::Date::from_ymd(2019, 2, 5)),
+            projects: vec!["project1".to_string(), "project2".to_string()],
+            contexts: vec!["context1".to_string(), "context2".to_string()],
+
+            ..Default::default()
+        };
+
+        let line = format!("{}", task);
+
+        assert_eq!(
+            line,
+            "x (B) 2019-02-15 2019-02-05 @Email SoAndSo at soandso@example.com +project1 +project2 @context1 @context2 due:2019-02-10"
+        );
+    }
+
+
+    #[test]
     #[cfg(feature = "serde-support")]
     fn test_simple_deserialize() {
         let json = r#"{
