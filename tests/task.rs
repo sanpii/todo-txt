@@ -19,9 +19,9 @@ mod test {
             subject: "@Email SoAndSo at soandso@example.com".to_owned(),
             priority: 1.into(),
             finished: true,
-            due_date: Some(todo_txt::Date::from_ymd(2019, 2, 10)),
-            finish_date: Some(todo_txt::Date::from_ymd(2019, 2, 15)),
-            create_date: Some(todo_txt::Date::from_ymd(2019, 2, 5)),
+            due_date: todo_txt::Date::from_ymd_opt(2019, 2, 10),
+            finish_date: todo_txt::Date::from_ymd_opt(2019, 2, 15),
+            create_date: todo_txt::Date::from_ymd_opt(2019, 2, 5),
 
             ..Default::default()
         };
@@ -90,22 +90,16 @@ mod test {
 
         assert_eq!(task.subject, "Test");
         assert_eq!(task.priority, 26);
-        assert_eq!(
-            task.create_date,
-            Some(todo_txt::Date::from_ymd(2018, 03, 01))
-        );
-        assert_eq!(
-            task.finish_date,
-            Some(todo_txt::Date::from_ymd(2018, 03, 04))
-        );
+        assert_eq!(task.create_date, todo_txt::Date::from_ymd_opt(2018, 03, 01));
+        assert_eq!(task.finish_date, todo_txt::Date::from_ymd_opt(2018, 03, 04));
         assert!(!task.finished);
         assert_eq!(task.contexts[0], "context_a");
         assert_eq!(task.contexts[1], "context_b");
         assert_eq!(
             task.threshold_date,
-            Some(todo_txt::Date::from_ymd(2018, 03, 02))
+            todo_txt::Date::from_ymd_opt(2018, 03, 02)
         );
-        assert_eq!(task.due_date, Some(todo_txt::Date::from_ymd(2018, 03, 03)));
+        assert_eq!(task.due_date, todo_txt::Date::from_ymd_opt(2018, 03, 03));
         assert!(task.projects.is_empty());
         assert_eq!(task.hashtags[0], "tag_a");
         assert_eq!(task.hashtags[1], "tag_b");

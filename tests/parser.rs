@@ -30,7 +30,7 @@ mod test {
         let line = "x 2017-11-25 subject".to_owned();
         let task = todo_txt::Task {
             subject: "subject".to_owned(),
-            create_date: Some(todo_txt::Date::from_ymd(2017, 11, 25)),
+            create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
             finished: true,
             ..Default::default()
         };
@@ -55,8 +55,8 @@ mod test {
         let line = "x 2017-11-26 2017-11-25 subject".to_owned();
         let task = todo_txt::Task {
             subject: "subject".to_owned(),
-            create_date: Some(todo_txt::Date::from_ymd(2017, 11, 25)),
-            finish_date: Some(todo_txt::Date::from_ymd(2017, 11, 26)),
+            create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
+            finish_date: todo_txt::Date::from_ymd_opt(2017, 11, 26),
             finished: true,
             ..Default::default()
         };
@@ -70,8 +70,8 @@ mod test {
         let task = todo_txt::Task {
             subject: "subject".to_owned(),
             priority: 0.into(),
-            create_date: Some(todo_txt::Date::from_ymd(2017, 11, 25)),
-            finish_date: Some(todo_txt::Date::from_ymd(2017, 11, 26)),
+            create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
+            finish_date: todo_txt::Date::from_ymd_opt(2017, 11, 26),
             finished: true,
             ..Default::default()
         };
@@ -204,7 +204,7 @@ mod test {
         let line = "Email SoAndSo at soandso@example.com due:2018-01-01".to_owned();
         let task = todo_txt::Task {
             subject: "Email SoAndSo at soandso@example.com".to_owned(),
-            due_date: Some(todo_txt::Date::from_ymd(2018, 1, 1)),
+            due_date: todo_txt::Date::from_ymd_opt(2018, 1, 1),
 
             ..Default::default()
         };
@@ -217,7 +217,7 @@ mod test {
         let line = "Email SoAndSo at soandso@example.com t:2018-01-01".to_owned();
         let task = todo_txt::Task {
             subject: "Email SoAndSo at soandso@example.com".to_owned(),
-            threshold_date: Some(todo_txt::Date::from_ymd(2018, 1, 1)),
+            threshold_date: todo_txt::Date::from_ymd_opt(2018, 1, 1),
 
             ..Default::default()
         };
@@ -231,7 +231,7 @@ mod test {
 
         let task = todo_txt::Task {
             subject: "Open issue on todo-txt parser".to_owned(),
-            threshold_date: Some(todo_txt::Date::from_ymd(2018, 4, 3)),
+            threshold_date: todo_txt::Date::from_ymd_opt(2018, 4, 3),
             priority: 2.into(),
 
             ..Default::default()
@@ -248,7 +248,7 @@ mod test {
         let line = "2018-03-26 test url:http://example.org".to_owned();
         let task = todo_txt::Task {
             subject: "test".to_owned(),
-            create_date: Some(todo_txt::Date::from_ymd(2018, 3, 26)),
+            create_date: todo_txt::Date::from_ymd_opt(2018, 3, 26),
             tags: keywords,
 
             ..Default::default()

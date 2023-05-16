@@ -82,6 +82,6 @@ impl std::ops::Add<chrono::NaiveDate> for Recurrence {
             d = Period::days_in_month(m, y);
         }
 
-        chrono::NaiveDate::from_ymd(y, m, d)
+        chrono::NaiveDate::from_ymd_opt(y, m, d).unwrap()
     }
 }

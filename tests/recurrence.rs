@@ -24,32 +24,36 @@ mod test {
 
     #[test]
     fn add_years() {
-        let current = Recurrence::from_str("4y").unwrap() + NaiveDate::from_ymd(1998, 1, 1);
-        let expected = NaiveDate::from_ymd(2002, 1, 1);
+        let current =
+            Recurrence::from_str("4y").unwrap() + NaiveDate::from_ymd_opt(1998, 1, 1).unwrap();
+        let expected = NaiveDate::from_ymd_opt(2002, 1, 1).unwrap();
 
         assert_eq!(current, expected);
     }
 
     #[test]
     fn add_months() {
-        let current = Recurrence::from_str("4m").unwrap() + NaiveDate::from_ymd(1999, 11, 1);
-        let expected = NaiveDate::from_ymd(2000, 3, 1);
+        let current =
+            Recurrence::from_str("4m").unwrap() + NaiveDate::from_ymd_opt(1999, 11, 1).unwrap();
+        let expected = NaiveDate::from_ymd_opt(2000, 3, 1).unwrap();
 
         assert_eq!(current, expected);
     }
 
     #[test]
     fn add_months_extra() {
-        let current = Recurrence::from_str("2m").unwrap() + NaiveDate::from_ymd(2009, 12, 31);
-        let expected = NaiveDate::from_ymd(2010, 2, 28);
+        let current =
+            Recurrence::from_str("2m").unwrap() + NaiveDate::from_ymd_opt(2009, 12, 31).unwrap();
+        let expected = NaiveDate::from_ymd_opt(2010, 2, 28).unwrap();
 
         assert_eq!(current, expected);
     }
 
     #[test]
     fn add_months_sticky() {
-        let current = Recurrence::from_str("3m").unwrap() + NaiveDate::from_ymd(2010, 2, 28);
-        let expected = NaiveDate::from_ymd(2010, 5, 31);
+        let current =
+            Recurrence::from_str("3m").unwrap() + NaiveDate::from_ymd_opt(2010, 2, 28).unwrap();
+        let expected = NaiveDate::from_ymd_opt(2010, 5, 31).unwrap();
 
         assert_eq!(current, expected);
     }
