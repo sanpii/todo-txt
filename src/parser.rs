@@ -137,6 +137,7 @@ fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
         rest,
     ))(input)?;
 
+    #[allow(deprecated)]
     let mut task = crate::Task {
         priority: priority.unwrap_or_default(),
         create_date: create_date.or(finish_date),
