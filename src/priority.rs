@@ -45,7 +45,7 @@ impl TryFrom<char> for Priority {
     fn try_from(value: char) -> Result<Self, Self::Error> {
         let c = value.to_ascii_uppercase() as u8;
 
-        if (b'A'..=b'Z').contains(&c) {
+        if c.is_ascii_uppercase() {
             Ok(Self(c - b'A'))
         } else {
             Err(crate::Error::InvalidPriority(value))
