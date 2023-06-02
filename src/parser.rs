@@ -1,4 +1,3 @@
-use lazy_static::lazy_static;
 use nom::bytes::complete::{tag, take};
 use nom::combinator::{complete, opt, rest};
 use nom::sequence::tuple;
@@ -81,38 +80,37 @@ macro_rules! regex_tags_shared {
 }
 
 fn get_contexts(subject: &str) -> Vec<String> {
-    lazy_static! {
-        static ref REGEX: regex::Regex =
-            regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap();
-    }
-    get_tags(&REGEX, subject)
+    static REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    let regex =
+        REGEX.get_or_init(|| regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap());
+
+    get_tags(&regex, subject)
 }
 
 fn get_projects(subject: &str) -> Vec<String> {
-    lazy_static! {
-        static ref REGEX: regex::Regex =
-            regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap();
-    }
-    get_tags(&REGEX, subject)
+    static REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    let regex =
+        REGEX.get_or_init(|| regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap());
+
+    get_tags(&regex, subject)
 }
 
 fn get_hashtags(subject: &str) -> Vec<String> {
-    lazy_static! {
-        static ref REGEX: regex::Regex =
-            regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap();
-    }
-    get_tags(&REGEX, subject)
+    static REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    let regex =
+        REGEX.get_or_init(|| regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap());
+
+    get_tags(&regex, subject)
 }
 
 fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
-    lazy_static! {
-        static ref REGEX: regex::Regex =
-            regex::Regex::new(r"(\s+|^)(?P<key>[^\s]+?):(?P<value>[^\s]+)").unwrap();
-    }
+    static REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    let regex = REGEX
+        .get_or_init(|| regex::Regex::new(r"(\s+|^)(?P<key>[^\s]+?):(?P<value>[^\s]+)").unwrap());
 
     let mut tags = BTreeMap::new();
 
-    let new_subject = REGEX.replace_all(subject, |caps: &regex::Captures<'_>| {
+    let new_subject = regex.replace_all(subject, |caps: &regex::Captures<'_>| {
         let key = caps.name("key").unwrap().as_str();
         let value = caps.name("value").unwrap().as_str();
 
