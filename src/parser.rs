@@ -84,7 +84,7 @@ fn get_contexts(subject: &str) -> Vec<String> {
     let regex =
         REGEX.get_or_init(|| regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap());
 
-    get_tags(&regex, subject)
+    get_tags(regex, subject)
 }
 
 fn get_projects(subject: &str) -> Vec<String> {
@@ -92,7 +92,7 @@ fn get_projects(subject: &str) -> Vec<String> {
     let regex =
         REGEX.get_or_init(|| regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap());
 
-    get_tags(&regex, subject)
+    get_tags(regex, subject)
 }
 
 fn get_hashtags(subject: &str) -> Vec<String> {
@@ -100,7 +100,7 @@ fn get_hashtags(subject: &str) -> Vec<String> {
     let regex =
         REGEX.get_or_init(|| regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap());
 
-    get_tags(&regex, subject)
+    get_tags(regex, subject)
 }
 
 fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
