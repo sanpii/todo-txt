@@ -7,7 +7,7 @@ license = "MIT"
 keywords = ["parser", "todotxt"]
 repository = "https://github.com/sanpii/todo-txt"
 edition = "2021"
-rust-version = "1.70.0"
+rust-version = "1.80.0"
 
 [dependencies]
 nom = "^7.0"
