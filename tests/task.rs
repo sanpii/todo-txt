@@ -26,7 +26,7 @@ mod test {
             ..Default::default()
         };
 
-        let line = format!("{}", task);
+        let line = format!("{task}");
 
         assert_eq!(
             line,

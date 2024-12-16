@@ -25,7 +25,7 @@ impl Note {
         let note_file = match Self::note_file(filename) {
             Ok(note_file) => note_file,
             Err(err) => {
-                log::error!("{}", err);
+                log::error!("{err}");
                 return Note::Short(filename.to_string());
             }
         };
@@ -33,7 +33,7 @@ impl Note {
         let file = match std::fs::File::open(note_file.clone()) {
             Ok(file) => file,
             Err(_) => {
-                log::error!("Unable to open {:?}", note_file);
+                log::error!("Unable to open {note_file:?}");
                 return Note::Short(filename.to_string());
             }
         };
@@ -44,7 +44,7 @@ impl Note {
         match buffer.read_to_string(&mut content) {
             Ok(_) => (),
             Err(_) => {
-                log::error!("Unable to read {:?}", note_file);
+                log::error!("Unable to read {note_file:?}");
                 return Note::Short(filename.to_string());
             }
         };
@@ -114,7 +114,7 @@ impl Note {
 
         let name = Self::new_note_id();
 
-        format!("{}{}", name, ext)
+        format!("{name}{ext}")
     }
 
     fn new_note_id() -> String {
@@ -136,10 +136,10 @@ impl Note {
 
         let note_dir = match std::env::var("TODO_NOTES_DIR") {
             Ok(note_dir) => note_dir,
-            Err(_) => format!("{}/notes", todo_dir),
+            Err(_) => format!("{todo_dir}/notes"),
         };
 
-        let path = format!("{}/{}", note_dir, filename);
+        let path = format!("{note_dir}/{filename}");
 
         Ok(path.into())
     }
@@ -154,8 +154,8 @@ impl std::fmt::Display for Note {
 
         let tag = match *self {
             Note::None => String::new(),
-            Note::Short(ref content) => format!("{}:{}", tag, content),
-            Note::Long { ref filename, .. } => format!("{}:{}", tag, filename),
+            Note::Short(ref content) => format!("{tag}:{content}"),
+            Note::Long { ref filename, .. } => format!("{tag}:{filename}"),
         };
 
         f.write_str(tag.as_str())

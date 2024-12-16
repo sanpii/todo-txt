@@ -106,7 +106,7 @@ impl std::fmt::Display for Extended {
         }
 
         if let Some(ref recurrence) = self.recurrence {
-            f.write_str(format!(" rec:{}", recurrence).as_str())?;
+            f.write_str(format!(" rec:{recurrence}").as_str())?;
         }
 
         if self.flagged {
