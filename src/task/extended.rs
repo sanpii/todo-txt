@@ -99,14 +99,14 @@ impl std::fmt::Display for Extended {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use std::ops::Deref;
 
-        f.write_str(format!("{}", self.deref()).as_str())?;
+        f.write_str(&format!("{}", self.deref()))?;
 
         if self.note != super::Note::None {
-            f.write_str(format!(" {}", self.note).as_str())?;
+            f.write_str(&format!(" {}", self.note))?;
         }
 
         if let Some(ref recurrence) = self.recurrence {
-            f.write_str(format!(" rec:{recurrence}").as_str())?;
+            f.write_str(&format!(" rec:{recurrence}"))?;
         }
 
         if self.flagged {

@@ -87,29 +87,29 @@ impl std::fmt::Display for Simple {
         }
 
         if !self.priority.is_lowest() {
-            f.write_str(format!("({}) ", self.priority).as_str())?;
+            f.write_str(&format!("({}) ", self.priority))?;
         }
 
         if let Some(finish_date) = self.finish_date {
-            f.write_str(format!("{} ", finish_date.format("%Y-%m-%d")).as_str())?;
+            f.write_str(&format!("{} ", finish_date.format("%Y-%m-%d")))?;
         }
 
         if let Some(create_date) = self.create_date {
-            f.write_str(format!("{} ", create_date.format("%Y-%m-%d")).as_str())?;
+            f.write_str(&format!("{} ", create_date.format("%Y-%m-%d")))?;
         }
 
-        f.write_str(self.subject.as_str())?;
+        f.write_str(&self.subject)?;
 
         if let Some(due_date) = self.due_date {
-            f.write_str(format!(" due:{}", due_date.format("%Y-%m-%d")).as_str())?;
+            f.write_str(&format!(" due:{}", due_date.format("%Y-%m-%d")))?;
         }
 
         if let Some(threshold_date) = self.threshold_date {
-            f.write_str(format!(" t:{}", threshold_date.format("%Y-%m-%d")).as_str())?;
+            f.write_str(&format!(" t:{}", threshold_date.format("%Y-%m-%d")))?;
         }
 
         for (key, value) in &self.tags {
-            f.write_str(format!(" {key}:{value}").as_str())?;
+            f.write_str(&format!(" {key}:{value}"))?;
         }
 
         Ok(())

@@ -158,7 +158,7 @@ impl std::fmt::Display for Note {
             Note::Long { ref filename, .. } => format!("{tag}:{filename}"),
         };
 
-        f.write_str(tag.as_str())
+        f.write_str(&tag)
     }
 }
 

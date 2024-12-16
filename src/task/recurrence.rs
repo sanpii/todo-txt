@@ -46,7 +46,7 @@ impl std::fmt::Display for Recurrence {
             f.write_str("+")?;
         }
 
-        f.write_str(format!("{}{}", self.num, self.period).as_str())?;
+        f.write_str(&format!("{}{}", self.num, self.period))?;
 
         Ok(())
     }
