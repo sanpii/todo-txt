@@ -161,3 +161,9 @@ impl std::fmt::Display for Note {
         f.write_str(tag.as_str())
     }
 }
+
+impl From<String> for Note {
+    fn from(value: String) -> Self {
+        Self::Short(value)
+    }
+}
