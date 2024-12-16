@@ -167,3 +167,11 @@ impl From<String> for Note {
         Self::Short(value)
     }
 }
+
+impl std::str::FromStr for Note {
+    type Err = std::convert::Infallible;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Self::from(s.to_string()))
+    }
+}
