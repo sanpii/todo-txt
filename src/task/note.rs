@@ -1,7 +1,7 @@
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde-support",
-    derive(serde_derive::Serialize, serde_derive::Deserialize)
+    derive(serde::Serialize, serde::Deserialize)
 )]
 #[cfg_attr(feature = "serde-support", serde(untagged))]
 pub enum Note {

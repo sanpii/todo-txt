@@ -1,7 +1,7 @@
 #[derive(Clone, Debug, PartialEq, Eq, Default)]
 #[cfg_attr(
     feature = "serde-support",
-    derive(serde_derive::Serialize, serde_derive::Deserialize)
+    derive(serde::Serialize, serde::Deserialize)
 )]
 pub struct Extended {
     #[cfg_attr(feature = "serde-support", serde(flatten))]

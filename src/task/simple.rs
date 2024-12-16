@@ -3,7 +3,7 @@ use std::collections::BTreeMap;
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(
     feature = "serde-support",
-    derive(serde_derive::Serialize, serde_derive::Deserialize)
+    derive(serde::Serialize, serde::Deserialize)
 )]
 pub struct Simple {
     pub subject: String,
