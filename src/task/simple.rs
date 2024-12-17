@@ -73,7 +73,7 @@ impl Default for Simple {
 }
 
 impl std::str::FromStr for Simple {
-    type Err = crate::Error;
+    type Err = std::convert::Infallible;
 
     fn from_str(s: &str) -> Result<Simple, Self::Err> {
         Ok(crate::parser::task(s))

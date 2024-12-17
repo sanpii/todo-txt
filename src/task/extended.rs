@@ -72,10 +72,12 @@ impl std::convert::From<super::Task> for Extended {
 }
 
 impl std::str::FromStr for Extended {
-    type Err = crate::Error;
+    type Err = std::convert::Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let task = super::Task::from_str(s)?;
+        super::Task::from_str(s).map(|x| x.into())
+    }
+}
 
         Ok(task.into())
     }
