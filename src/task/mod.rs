@@ -17,3 +17,14 @@ pub use note::Note;
 pub use period::Period;
 #[cfg(feature = "extended")]
 pub use recurrence::Recurrence;
+pub use simple::Simple;
+
+pub trait Task: From<String> + ToString + Clone + Default + AsRef<Simple> {
+}
+
+impl Task for Simple {
+}
+
+#[cfg(feature = "extended")]
+impl Task for Extended {
+}

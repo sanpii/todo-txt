@@ -136,3 +136,9 @@ impl std::cmp::Ord for Extended {
         self.inner.cmp(&other.inner)
     }
 }
+
+impl AsRef<super::Simple> for Extended {
+    fn as_ref(&self) -> &super::Simple {
+        &self.inner
+    }
+}

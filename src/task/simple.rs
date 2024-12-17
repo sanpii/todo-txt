@@ -145,3 +145,9 @@ impl std::cmp::Ord for Simple {
         std::cmp::Ordering::Equal
     }
 }
+
+impl AsRef<Simple> for Simple {
+    fn as_ref(&self) -> &Simple {
+        self
+    }
+}
