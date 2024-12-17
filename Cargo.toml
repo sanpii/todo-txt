@@ -14,6 +14,11 @@ nom = "7.0"
 regex = "1.0"
 thiserror = "2.0"
 
+[dependencies.envir]
+version = "1.0"
+features = ["extrapolation", "serde"]
+optional = true
+
 [dependencies.chrono]
 version = "0.4"
 features = ["clock", "std"]
@@ -21,6 +26,11 @@ default-features = false
 
 [dependencies.log]
 version = "0.4"
+optional = true
+
+[dependencies.owo-colors]
+version = "4.0"
+features = ["supports-colors"]
 optional = true
 
 [dependencies.rand]
@@ -41,5 +51,6 @@ required-features = ["serde-support"]
 
 [features]
 default = []
-serde-support = ["serde", "chrono/serde"]
+config = ["envir", "owo-colors"]
 extended = ["log", "rand"]
+serde-support = ["serde", "chrono/serde"]
