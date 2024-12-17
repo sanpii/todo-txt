@@ -9,11 +9,11 @@ mod recurrence;
 mod simple;
 
 #[cfg(feature = "extended")]
-pub use self::extended::Extended;
+pub use extended::Extended;
 #[cfg(feature = "extended")]
-pub use self::note::Note;
+pub use note::Note;
 #[cfg(feature = "extended")]
-pub use self::period::Period;
+pub use period::Period;
 #[cfg(feature = "extended")]
-pub use self::recurrence::Recurrence;
-pub use self::simple::Simple as Task;
+pub use recurrence::Recurrence;
+pub use simple::Simple as Task;

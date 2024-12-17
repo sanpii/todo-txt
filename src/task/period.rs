@@ -34,7 +34,7 @@ impl std::str::FromStr for Period {
     type Err = crate::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        use self::Period::*;
+        use Period::*;
 
         match s {
             "d" => Ok(Day),
@@ -48,7 +48,7 @@ impl std::str::FromStr for Period {
 
 impl std::fmt::Display for Period {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        use self::Period::*;
+        use Period::*;
 
         let s = match *self {
             Day => "d",
