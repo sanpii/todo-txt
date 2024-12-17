@@ -10,10 +10,10 @@ mod simple;
 
 #[cfg(feature = "extended")]
 pub use extended::Extended;
+pub use list::List;
 #[cfg(feature = "extended")]
 pub use note::Note;
 #[cfg(feature = "extended")]
 pub use period::Period;
 #[cfg(feature = "extended")]
 pub use recurrence::Recurrence;
-pub use simple::Simple as Task;

@@ -12,7 +12,7 @@ mod test {
         let actual: todo_txt::task::Extended = serde_json::from_str(json).unwrap();
 
         let expected = todo_txt::task::Extended {
-            inner: todo_txt::Task {
+            inner: todo_txt::task::Simple {
                 subject: "Test".to_string(),
                 priority: 26.into(),
                 create_date: None,
@@ -45,10 +45,10 @@ mod test {
         let actual: todo_txt::task::Extended = serde_json::from_str(json).unwrap();
 
         let expected = todo_txt::task::Extended {
-            inner: todo_txt::Task {
+            inner: todo_txt::task::Simple {
                 subject: "Test".to_string(),
 
-                ..todo_txt::Task::default()
+                ..todo_txt::task::Simple::default()
             },
             note: todo_txt::task::Note::Short("A note".to_string()),
 
@@ -60,7 +60,7 @@ mod test {
 
     #[test]
     fn test_from_task() {
-        let task = todo_txt::Task {
+        let task = todo_txt::task::Simple {
             subject: "Subject".to_string(),
             tags: {
                 let mut map = BTreeMap::new();
@@ -69,7 +69,7 @@ mod test {
                 map
             },
 
-            ..todo_txt::Task::default()
+            ..todo_txt::task::Simple::default()
         };
 
         let extra: todo_txt::task::Extended = task.into();

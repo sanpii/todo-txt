@@ -5,17 +5,17 @@ mod test {
         use std::str::FromStr;
 
         let line = "Email SoAndSo at soandso@example.com";
-        let task = todo_txt::Task {
+        let task = todo_txt::task::Simple {
             subject: "Email SoAndSo at soandso@example.com".to_owned(),
             ..Default::default()
         };
 
-        assert_eq!(todo_txt::Task::from_str(line).unwrap(), task);
+        assert_eq!(todo_txt::task::Simple::from_str(line).unwrap(), task);
     }
 
     #[test]
     fn display() {
-        let task = todo_txt::Task {
+        let task = todo_txt::task::Simple {
             subject: "@Email SoAndSo at soandso@example.com".to_owned(),
             priority: 1.into(),
             finished: true,
@@ -51,7 +51,7 @@ mod test {
             "tags": {}
         }"#;
 
-        let task: todo_txt::Task = serde_json::from_str(json).unwrap();
+        let task: todo_txt::task::Simple = serde_json::from_str(json).unwrap();
 
         assert_eq!(task.subject, "Test");
         assert_eq!(task.priority, 26);
@@ -86,7 +86,7 @@ mod test {
             "tags": {}
         }"#;
 
-        let task: todo_txt::Task = serde_json::from_str(json).unwrap();
+        let task: todo_txt::task::Simple = serde_json::from_str(json).unwrap();
 
         assert_eq!(task.subject, "Test");
         assert_eq!(task.priority, 26);
@@ -109,7 +109,7 @@ mod test {
     #[test]
     #[cfg(feature = "serde-support")]
     fn test_serialize_simple() {
-        let task = todo_txt::Task::default();
+        let task = todo_txt::task::Simple::default();
         let json = serde_json::to_string(&task).unwrap();
 
         let expected = r#"{"subject":"","priority":26,"create_date":null,"finish_date":null,"finished":false,"threshold_date":null,"due_date":null,"contexts":[],"projects":[],"hashtags":[],"tags":{}}"#;

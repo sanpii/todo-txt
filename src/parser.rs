@@ -126,7 +126,7 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
     (new_subject.trim().to_owned(), tags)
 }
 
-fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
+fn parse(input: &str) -> nom::IResult<&str, crate::task::Simple> {
     let (input, (finished, priority, finish_date, create_date, rest)) = tuple((
         opt(complete(tag("x "))),
         opt(complete(priority)),
@@ -136,7 +136,7 @@ fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
     ))(input)?;
 
     #[allow(deprecated)]
-    let mut task = crate::Task {
+    let mut task = crate::task::Simple {
         priority: priority.unwrap_or_default(),
         create_date: create_date.or(finish_date),
         finish_date: create_date.and(finish_date),
@@ -145,7 +145,7 @@ fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
         projects: get_projects(rest),
         hashtags: get_hashtags(rest),
 
-        ..crate::Task::default()
+        ..crate::task::Simple::default()
     };
 
     let (subject, mut tags) = get_keywords(rest);
@@ -171,6 +171,6 @@ fn parse(input: &str) -> nom::IResult<&str, crate::Task> {
 }
 
 #[must_use]
-pub fn task(line: &str) -> crate::Task {
+pub fn task(line: &str) -> crate::task::Simple {
     parse(line).unwrap().1
 }

@@ -5,7 +5,7 @@
 )]
 pub struct Extended {
     #[cfg_attr(feature = "serde-support", serde(flatten))]
-    pub inner: super::Task,
+    pub inner: super::Simple,
     #[cfg_attr(feature = "serde-support", serde(default))]
     pub note: super::Note,
     pub recurrence: Option<super::Recurrence>,
@@ -20,7 +20,7 @@ impl Extended {
         self.note != super::Note::None
     }
 
-    fn note(task: &super::Task) -> super::Note {
+    fn note(task: &super::Simple) -> super::Note {
         if let Some(file) = task.tags.get(&Self::tag_name()) {
             super::Note::from_file(file)
         } else {
@@ -36,8 +36,8 @@ impl Extended {
     }
 }
 
-impl std::convert::From<super::Task> for Extended {
-    fn from(task: super::Task) -> Self {
+impl std::convert::From<super::Simple> for Extended {
+    fn from(task: super::Simple) -> Self {
         use std::str::FromStr;
 
         let mut inner = task;
@@ -75,7 +75,7 @@ impl std::str::FromStr for Extended {
     type Err = std::convert::Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        super::Task::from_str(s).map(|x| x.into())
+        super::Simple::from_str(s).map(|x| x.into())
     }
 }
 
@@ -86,7 +86,7 @@ impl From<String> for Extended {
 }
 
 impl std::ops::Deref for Extended {
-    type Target = super::Task;
+    type Target = super::Simple;
 
     fn deref(&self) -> &Self::Target {
         &self.inner
