@@ -1,8 +1,5 @@
 #[derive(Clone, Debug, Default)]
-#[cfg_attr(
-    feature = "serde-support",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct List<T: crate::Task> {
     pub tasks: Vec<T>,
 }
@@ -43,12 +40,11 @@ impl<T: crate::Task> List<T> {
 
     #[must_use]
     pub fn projects(&self) -> Vec<String> {
-        let mut projects = self.tasks.iter()
-            .fold(Vec::new(), |mut acc, item| {
-                acc.extend_from_slice(item.as_ref().projects());
+        let mut projects = self.tasks.iter().fold(Vec::new(), |mut acc, item| {
+            acc.extend_from_slice(item.as_ref().projects());
 
-                acc
-            });
+            acc
+        });
         projects.sort();
         projects.dedup();
 
@@ -57,12 +53,11 @@ impl<T: crate::Task> List<T> {
 
     #[must_use]
     pub fn contexts(&self) -> Vec<String> {
-        let mut contexts = self.tasks.iter()
-            .fold(Vec::new(), |mut acc, item| {
-                acc.extend_from_slice(item.as_ref().contexts());
+        let mut contexts = self.tasks.iter().fold(Vec::new(), |mut acc, item| {
+            acc.extend_from_slice(item.as_ref().contexts());
 
-                acc
-            });
+            acc
+        });
         contexts.sort();
         contexts.dedup();
 

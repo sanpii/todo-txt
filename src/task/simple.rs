@@ -1,29 +1,26 @@
 use std::collections::BTreeMap;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(
-    feature = "serde-support",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Simple {
     pub subject: String,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub priority: crate::Priority,
     pub create_date: Option<crate::Date>,
     pub finish_date: Option<crate::Date>,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub finished: bool,
     pub threshold_date: Option<crate::Date>,
     pub due_date: Option<crate::Date>,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     #[deprecated(since = "3.1.0", note = "Use Task::contexts() instead")]
     pub contexts: Vec<String>,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     #[deprecated(since = "3.1.0", note = "Use Task::projects() instead")]
     pub projects: Vec<String>,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub hashtags: Vec<String>,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub tags: BTreeMap<String, String>,
 }
 

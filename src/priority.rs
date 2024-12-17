@@ -1,8 +1,5 @@
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
-#[cfg_attr(
-    feature = "serde-support",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Priority(u8);
 
 impl Priority {

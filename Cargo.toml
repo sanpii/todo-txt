@@ -47,10 +47,10 @@ serde_json = "1.0"
 
 [[example]]
 name = "serialization"
-required-features = ["serde-support"]
+required-features = ["serde"]
 
 [features]
 default = []
 config = ["envir", "owo-colors"]
 extended = ["log", "rand"]
-serde-support = ["serde", "chrono/serde"]
+serde = ["dep:serde", "chrono/serde"]

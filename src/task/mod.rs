@@ -20,12 +20,9 @@ pub use period::Period;
 pub use recurrence::Recurrence;
 pub use simple::Simple;
 
-pub trait Task: From<String> + ToString + Clone + Default + AsRef<Simple> {
-}
+pub trait Task: From<String> + ToString + Clone + Default + AsRef<Simple> {}
 
-impl Task for Simple {
-}
+impl Task for Simple {}
 
 #[cfg(feature = "extended")]
-impl Task for Extended {
-}
+impl Task for Extended {}

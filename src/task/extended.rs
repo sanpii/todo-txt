@@ -1,17 +1,14 @@
 #[derive(Clone, Debug, PartialEq, Eq, Default)]
-#[cfg_attr(
-    feature = "serde-support",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Extended {
-    #[cfg_attr(feature = "serde-support", serde(flatten))]
+    #[cfg_attr(feature = "serde", serde(flatten))]
     pub inner: super::Simple,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub note: super::Note,
     pub recurrence: Option<super::Recurrence>,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub flagged: bool,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub hidden: bool,
 }
 

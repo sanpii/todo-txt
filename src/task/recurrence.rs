@@ -1,12 +1,9 @@
 #[derive(Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(
-    feature = "serde-support",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Recurrence {
     pub num: i64,
     pub period: super::Period,
-    #[cfg_attr(feature = "serde-support", serde(default))]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub strict: bool,
 }
 
