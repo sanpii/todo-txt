@@ -79,7 +79,9 @@ impl std::str::FromStr for Extended {
     }
 }
 
-        Ok(task.into())
+impl From<String> for Extended {
+    fn from(value: String) -> Self {
+        value.parse().unwrap()
     }
 }
 

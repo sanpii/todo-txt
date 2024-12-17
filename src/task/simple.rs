@@ -80,6 +80,12 @@ impl std::str::FromStr for Simple {
     }
 }
 
+impl From<String> for Simple {
+    fn from(value: String) -> Self {
+        value.parse().unwrap()
+    }
+}
+
 impl std::fmt::Display for Simple {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if self.finished {
