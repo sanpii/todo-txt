@@ -105,12 +105,12 @@ impl std::cmp::Ord for Priority {
 mod test {
     #[test]
     fn from_char() {
-        assert_eq!(crate::Priority::from(1), char::try_from('B').unwrap());
+        assert_eq!(crate::Priority::from(1), 'B');
     }
 
     #[test]
     fn from_u8() {
-        assert_eq!(crate::Priority::from(1), u8::from(1));
+        assert_eq!(crate::Priority::from(1), 1);
     }
 
     #[test]

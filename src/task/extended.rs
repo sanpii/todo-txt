@@ -47,19 +47,19 @@ impl std::convert::From<super::Task> for Extended {
 
         let mut recurrence = None;
 
-        if let Some(rec) = inner.tags.get(&"rec".to_owned()) {
+        if let Some(rec) = inner.tags.get("rec") {
             recurrence = match super::Recurrence::from_str(rec) {
                 Ok(rec) => Some(rec),
                 Err(_) => None,
             };
         }
-        inner.tags.remove(&"rec".to_owned());
+        inner.tags.remove("rec");
 
-        let flagged = inner.tags.contains_key(&"f".to_owned());
-        inner.tags.remove(&"f".to_owned());
+        let flagged = inner.tags.contains_key("f");
+        inner.tags.remove("f");
 
-        let hidden = inner.tags.contains_key(&"h".to_owned());
-        inner.tags.remove(&"h".to_owned());
+        let hidden = inner.tags.contains_key("h");
+        inner.tags.remove("h");
 
         Self {
             inner,

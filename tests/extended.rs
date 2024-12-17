@@ -3,7 +3,7 @@ mod test {
     use std::collections::BTreeMap;
 
     #[test]
-    #[cfg(all(feature = "serde-support"))]
+    #[cfg(feature = "serde-support")]
     fn test_extra_deserialize() {
         let json = r#"{
             "subject": "Test"
@@ -35,7 +35,7 @@ mod test {
     }
 
     #[test]
-    #[cfg(all(feature = "serde-support"))]
+    #[cfg(feature = "serde-support")]
     fn test_note_deserialize() {
         let json = r#"{
             "subject": "Test",
@@ -74,6 +74,6 @@ mod test {
 
         let extra: todo_txt::task::Extended = task.into();
 
-        assert_eq!(extra.flagged, true);
+        assert!(extra.flagged);
     }
 }

@@ -85,7 +85,7 @@ impl Note {
 
             if let Some(note_dir) = note_file.parent() {
                 if !note_dir.exists() {
-                    std::fs::create_dir_all(&note_dir).map_err(crate::Error::Note)?;
+                    std::fs::create_dir_all(note_dir).map_err(crate::Error::Note)?;
                 }
             }
 
@@ -98,7 +98,7 @@ impl Note {
 
     pub fn delete(&mut self) -> crate::Result {
         if let Self::Long { filename, .. } = self {
-            std::fs::remove_file(&filename).map_err(crate::Error::Note)?;
+            std::fs::remove_file(filename).map_err(crate::Error::Note)?;
         }
 
         *self = Self::None;
