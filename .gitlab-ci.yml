@@ -16,7 +16,7 @@ lint:fmt:
 lint:clippy:
     before_script:
         - rustup component add clippy
-    script: cargo clippy --all-features -- --deny warnings
+    script: cargo clippy --all-targets --all-features -- --deny warnings
 
 test:debug:
     script: cargo test --all-features

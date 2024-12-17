@@ -28,7 +28,7 @@ jobs:
           toolchain: stable
           components: clippy
       - name: Run clippy
-        run: cargo clippy --all-features -- --deny warnings
+        run: cargo clippy --all-targets --all-features -- --deny warnings
 
   tests:
     name: Tests
