@@ -98,6 +98,30 @@ impl std::fmt::Display for Simple {
             f.write_str(&format!(" t:{}", threshold_date.format("%Y-%m-%d")))?;
         }
 
+        for context in &self.contexts {
+            let tag = format!("@{context}");
+
+            if self.subject.find(&tag).is_none() {
+                write!(f, " {tag}")?;
+            }
+        }
+
+        for project in &self.projects {
+            let tag = format!("+{project}");
+
+            if self.subject.find(&tag).is_none() {
+                write!(f, " {tag}")?;
+            }
+        }
+
+        for hashtags in &self.hashtags {
+            let tag = format!("#{hashtags}");
+
+            if self.subject.find(&tag).is_none() {
+                write!(f, " {tag}")?;
+            }
+        }
+
         for (key, value) in &self.tags {
             f.write_str(&format!(" {key}:{value}"))?;
         }

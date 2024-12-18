@@ -36,6 +36,20 @@ mod test {
 
     #[test]
     #[cfg(feature = "serde")]
+    fn display_tags() {
+        let task = todo_txt::task::Simple {
+            subject: "@context +project2".to_string(),
+            contexts: vec!["context".to_string()],
+            projects: vec!["project1".to_string(), "project2".to_string()],
+
+            ..Default::default()
+        };
+
+        assert_eq!(task.to_string(), "@context +project2 +project1");
+    }
+
+    #[test]
+    #[cfg(feature = "serde")]
     fn test_simple_deserialize() {
         let json = r#"{
             "subject": "Test",
