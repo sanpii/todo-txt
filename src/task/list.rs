@@ -63,6 +63,19 @@ impl<T: crate::Task> List<T> {
 
         contexts
     }
+
+    #[must_use]
+    pub fn hashtags(&self) -> Vec<String> {
+        let mut hashtaps = self.tasks.iter().fold(Vec::new(), |mut acc, item| {
+            acc.extend_from_slice(&item.as_ref().hashtags);
+
+            acc
+        });
+        hashtaps.sort();
+        hashtaps.dedup();
+
+        hashtaps
+    }
 }
 
 impl<T: crate::Task> From<String> for List<T> {
