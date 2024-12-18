@@ -13,10 +13,8 @@ pub struct Simple {
     pub threshold_date: Option<crate::Date>,
     pub due_date: Option<crate::Date>,
     #[cfg_attr(feature = "serde", serde(default))]
-    #[deprecated(since = "3.1.0", note = "Use Task::contexts() instead")]
     pub contexts: Vec<String>,
     #[cfg_attr(feature = "serde", serde(default))]
-    #[deprecated(since = "3.1.0", note = "Use Task::projects() instead")]
     pub projects: Vec<String>,
     #[cfg_attr(feature = "serde", serde(default))]
     pub hashtags: Vec<String>,
@@ -38,21 +36,10 @@ impl Simple {
         self.finished = false;
         self.finish_date = None;
     }
-
-    pub fn contexts(&self) -> &[String] {
-        #[allow(deprecated)]
-        &self.contexts
-    }
-
-    pub fn projects(&self) -> &[String] {
-        #[allow(deprecated)]
-        &self.projects
-    }
 }
 
 impl Default for Simple {
     fn default() -> Self {
-        #[allow(deprecated)]
         Self {
             subject: String::new(),
             priority: crate::Priority::lowest(),
