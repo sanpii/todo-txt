@@ -106,7 +106,7 @@ impl Note {
     fn new_filename() -> String {
         let ext = match std::env::var("TODO_NOTE_EXT") {
             Ok(ext) => ext,
-            Err(_) => ".txt".to_owned(),
+            Err(_) => ".txt".to_string(),
         };
 
         let name = Self::new_note_id();
@@ -146,7 +146,7 @@ impl std::fmt::Display for Note {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let tag = match std::env::var("TODO_NOTE_TAG") {
             Ok(tag) => tag,
-            Err(_) => "note".to_owned(),
+            Err(_) => "note".to_string(),
         };
 
         let tag = match *self {

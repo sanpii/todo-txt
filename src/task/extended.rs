@@ -28,7 +28,7 @@ impl Extended {
     fn tag_name() -> String {
         match std::env::var("TODO_NOTE_TAG") {
             Ok(tag) => tag,
-            Err(_) => "note".to_owned(),
+            Err(_) => "note".to_string(),
         }
     }
 }

@@ -6,7 +6,7 @@ mod test {
 
         let line = "Email SoAndSo at soandso@example.com";
         let task = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com".to_string(),
             ..Default::default()
         };
 
@@ -16,7 +16,7 @@ mod test {
     #[test]
     fn display() {
         let task = todo_txt::task::Simple {
-            subject: "@Email SoAndSo at soandso@example.com".to_owned(),
+            subject: "@Email SoAndSo at soandso@example.com".to_string(),
             priority: 1.into(),
             finished: true,
             due_date: todo_txt::Date::from_ymd_opt(2019, 2, 10),

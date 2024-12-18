@@ -4,9 +4,9 @@ mod test {
 
     #[test]
     fn simple_task() {
-        let line = "Email SoAndSo at soandso@example.com".to_owned();
+        let line = "Email SoAndSo at soandso@example.com".to_string();
         let task = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com".to_string(),
             ..Default::default()
         };
 
@@ -15,9 +15,9 @@ mod test {
 
     #[test]
     fn finished() {
-        let line = "x done".to_owned();
+        let line = "x done".to_string();
         let task = todo_txt::task::Simple {
-            subject: "done".to_owned(),
+            subject: "done".to_string(),
             finished: true,
             ..Default::default()
         };
@@ -27,9 +27,9 @@ mod test {
 
     #[test]
     fn created() {
-        let line = "x 2017-11-25 subject".to_owned();
+        let line = "x 2017-11-25 subject".to_string();
         let task = todo_txt::task::Simple {
-            subject: "subject".to_owned(),
+            subject: "subject".to_string(),
             create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
             finished: true,
             ..Default::default()
@@ -40,9 +40,9 @@ mod test {
 
     #[test]
     fn invalid_date() {
-        let line = "2017-02-30 subject".to_owned();
+        let line = "2017-02-30 subject".to_string();
         let task = todo_txt::task::Simple {
-            subject: "2017-02-30 subject".to_owned(),
+            subject: "2017-02-30 subject".to_string(),
 
             ..Default::default()
         };
@@ -52,9 +52,9 @@ mod test {
 
     #[test]
     fn completed() {
-        let line = "x 2017-11-26 2017-11-25 subject".to_owned();
+        let line = "x 2017-11-26 2017-11-25 subject".to_string();
         let task = todo_txt::task::Simple {
-            subject: "subject".to_owned(),
+            subject: "subject".to_string(),
             create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
             finish_date: todo_txt::Date::from_ymd_opt(2017, 11, 26),
             finished: true,
@@ -66,9 +66,9 @@ mod test {
 
     #[test]
     fn priority() {
-        let line = "x (A) 2017-11-26 2017-11-25 subject".to_owned();
+        let line = "x (A) 2017-11-26 2017-11-25 subject".to_string();
         let task = todo_txt::task::Simple {
-            subject: "subject".to_owned(),
+            subject: "subject".to_string(),
             priority: 0.into(),
             create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
             finish_date: todo_txt::Date::from_ymd_opt(2017, 11, 26),
@@ -81,52 +81,52 @@ mod test {
 
     #[test]
     fn contexts() {
-        let line = "Email SoAndSo at soandso@example.com @context1 @context2".to_owned();
+        let line = "Email SoAndSo at soandso@example.com @context1 @context2".to_string();
         let expected = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com @context1 @context2".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com @context1 @context2".to_string(),
             ..Default::default()
         };
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context1".to_owned(), "context2".to_owned()]);
+        assert_eq!(actual.contexts(), vec!["context1".to_string(), "context2".to_string()]);
     }
 
     #[test]
     fn deplucate_contexts() {
-        let line = "Email SoAndSo at soandso@example.com @context1 @context2 @context1".to_owned();
+        let line = "Email SoAndSo at soandso@example.com @context1 @context2 @context1".to_string();
         let expected = todo_txt::task::Simple {
             subject: "Email SoAndSo at soandso@example.com @context1 @context2 @context1"
-                .to_owned(),
+                .to_string(),
             ..Default::default()
         };
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context1".to_owned(), "context2".to_owned()]);
+        assert_eq!(actual.contexts(), vec!["context1".to_string(), "context2".to_string()]);
     }
 
     #[test]
     fn projects() {
         let line = "Email SoAndSo at soandso@example.com +project1 +project1\\subject1 @context2"
-            .to_owned();
+            .to_string();
         let expected = todo_txt::task::Simple {
             subject: "Email SoAndSo at soandso@example.com +project1 +project1\\subject1 @context2"
-                .to_owned(),
+                .to_string(),
             ..Default::default()
         };
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context2".to_owned()]);
-        assert_eq!(actual.projects(), vec!["project1".to_owned(), "project1\\subject1".to_owned()]);
+        assert_eq!(actual.contexts(), vec!["context2".to_string()]);
+        assert_eq!(actual.projects(), vec!["project1".to_string(), "project1\\subject1".to_string()]);
     }
 
     #[test]
     fn empty_tag() {
-        let line = "Email SoAndSo at soandso@example.com + @ #".to_owned();
+        let line = "Email SoAndSo at soandso@example.com + @ #".to_string();
         let task = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com + @ #".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com + @ #".to_string(),
 
             ..Default::default()
         };
@@ -136,35 +136,35 @@ mod test {
 
     #[test]
     fn case_sensitive_tag() {
-        let line = "Email SoAndSo at soandso@example.com +Project1".to_owned();
+        let line = "Email SoAndSo at soandso@example.com +Project1".to_string();
         let expected = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com +Project1".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com +Project1".to_string(),
 
             ..Default::default()
         };
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.projects(), vec!["Project1".to_owned()]);
+        assert_eq!(actual.projects(), vec!["Project1".to_string()]);
     }
 
     #[test]
     fn start_with_tag() {
-        let line = "+Project1".to_owned();
+        let line = "+Project1".to_string();
         let expected = todo_txt::task::Simple {
-            subject: "+Project1".to_owned(),
+            subject: "+Project1".to_string(),
 
             ..Default::default()
         };
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.projects(), vec!["Project1".to_owned()]);
+        assert_eq!(actual.projects(), vec!["Project1".to_string()]);
     }
 
     #[test]
     fn url() {
-        let line = "Participer à https://contributopia.org".to_owned();
+        let line = "Participer à https://contributopia.org".to_string();
         let task = todo_txt::task::Simple {
             subject: line.clone(),
 
@@ -176,28 +176,28 @@ mod test {
 
     #[test]
     fn hashtags() {
-        let line = "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_owned();
+        let line = "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_string();
         let expected = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_string(),
             ..Default::default()
         };
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context2".to_owned()]);
-        assert_eq!(actual.projects(), vec!["project1".to_owned()]);
-        assert_eq!(actual.hashtags(), vec!["tag".to_owned()]);
+        assert_eq!(actual.contexts(), vec!["context2".to_string()]);
+        assert_eq!(actual.projects(), vec!["project1".to_string()]);
+        assert_eq!(actual.hashtags(), vec!["tag".to_string()]);
     }
 
     #[test]
     fn keywords() {
         let mut keywords = BTreeMap::new();
-        keywords.insert("key1".to_owned(), "2018-01-01".to_owned());
-        keywords.insert("key2".to_owned(), "value".to_owned());
+        keywords.insert("key1".to_string(), "2018-01-01".to_string());
+        keywords.insert("key2".to_string(), "value".to_string());
 
-        let line = "Email SoAndSo at soandso@example.com key1:2018-01-01 key2:value".to_owned();
+        let line = "Email SoAndSo at soandso@example.com key1:2018-01-01 key2:value".to_string();
         let task = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com".to_string(),
             tags: keywords,
             ..Default::default()
         };
@@ -207,9 +207,9 @@ mod test {
 
     #[test]
     fn due() {
-        let line = "Email SoAndSo at soandso@example.com due:2018-01-01".to_owned();
+        let line = "Email SoAndSo at soandso@example.com due:2018-01-01".to_string();
         let task = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com".to_string(),
             due_date: todo_txt::Date::from_ymd_opt(2018, 1, 1),
 
             ..Default::default()
@@ -220,9 +220,9 @@ mod test {
 
     #[test]
     fn threshold() {
-        let line = "Email SoAndSo at soandso@example.com t:2018-01-01".to_owned();
+        let line = "Email SoAndSo at soandso@example.com t:2018-01-01".to_string();
         let task = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com".to_owned(),
+            subject: "Email SoAndSo at soandso@example.com".to_string(),
             threshold_date: todo_txt::Date::from_ymd_opt(2018, 1, 1),
 
             ..Default::default()
@@ -233,10 +233,10 @@ mod test {
 
     #[test]
     fn begin_with_keyword() {
-        let line = "(C) t:2018-04-03 Open issue on todo-txt parser".to_owned();
+        let line = "(C) t:2018-04-03 Open issue on todo-txt parser".to_string();
 
         let task = todo_txt::task::Simple {
-            subject: "Open issue on todo-txt parser".to_owned(),
+            subject: "Open issue on todo-txt parser".to_string(),
             threshold_date: todo_txt::Date::from_ymd_opt(2018, 4, 3),
             priority: 2.into(),
 
@@ -249,11 +249,11 @@ mod test {
     #[test]
     fn url_in_tags() {
         let mut keywords = BTreeMap::new();
-        keywords.insert("url".to_owned(), "http://example.org".to_owned());
+        keywords.insert("url".to_string(), "http://example.org".to_string());
 
-        let line = "2018-03-26 test url:http://example.org".to_owned();
+        let line = "2018-03-26 test url:http://example.org".to_string();
         let task = todo_txt::task::Simple {
-            subject: "test".to_owned(),
+            subject: "test".to_string(),
             create_date: todo_txt::Date::from_ymd_opt(2018, 3, 26),
             tags: keywords,
 

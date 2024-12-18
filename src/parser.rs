@@ -74,13 +74,13 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
         if value.starts_with('/') {
             format!(" {key}:{value}")
         } else {
-            tags.insert(key.to_owned(), value.to_owned());
+            tags.insert(key.to_string(), value.to_string());
 
             String::new()
         }
     });
 
-    (new_subject.trim().to_owned(), tags)
+    (new_subject.trim().to_string(), tags)
 }
 
 fn parse(input: &str) -> nom::IResult<&str, crate::task::Simple> {
