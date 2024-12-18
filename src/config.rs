@@ -155,7 +155,7 @@ impl Config {
         ];
 
         for config in configs {
-            if dotenvy::from_path(config()).is_ok() {
+            if envir::from_path(config()).is_ok() {
                 break;
             }
         }
