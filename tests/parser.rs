@@ -89,7 +89,10 @@ mod test {
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context1".to_string(), "context2".to_string()]);
+        assert_eq!(
+            actual.contexts(),
+            vec!["context1".to_string(), "context2".to_string()]
+        );
     }
 
     #[test]
@@ -103,7 +106,10 @@ mod test {
         let actual = todo_txt::parser::task(&line);
 
         assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context1".to_string(), "context2".to_string()]);
+        assert_eq!(
+            actual.contexts(),
+            vec!["context1".to_string(), "context2".to_string()]
+        );
     }
 
     #[test]
@@ -119,7 +125,10 @@ mod test {
 
         assert_eq!(actual, expected);
         assert_eq!(actual.contexts(), vec!["context2".to_string()]);
-        assert_eq!(actual.projects(), vec!["project1".to_string(), "project1\\subject1".to_string()]);
+        assert_eq!(
+            actual.projects(),
+            vec!["project1".to_string(), "project1\\subject1".to_string()]
+        );
     }
 
     #[test]
