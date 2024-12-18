@@ -41,7 +41,7 @@ impl<T: crate::Task> List<T> {
     #[must_use]
     pub fn projects(&self) -> Vec<String> {
         let mut projects = self.tasks.iter().fold(Vec::new(), |mut acc, item| {
-            acc.extend_from_slice(item.as_ref().projects());
+            acc.extend_from_slice(&item.as_ref().projects());
 
             acc
         });
@@ -54,7 +54,7 @@ impl<T: crate::Task> List<T> {
     #[must_use]
     pub fn contexts(&self) -> Vec<String> {
         let mut contexts = self.tasks.iter().fold(Vec::new(), |mut acc, item| {
-            acc.extend_from_slice(item.as_ref().contexts());
+            acc.extend_from_slice(&item.as_ref().contexts());
 
             acc
         });

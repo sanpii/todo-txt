@@ -1,5 +1,11 @@
 use std::collections::BTreeMap;
 
+macro_rules! regex_tags_shared {
+    () => {
+        "(?P<space>^|[\\s]){}(?P<tag>[\\w\\\\-]+)"
+    };
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Simple {
@@ -12,14 +18,6 @@ pub struct Simple {
     pub finished: bool,
     pub threshold_date: Option<crate::Date>,
     pub due_date: Option<crate::Date>,
-    #[cfg_attr(feature = "serde", serde(default))]
-    #[deprecated(since = "3.1.0", note = "Use Task::contexts() instead")]
-    pub contexts: Vec<String>,
-    #[cfg_attr(feature = "serde", serde(default))]
-    #[deprecated(since = "3.1.0", note = "Use Task::projects() instead")]
-    pub projects: Vec<String>,
-    #[cfg_attr(feature = "serde", serde(default))]
-    pub hashtags: Vec<String>,
     #[cfg_attr(feature = "serde", serde(default))]
     pub tags: BTreeMap<String, String>,
 }
@@ -39,20 +37,49 @@ impl Simple {
         self.finish_date = None;
     }
 
-    pub fn contexts(&self) -> &[String] {
-        #[allow(deprecated)]
-        &self.contexts
+    #[must_use]
+    pub fn contexts(&self) -> Vec<String> {
+        static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+            regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap()
+        });
+
+        self.tags(&REGEX)
     }
 
-    pub fn projects(&self) -> &[String] {
-        #[allow(deprecated)]
-        &self.projects
+    #[must_use]
+    pub fn projects(&self) -> Vec<String> {
+        static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+            regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap()
+        });
+
+        self.tags(&REGEX)
+    }
+
+    #[must_use]
+    pub fn hashtags(&self) -> Vec<String> {
+        static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+            regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap()
+        });
+
+        self.tags(&REGEX)
+    }
+
+    fn tags(&self, regex: &::regex::Regex) -> Vec<String> {
+        let mut tags = regex
+            .captures_iter(&self.subject)
+            .map(|x| x["tag"].to_string())
+            .filter(|x| !x.is_empty())
+            .collect::<Vec<_>>();
+
+        tags.sort();
+        tags.dedup();
+
+        tags
     }
 }
 
 impl Default for Simple {
     fn default() -> Self {
-        #[allow(deprecated)]
         Self {
             subject: String::new(),
             priority: crate::Priority::lowest(),
@@ -61,9 +88,6 @@ impl Default for Simple {
             finished: false,
             threshold_date: None,
             due_date: None,
-            contexts: Vec::new(),
-            projects: Vec::new(),
-            hashtags: Vec::new(),
             tags: BTreeMap::new(),
         }
     }
