@@ -3,7 +3,7 @@ mod test {
     use std::collections::BTreeMap;
 
     #[test]
-    #[cfg(feature = "serde-support")]
+    #[cfg(feature = "serde")]
     fn test_extra_deserialize() {
         let json = r#"{
             "subject": "Test"
@@ -35,7 +35,7 @@ mod test {
     }
 
     #[test]
-    #[cfg(feature = "serde-support")]
+    #[cfg(feature = "serde")]
     fn test_note_deserialize() {
         let json = r#"{
             "subject": "Test",

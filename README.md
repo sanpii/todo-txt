@@ -30,7 +30,7 @@ fn main()
 
 ## Features
 
-* `serde-support`: (De)serialization with serde. See
+* `serde`: (De)serialization with serde. See
     [serialization.rs](examples/serialization.rs).
 * `extended`: Provide a non-standard extended task type who provides common
     extra features like recurrence.

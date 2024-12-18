@@ -35,7 +35,7 @@ mod test {
     }
 
     #[test]
-    #[cfg(feature = "serde-support")]
+    #[cfg(feature = "serde")]
     fn test_simple_deserialize() {
         let json = r#"{
             "subject": "Test",
@@ -70,7 +70,7 @@ mod test {
     }
 
     #[test]
-    #[cfg(feature = "serde-support")]
+    #[cfg(feature = "serde")]
     fn test_deserialize_with_dates() {
         let json = r#"{
             "subject": "Test",
@@ -107,7 +107,7 @@ mod test {
     }
 
     #[test]
-    #[cfg(feature = "serde-support")]
+    #[cfg(feature = "serde")]
     fn test_serialize_simple() {
         let task = todo_txt::task::Simple::default();
         let json = serde_json::to_string(&task).unwrap();
