@@ -30,6 +30,7 @@ fn main()
 
 ## Features
 
+* `config`: Add `Config` struct to handle configuration like todo.txt-cli;
 * `serde`: (De)serialization with serde. See
     [serialization.rs](examples/serialization.rs).
 * `extended`: Provide a non-standard extended task type who provides common
