@@ -99,7 +99,7 @@ impl std::fmt::Display for Simple {
         }
 
         for context in &self.contexts {
-            let tag = format!("@{context}");
+            let tag = format!("{}{context}", super::Tag::Context);
 
             if self.subject.find(&tag).is_none() {
                 write!(f, " {tag}")?;
@@ -107,7 +107,7 @@ impl std::fmt::Display for Simple {
         }
 
         for project in &self.projects {
-            let tag = format!("+{project}");
+            let tag = format!("{}{project}", super::Tag::Project);
 
             if self.subject.find(&tag).is_none() {
                 write!(f, " {tag}")?;
@@ -115,7 +115,7 @@ impl std::fmt::Display for Simple {
         }
 
         for hashtags in &self.hashtags {
-            let tag = format!("#{hashtags}");
+            let tag = format!("{}{hashtags}", super::Tag::Hashtag);
 
             if self.subject.find(&tag).is_none() {
                 write!(f, " {tag}")?;

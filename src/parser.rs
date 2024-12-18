@@ -81,7 +81,7 @@ macro_rules! regex_tags_shared {
 
 fn get_contexts(subject: &str) -> Vec<String> {
     static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
-        regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap()
+        regex::Regex::new(&format!(regex_tags_shared!(), crate::task::Tag::Context)).unwrap()
     });
 
     get_tags(&REGEX, subject)
@@ -89,7 +89,11 @@ fn get_contexts(subject: &str) -> Vec<String> {
 
 fn get_projects(subject: &str) -> Vec<String> {
     static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
-        regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap()
+        regex::Regex::new(&format!(
+            regex_tags_shared!(),
+            regex::escape(&crate::task::Tag::Project.to_string())
+        ))
+        .unwrap()
     });
 
     get_tags(&REGEX, subject)
@@ -97,7 +101,7 @@ fn get_projects(subject: &str) -> Vec<String> {
 
 fn get_hashtags(subject: &str) -> Vec<String> {
     static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
-        regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap()
+        regex::Regex::new(&format!(regex_tags_shared!(), crate::task::Tag::Hashtag)).unwrap()
     });
 
     get_tags(&REGEX, subject)
