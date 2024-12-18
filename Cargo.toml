@@ -48,9 +48,14 @@ serde_json = "1.0"
 [[example]]
 name = "serialization"
 required-features = ["serde"]
+doc-scrape-examples = true
 
 [features]
 default = []
 config = ["envir", "owo-colors"]
 extended = ["log", "rand"]
 serde = ["dep:serde", "chrono/serde"]
+
+[package.metadata.docs.rs]
+all-features = true
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
