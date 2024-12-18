@@ -57,15 +57,15 @@ mod test {
         assert_eq!(task.priority, 26);
         assert_eq!(task.create_date, None);
         assert_eq!(task.finish_date, None);
-        assert_eq!(task.contexts()[0], "context_a");
-        assert_eq!(task.contexts()[1], "context_b");
+        assert_eq!(task.contexts[0], "context_a");
+        assert_eq!(task.contexts[1], "context_b");
         assert_eq!(task.threshold_date, None);
         assert_eq!(task.due_date, None);
-        assert_eq!(task.hashtags()[0], "tag_a");
-        assert_eq!(task.hashtags()[1], "tag_b");
+        assert_eq!(task.hashtags[0], "tag_a");
+        assert_eq!(task.hashtags[1], "tag_b");
 
         assert!(!task.finished);
-        assert!(task.projects().is_empty());
+        assert!(task.projects.is_empty());
         assert!(task.tags.is_empty());
     }
 
@@ -93,16 +93,16 @@ mod test {
         assert_eq!(task.create_date, todo_txt::Date::from_ymd_opt(2018, 3, 1));
         assert_eq!(task.finish_date, todo_txt::Date::from_ymd_opt(2018, 3, 4));
         assert!(!task.finished);
-        assert_eq!(task.contexts()[0], "context_a");
-        assert_eq!(task.contexts()[1], "context_b");
+        assert_eq!(task.contexts[0], "context_a");
+        assert_eq!(task.contexts[1], "context_b");
         assert_eq!(
             task.threshold_date,
             todo_txt::Date::from_ymd_opt(2018, 3, 2)
         );
         assert_eq!(task.due_date, todo_txt::Date::from_ymd_opt(2018, 3, 3));
-        assert!(task.projects().is_empty());
-        assert_eq!(task.hashtags()[0], "tag_a");
-        assert_eq!(task.hashtags()[1], "tag_b");
+        assert!(task.projects.is_empty());
+        assert_eq!(task.hashtags[0], "tag_a");
+        assert_eq!(task.hashtags[1], "tag_b");
         assert!(task.tags.is_empty());
     }
 

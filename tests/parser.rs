@@ -81,54 +81,42 @@ mod test {
 
     #[test]
     fn contexts() {
-        let line = "Email SoAndSo at soandso@example.com @context1 @context2".to_string();
-        let expected = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com @context1 @context2".to_string(),
+        let line = "Email SoAndSo at soandso@example.com @context1 @context2".to_owned();
+        let task = todo_txt::task::Simple {
+            subject: "Email SoAndSo at soandso@example.com @context1 @context2".to_owned(),
+            contexts: vec!["context1".to_owned(), "context2".to_owned()],
             ..Default::default()
         };
-        let actual = todo_txt::parser::task(&line);
 
-        assert_eq!(actual, expected);
-        assert_eq!(
-            actual.contexts(),
-            vec!["context1".to_string(), "context2".to_string()]
-        );
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
     fn deplucate_contexts() {
-        let line = "Email SoAndSo at soandso@example.com @context1 @context2 @context1".to_string();
-        let expected = todo_txt::task::Simple {
+        let line = "Email SoAndSo at soandso@example.com @context1 @context2 @context1".to_owned();
+        let task = todo_txt::task::Simple {
             subject: "Email SoAndSo at soandso@example.com @context1 @context2 @context1"
-                .to_string(),
+                .to_owned(),
+            contexts: vec!["context1".to_owned(), "context2".to_owned()],
             ..Default::default()
         };
-        let actual = todo_txt::parser::task(&line);
 
-        assert_eq!(actual, expected);
-        assert_eq!(
-            actual.contexts(),
-            vec!["context1".to_string(), "context2".to_string()]
-        );
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
     fn projects() {
         let line = "Email SoAndSo at soandso@example.com +project1 +project1\\subject1 @context2"
-            .to_string();
-        let expected = todo_txt::task::Simple {
+            .to_owned();
+        let task = todo_txt::task::Simple {
             subject: "Email SoAndSo at soandso@example.com +project1 +project1\\subject1 @context2"
-                .to_string(),
+                .to_owned(),
+            contexts: vec!["context2".to_owned()],
+            projects: vec!["project1".to_owned(), "project1\\subject1".to_owned()],
             ..Default::default()
         };
-        let actual = todo_txt::parser::task(&line);
 
-        assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context2".to_string()]);
-        assert_eq!(
-            actual.projects(),
-            vec!["project1".to_string(), "project1\\subject1".to_string()]
-        );
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -145,30 +133,28 @@ mod test {
 
     #[test]
     fn case_sensitive_tag() {
-        let line = "Email SoAndSo at soandso@example.com +Project1".to_string();
-        let expected = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com +Project1".to_string(),
+        let line = "Email SoAndSo at soandso@example.com +Project1".to_owned();
+        let task = todo_txt::task::Simple {
+            subject: "Email SoAndSo at soandso@example.com +Project1".to_owned(),
+            projects: vec!["Project1".to_string()],
 
             ..Default::default()
         };
-        let actual = todo_txt::parser::task(&line);
 
-        assert_eq!(actual, expected);
-        assert_eq!(actual.projects(), vec!["Project1".to_string()]);
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
     fn start_with_tag() {
-        let line = "+Project1".to_string();
-        let expected = todo_txt::task::Simple {
-            subject: "+Project1".to_string(),
+        let line = "+Project1".to_owned();
+        let task = todo_txt::task::Simple {
+            subject: "+Project1".to_owned(),
+            projects: vec!["Project1".to_string()],
 
             ..Default::default()
         };
-        let actual = todo_txt::parser::task(&line);
 
-        assert_eq!(actual, expected);
-        assert_eq!(actual.projects(), vec!["Project1".to_string()]);
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]
@@ -185,17 +171,16 @@ mod test {
 
     #[test]
     fn hashtags() {
-        let line = "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_string();
-        let expected = todo_txt::task::Simple {
-            subject: "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_string(),
+        let line = "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_owned();
+        let task = todo_txt::task::Simple {
+            subject: "Email SoAndSo at soandso@example.com +project1 #tag @context2".to_owned(),
+            contexts: vec!["context2".to_owned()],
+            projects: vec!["project1".to_owned()],
+            hashtags: vec!["tag".to_owned()],
             ..Default::default()
         };
-        let actual = todo_txt::parser::task(&line);
 
-        assert_eq!(actual, expected);
-        assert_eq!(actual.contexts(), vec!["context2".to_string()]);
-        assert_eq!(actual.projects(), vec!["project1".to_string()]);
-        assert_eq!(actual.hashtags(), vec!["tag".to_string()]);
+        assert_eq!(todo_txt::parser::task(&line), task);
     }
 
     #[test]

@@ -60,6 +60,49 @@ fn priority(input: &str) -> nom::IResult<&str, crate::Priority> {
     Ok((input, priority))
 }
 
+fn get_tags(regex: &::regex::Regex, subject: &str) -> Vec<String> {
+    let mut tags = regex
+        .captures_iter(subject)
+        .map(|x| x["tag"].to_string())
+        .filter(|x| !x.is_empty())
+        .collect::<Vec<_>>();
+
+    tags.sort();
+    tags.dedup();
+
+    tags
+}
+
+macro_rules! regex_tags_shared {
+    () => {
+        "(?P<space>^|[\\s]){}(?P<tag>[\\w\\\\-]+)"
+    };
+}
+
+fn get_contexts(subject: &str) -> Vec<String> {
+    static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(&format!(regex_tags_shared!(), "@")).unwrap()
+    });
+
+    get_tags(&REGEX, subject)
+}
+
+fn get_projects(subject: &str) -> Vec<String> {
+    static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(&format!(regex_tags_shared!(), "\\+")).unwrap()
+    });
+
+    get_tags(&REGEX, subject)
+}
+
+fn get_hashtags(subject: &str) -> Vec<String> {
+    static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(&format!(regex_tags_shared!(), "#")).unwrap()
+    });
+
+    get_tags(&REGEX, subject)
+}
+
 fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
     static REGEX: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
         regex::Regex::new(r"(\s+|^)(?P<key>[^\s]+?):(?P<value>[^\s]+)").unwrap()
@@ -92,11 +135,15 @@ fn parse(input: &str) -> nom::IResult<&str, crate::task::Simple> {
         rest,
     ))(input)?;
 
+    #[allow(deprecated)]
     let mut task = crate::task::Simple {
         priority: priority.unwrap_or_default(),
         create_date: create_date.or(finish_date),
         finish_date: create_date.and(finish_date),
         finished: finished.is_some(),
+        contexts: get_contexts(rest),
+        projects: get_projects(rest),
+        hashtags: get_hashtags(rest),
 
         ..crate::task::Simple::default()
     };
