@@ -27,7 +27,7 @@ impl From<&str> for Color {
 }
 
 impl std::str::FromStr for Color {
-    type Err = crate::Error;
+    type Err = std::convert::Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let ansi_color = s.into();
