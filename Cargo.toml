@@ -1,6 +1,6 @@
 [package]
 name = "todo-txt"
-version = "4.0.1"
+version = "4.0.2"
 authors = ["Sanpi <sanpi@homecomputing.fr>"]
 description = "Parser for the todo.txt format"
 license = "MIT"
